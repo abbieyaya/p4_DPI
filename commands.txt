@@ -1,0 +1,2 @@
+table_set_default forward _nop
+table_add forward _nop 10.0.0.2
