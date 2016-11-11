@@ -8,8 +8,8 @@ def handle_pkt(pkt):
     pkt = str(pkt)
     if(len(pkt) > 40): return  # filter unexpect packet
     raw_hex = to_hex(pkt)
-    print "Received %d bytes" % (len(pkt), )
-    print "Hex data: %s" % (raw_hex, )
+    print "Received %d bytes" % (len(pkt))
+    print "Hex data: %s" % (raw_hex)
     src = to_hex(pkt[0:2])
     dst = to_hex(pkt[2:4])
     msg = pkt[4:]
@@ -22,9 +22,10 @@ def main():
         print "Usage receiver.py [host number]"
         return
 
-    iface = "h%s-eth0" % (argv[1], )
-    print "Listen on %s" % (iface, )
+    iface = "h%s-eth%s" % (argv[1],argv[1])
+    print "Listen on %s" % (iface)
     sniff(iface = iface, prn = lambda x: handle_pkt(x))
 
 if __name__ == '__main__':
     main()
+

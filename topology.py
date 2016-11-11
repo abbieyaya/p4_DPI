@@ -48,20 +48,19 @@ class MyTopo(Topo):
 
         # internal host
         h1 = self.addHost('h1', ip = "10.0.0.1", mac = "00:04:00:00:00:10" )
-        self.addLink(h1, switch)
+        self.addLink(h1, switch, port1=1, port2=1)
 
         h2 = self.addHost('h2', ip = "10.0.0.2", mac = "00:05:00:00:00:10" )
-        self.addLink(h2, switch)
+        self.addLink(h2, switch, port1=2, port2=2)
 
         h3 = self.addHost('h3', ip = "10.0.0.3", mac = "00:06:00:00:00:10" )
-        self.addLink(h3, switch)
+        self.addLink(h3, switch, port1=3, port2=3)
 
 def main():
     topo = MyTopo( args.behavioral_exe, args.json, args.thrift_port )
-
     net = Mininet( topo = topo, host = P4Host, switch = P4Switch, controller = None )
-
     net.start()
+    sleep(1) 
 
     cmd = [args.cli, args.json, str(args.thrift_port)]
     with open("commands.txt", "r") as f:
@@ -72,12 +71,12 @@ def main():
         except subprocess.CalledProcessError as e:
             print e
             print e.output
-    
-    print "Ready !"
 
-    CLI( net )
-    net.stop()
+    sleep(1)
+    print "Ready !"
+    CLI( net ) # start mininet
+    net.stop() 
 
 if __name__ == '__main__':
-    setLogLevel( 'info' )
+    setLogLevel( 'debug' )
     main()
