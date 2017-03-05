@@ -1,2 +1,0 @@
-table_set_default forward _nop
-table_add forward action_forward 10.0.0.1 => 3

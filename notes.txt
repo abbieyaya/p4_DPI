@@ -1,6 +1,0 @@
-注意: 
-p4_mininet.py 
-
-delete : self.defaultIntf().rename("eth0") 
-
-不然interface名字會被蓋掉
