@@ -9,7 +9,7 @@ import sys
 
 
 SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch'
-JSON_PATH='copy.json'
+JSON_PATH='mirror.json'
 
 
 def main():

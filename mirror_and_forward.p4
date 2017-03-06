@@ -102,12 +102,12 @@ action do_copy_to_cpu(mirror_port) {
 /* Table */
 table copy_to_cpu {
     actions {do_copy_to_cpu;}
-    size : 1;
+    // size : 1;
 }
 
 table forward {
     reads {
-        ethernet.dstAddr: exact;
+        ipv4.dstAddr: exact;
     }
 
     actions {
