@@ -65,8 +65,10 @@ header_type udp_header_t {
 header_type label_header_t {
     fields {
         label: 8;
+        reason: 8;
     }
 }
+
 /* Header */
 
 header ethernet_header_t ethernet_header;
@@ -77,8 +79,16 @@ header label_header_t label_header;
 metadata intrinsic_metadata_t intrinsic_metadata;
 
 /* Parser */
+/*
 parser start {
     return parse_ethernet;
+}
+*/
+parser start {
+    return select(current(0, 64)) {
+        0 : parse_label_header;
+        default: parse_ethernet;
+    }
 }
 
 #define ETHERTYPE_IPV4 0x0800
@@ -112,8 +122,13 @@ parser parse_udp {
     return ingress;
 }
 
+parser parse_label_header {
+    extract(label_header);
+    return parse_ethernet;
+}
+
 /* Action */
-action action_forward(out_port) {
+action do_forward(out_port) {
     modify_field(standard_metadata.egress_spec, out_port);
 }
 
@@ -125,11 +140,15 @@ action do_copy_to_cpu(mirror_port) {
     clone_ingress_pkt_to_egress(mirror_port, copy_to_cpu_fields);
 }
 
-action do_label_encap(label) {
+action do_label_encap(label, reason) {
     add_header(label_header);
-    modify_field(label_header.label, label);
+    modify_field(label_header.label, label );
+    modify_field(label_header.reason, reason );
 }
 
+action _drop() {
+    drop();
+}
 /* Table */
 table copy_to_cpu {
     actions {do_copy_to_cpu;}
@@ -145,7 +164,8 @@ table classifier_tcp {
     }
 
     actions { 
-      do_label_encap;
+        do_label_encap;
+        do_forward;
     }
 }
 
@@ -158,7 +178,8 @@ table classifier_udp {
     }
 
     actions { 
-      do_label_encap;
+        do_label_encap;
+	do_forward;
     }
 }
 
@@ -168,18 +189,25 @@ table forward {
     }
 
     actions {
-        action_forward;
+        do_forward;
     }
+}
+
+table label_encup {
+    reads { standard_metadata.egress_port : exact; }
+    actions { _drop; do_label_encap; }
+    size : 16;
 }
 
 /* Control */
 
 control ingress {
-    apply(copy_to_cpu);
+    //apply(copy_to_cpu);
     if( ipv4_header.protocol == IP_PROTOCOLS_TCP ) apply(classifier_tcp) ;
     else if( ipv4_header.protocol == IP_PROTOCOLS_UDP ) apply(classifier_udp) ;
-    apply(forward);
+    //apply(forward);
 }
 
 control egress {
+    apply(label_encup);
 }
