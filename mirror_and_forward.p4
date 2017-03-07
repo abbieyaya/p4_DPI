@@ -9,6 +9,7 @@ header_type intrinsic_metadata_t {
         lf_field_list : 32;
         mcast_grp : 16;
         egress_rid : 16;
+	priority : 8;
     }
 }
 
@@ -149,6 +150,11 @@ action do_label_encap(label, reason) {
 action _drop() {
     drop();
 }
+
+action do_set_priority(priority) {
+    modify_field(intrinsic_metadata.priority, priority);
+}
+
 /* Table */
 table copy_to_cpu {
     actions {do_copy_to_cpu;}
@@ -194,18 +200,31 @@ table forward {
 }
 
 table label_encup {
-    reads { standard_metadata.egress_port : exact; }
+    reads { 
+        standard_metadata.egress_port : exact; 
+    }
     actions { _drop; do_label_encap; }
     size : 16;
 }
 
+table set_queue {
+    reads {
+        ipv4_header.srcAddr: exact;
+    }
+
+    actions {
+        do_set_priority ;
+    }
+
+} 
 /* Control */
 
 control ingress {
     //apply(copy_to_cpu);
-    if( ipv4_header.protocol == IP_PROTOCOLS_TCP ) apply(classifier_tcp) ;
-    else if( ipv4_header.protocol == IP_PROTOCOLS_UDP ) apply(classifier_udp) ;
-    //apply(forward);
+    //if( ipv4_header.protocol == IP_PROTOCOLS_TCP ) apply(classifier_tcp) ;
+    //else if( ipv4_header.protocol == IP_PROTOCOLS_UDP ) apply(classifier_udp) ;
+    apply(forward);
+    apply(set_queue);
 }
 
 control egress {
