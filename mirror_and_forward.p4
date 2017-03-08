@@ -210,6 +210,7 @@ table label_encup {
 table set_queue {
     reads {
         ipv4_header.srcAddr: exact;
+        ipv4_header.dstAddr: exact;
     }
 
     actions {
@@ -224,7 +225,7 @@ control ingress {
     //if( ipv4_header.protocol == IP_PROTOCOLS_TCP ) apply(classifier_tcp) ;
     //else if( ipv4_header.protocol == IP_PROTOCOLS_UDP ) apply(classifier_udp) ;
     apply(forward);
-    apply(set_queue);
+    //apply(set_queue);
 }
 
 control egress {
