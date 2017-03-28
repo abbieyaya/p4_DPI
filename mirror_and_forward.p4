@@ -9,7 +9,14 @@ header_type intrinsic_metadata_t {
         lf_field_list : 32;
         mcast_grp : 16;
         egress_rid : 16;
-	priority : 8;
+	    priority : 8;
+    }
+}
+
+header_type label_metadata_t {
+    fields {
+        label : 32 ;
+        
     }
 }
 
@@ -70,14 +77,22 @@ header_type label_header_t {
     }
 }
 
+header_type payload_t {
+    fields {
+        data : 32 ; 
+    }
+}
+
 /* Header */
 
 header ethernet_header_t ethernet_header;
 header ipv4_header_t ipv4_header;
 header tcp_header_t tcp_header;
 header udp_header_t udp_header;
+header payload_t payload_data;
 header label_header_t label_header;
 metadata intrinsic_metadata_t intrinsic_metadata;
+metadata label_metadata_t label_metadata;
 
 /* Parser */
 /*
@@ -115,11 +130,13 @@ parser parse_ipv4 {
 
 parser parse_tcp {
     extract(tcp_header);
+    //extract(payload_data);
     return ingress;
 }
 
 parser parse_udp {
     extract(udp_header);
+    extract(payload_data);
     return ingress;
 }
 
@@ -149,6 +166,10 @@ action do_label_encap(label, reason) {
 
 action _drop() {
     drop();
+}
+
+action _nop() {
+    no_op();
 }
 
 action do_set_priority(priority) {
@@ -196,6 +217,7 @@ table forward {
 
     actions {
         do_forward;
+        _nop;
     }
 }
 
@@ -216,18 +238,30 @@ table set_queue {
     actions {
         do_set_priority ;
     }
-
 } 
+
+table detect {
+    reads {
+        payload_data.data : ternary ;
+    }
+
+    actions {
+        do_forward ;
+    }
+
+}
+
 /* Control */
 
 control ingress {
     //apply(copy_to_cpu);
     //if( ipv4_header.protocol == IP_PROTOCOLS_TCP ) apply(classifier_tcp) ;
     //else if( ipv4_header.protocol == IP_PROTOCOLS_UDP ) apply(classifier_udp) ;
-    apply(forward);
-    apply(set_queue);
+    //apply(forward);
+    //apply(set_queue);
+    apply(detect);
 }
 
 control egress {
-    apply(label_encup);
+    //apply(label_encup);
 }
