@@ -15,7 +15,7 @@ header_type intrinsic_metadata_t {
 
 header_type label_metadata_t {
     fields {
-        label : 32 ;
+        label : 8 ;
         
     }
 }
@@ -150,6 +150,11 @@ action do_forward(out_port) {
     modify_field(standard_metadata.egress_spec, out_port);
 }
 
+action do_set_label(label, out_port) {
+    modify_field(label_metadata.label, label);
+    modify_field(standard_metadata.egress_spec, out_port);
+}
+
 field_list copy_to_cpu_fields {
     standard_metadata;
 }
@@ -158,9 +163,9 @@ action do_copy_to_cpu(mirror_port) {
     clone_ingress_pkt_to_egress(mirror_port, copy_to_cpu_fields);
 }
 
-action do_label_encap(label, reason) {
+action do_label_encap(reason) {
     add_header(label_header);
-    modify_field(label_header.label, label );
+    modify_field(label_header.label, label_metadata.label );
     modify_field(label_header.reason, reason );
 }
 
@@ -206,7 +211,7 @@ table classifier_udp {
 
     actions { 
         do_label_encap;
-	do_forward;
+	    do_forward;
     }
 }
 
@@ -223,7 +228,7 @@ table forward {
 
 table label_encup {
     reads { 
-        standard_metadata.egress_port : exact; 
+        label_metadata.label : exact; 
     }
     actions { _drop; do_label_encap; }
     size : 16;
@@ -246,7 +251,7 @@ table detect {
     }
 
     actions {
-        do_forward ;
+        do_set_label ;
     }
 
 }
@@ -263,5 +268,5 @@ control ingress {
 }
 
 control egress {
-    //apply(label_encup);
+    apply(label_encup);
 }
