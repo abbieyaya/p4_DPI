@@ -8,13 +8,12 @@ from struct import unpack
 to_hex = lambda x:" ".join([hex(ord(c)) for c in x])
 
 def transfer(label):
-    if label == 0x1:
-        print ":Skype"
+    if label == 1:
+        return "Skype"
 
 def handle_pkt(pkt):
     try :
-        label = (str(pkt))[0:1]
-        print to_hex(label);
+        label = transfer(int(to_hex((str(pkt))[0:1]), 16))
         reason = (str(pkt))[1:2]
         packet = (str(pkt))[2:]
         original_pkt = Ether(packet)
@@ -36,8 +35,7 @@ def handle_pkt(pkt):
             counter += 1
 
 
-        print "%s:%s <-> %s:%s " % ( src_ip, src_port, dst_ip, dst_port)
-        transfer(int(to_hex(label),16))
+        print "%s:%s <-> %s:%s , %s" % ( src_ip, src_port, dst_ip, dst_port, label)
         sys.stdout.flush()
         
         
