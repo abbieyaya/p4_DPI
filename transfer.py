@@ -13,31 +13,37 @@ def transfer(label):
 
 def handle_pkt(pkt):
     try :
+        # get label name
         label = transfer(int(to_hex((str(pkt))[0:1]), 16))
+
+        # get some info
         reason = (str(pkt))[1:2]
-        packet = (str(pkt))[2:]
-        original_pkt = Ether(packet)
+
+        # parse five tuple
+        packet = Ether((str(pkt))[2:])
+
         counter = 0
         while True:
-            layer = original_pkt.getlayer(counter)
+            layer = packet.getlayer(counter)
 
-            if layer == None : break
-            elif layer.name == 'IP' :
-                src_ip = original_pkt['IP'].fields['src']
-                dst_ip = original_pkt['IP'].fields['dst']
+            if layer.name == 'IP' :
+                src_ip = packet['IP'].fields['src']
+                dst_ip = packet['IP'].fields['dst']
             elif layer.name == 'TCP' :
-                src_port = original_pkt['TCP'].fields['sport']
-                dst_port = original_pkt['TCP'].fields['dport']
+                src_port = packet['TCP'].fields['sport']
+                dst_port = packet['TCP'].fields['dport']
+                break ;
             elif layer.name == 'UDP' :
-                src_port = original_pkt['UDP'].fields['sport']
-                dst_port = original_pkt['UDP'].fields['dport']
-            
+                src_port = packet['UDP'].fields['sport']
+                dst_port = packet['UDP'].fields['dport']
+                break ;
+            elif layer == None : break
+
             counter += 1
 
-
+        # show results
         print "%s:%s <-> %s:%s , %s" % ( src_ip, src_port, dst_ip, dst_port, label)
         sys.stdout.flush()
-        
         
     except:
         print "Something wrong..."
