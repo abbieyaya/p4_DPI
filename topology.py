@@ -10,9 +10,9 @@ import sys
 
 
 #SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch'
-SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch --log-console'
+#SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch --log-console'
 #SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch --nanolog ipc:///tmp/bm-log.ipc'
-#SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch --debugger'
+SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch --debugger  --log-console'
 JSON_PATH='mirror.json'
 
 

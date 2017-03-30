@@ -3,23 +3,6 @@ Forward and Mirror
 */
 
 /* Header_type */
-header_type intrinsic_metadata_t {
-    fields {
-        ingress_global_timestamp : 32;
-        lf_field_list : 32;
-        mcast_grp : 16;
-        egress_rid : 16;
-	    priority : 8;
-    }
-}
-
-header_type label_metadata_t {
-    fields {
-        label : 8 ;
-        
-    }
-}
-
 header_type ethernet_header_t {
     fields {
         dstAddr : 48;
@@ -42,6 +25,19 @@ header_type ipv4_header_t {
         hdrChecksum : 16;
         srcAddr : 32;
         dstAddr: 32;
+    }
+}
+
+header_type ipv6_header_t {
+    fields {
+        version : 4;
+        trafficClass : 8;
+        flowLabel : 20;
+        payloadLen : 16;
+        nextHdr : 8;
+        hopLimit : 8;
+        srcAddr : 128;
+        dstAddr : 128;
     }
 }
 
@@ -83,23 +79,44 @@ header_type payload_t {
     }
 }
 
-/* Header */
 
+/* Metedata Type */
+header_type intrinsic_metadata_t {
+    fields {
+        ingress_global_timestamp : 32;
+        lf_field_list : 32;
+        mcast_grp : 16;
+        egress_rid : 16;
+	    priority : 8;
+        payload_len : 16;
+    }
+}
+
+header_type label_metadata_t {
+    fields {
+        label : 8 ;
+        
+    }
+}
+
+
+
+/* Header */
 header ethernet_header_t ethernet_header;
 header ipv4_header_t ipv4_header;
+header ipv6_header_t ipv6_header;
 header tcp_header_t tcp_header;
 header udp_header_t udp_header;
 header payload_t payload_data;
 header label_header_t label_header;
+
+
+/* Metedata */
 metadata intrinsic_metadata_t intrinsic_metadata;
 metadata label_metadata_t label_metadata;
 
+
 /* Parser */
-/*
-parser start {
-    return parse_ethernet;
-}
-*/
 parser start {
     return select(current(0, 64)) {
         0 : parse_label_header;
@@ -107,14 +124,16 @@ parser start {
     }
 }
 
-#define ETHERTYPE_IPV4 0x0800
-#define IP_PROTOCOLS_TCP  6
-#define IP_PROTOCOLS_UDP  17
+#define ETHERTYPE_IPV4          0x0800
+#define ETHERTYPE_IPV6          0x86dd
+#define IP_PROTOCOLS_TCP        6
+#define IP_PROTOCOLS_UDP        17
 
 parser parse_ethernet {
     extract(ethernet_header);
     return select(latest.etherType) {
         ETHERTYPE_IPV4 : parse_ipv4;
+        ETHERTYPE_IPV6 : parse_ipv6;
         default : ingress;
     }
 }
@@ -128,14 +147,25 @@ parser parse_ipv4 {
     }
 }
 
+parser parse_ipv6 {
+    extract(ipv6_header);
+    return select(latest.nextHdr) {
+        IP_PROTOCOLS_TCP : parse_tcp;
+        IP_PROTOCOLS_UDP : parse_udp;
+        default : ingress;
+    }
+}
+
 parser parse_tcp {
     extract(tcp_header);
+    set_metadata( intrinsic_metadata.payload_len, ipv4_header.totalLen - 40 );
     //extract(payload_data);
     return ingress;
 }
 
 parser parse_udp {
     extract(udp_header);
+    set_metadata( intrinsic_metadata.payload_len, udp_header.length_ - 8 );
     extract(payload_data);
     return ingress;
 }
