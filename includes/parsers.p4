@@ -48,6 +48,9 @@ parser parse_tcp {
     set_metadata( intrinsic_metadata.payload_len, ipv4_header.totalLen - 40 );
     return select( intrinsic_metadata.payload_len ){
         0 : ingress ;
+        1 : ingress ;
+        2 : ingress ;
+        3 : ingress ;
         default : parse_payload;
     }
 }
@@ -57,6 +60,9 @@ parser parse_udp {
     set_metadata( intrinsic_metadata.payload_len, udp_header.length_ - 8 );
     return select( intrinsic_metadata.payload_len ){
         0 : ingress ;
+        1 : ingress ;
+        2 : ingress ;
+        3 : ingress ;
         default : parse_payload;
     }
 }

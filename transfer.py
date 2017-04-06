@@ -55,7 +55,7 @@ def main():
         return
 
     if argv[1].find(".pcap") == -1 : target =  "h%s-eth1" % (argv[1])
-    else : target = argv[1]
+    else : target = "h%s-eth1" % (argv[1])
     
     print "Listen on %s to transfer label of the packet" % target
     if target.find(".pcap") == -1 : sniff(iface=target, prn=handle_pkt )
