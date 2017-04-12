@@ -66,6 +66,17 @@ header_type udp_header_t {
     }
 }
 
+header_type dns_header_t {
+   fields {
+        tr_id : 16;
+        flags : 16;
+        num_queries : 16;
+        num_answers : 16;
+        authority_rrs : 16;
+        additional_rrs : 16;
+   }
+}
+
 header_type label_header_t {
     fields {
         label: 8;
@@ -107,6 +118,7 @@ header ipv4_header_t ipv4_header;
 header ipv6_header_t ipv6_header;
 header tcp_header_t tcp_header;
 header udp_header_t udp_header;
+header dns_header_t dns_header;
 header payload_t payload_data;
 header label_header_t label_header;
 
