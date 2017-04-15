@@ -19,7 +19,8 @@ header_type intrinsic_metadata_t {
 
 header_type label_metadata_t {
     fields {
-        label : 8 ;        
+        label : 8 ;
+        sub_label : 8 ;        
     }
 }
 
@@ -113,7 +114,7 @@ header_type dns_header_t {
 header_type label_header_t {
     fields {
         label: 8;
-        reason: 8;
+        sub_label: 8;
     }
 }
 

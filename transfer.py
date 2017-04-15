@@ -7,17 +7,21 @@ from struct import unpack
 
 to_hex = lambda x:" ".join([hex(ord(c)) for c in x])
 
-def transfer(label):
+def master_label(label):
     if label == 1:
         return "Skype"
+    if label == 2:
+        return "DNS"
+
+def sub_label(label):
+    if label == 1:
+        return ".r"
 
 def handle_pkt(pkt):
     try :
         # get label name
-        label = transfer(int(to_hex((str(pkt))[0:1]), 16))
-
-        # get some info
-        reason = (str(pkt))[1:2]
+        m_label = master_label(int(to_hex((str(pkt))[0:1]), 16))
+        s_label = sub_label(int(to_hex((str(pkt))[1:2]), 16))
 
         # parse five tuple
         packet = Ether((str(pkt))[2:])
@@ -42,7 +46,7 @@ def handle_pkt(pkt):
             counter += 1
 
         # show results
-        print "%s:%s <-> %s:%s , %s" % ( src_ip, src_port, dst_ip, dst_port, label)
+        print "%s:%s <-> %s:%s , %s%s" % ( src_ip, src_port, dst_ip, dst_port, m_label, s_label)
         sys.stdout.flush()
         
     except:
@@ -54,7 +58,8 @@ def main():
         print "Usage transfer.py [host number/file]"
         return
 
-    if argv[1].find(".pcap") == -1 : target =  "h%s-eth1" % (argv[1])
+    #if argv[1].find(".pcap") == -1 : target =  "h%s-eth1" % (argv[1])
+    if argv[1].find(".pcap") == -1 : target =  argv[1]
     else : target = "h%s-eth1" % (argv[1])
     
     print "Listen on %s to transfer label of the packet" % target
