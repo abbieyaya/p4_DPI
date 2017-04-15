@@ -13,7 +13,7 @@ control ingress {
     //else if( ipv4_header.protocol == IP_PROTOCOLS_UDP ) apply(classifier_udp) ;
     //apply(forward);
     //apply(set_queue);
-    apply(detect);
+    apply(dns);
 }
 
 control egress {

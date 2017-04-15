@@ -2,6 +2,39 @@
 Forward and Mirror
 */
 
+/* Metedata Type */
+header_type intrinsic_metadata_t {
+    fields {
+        ingress_global_timestamp : 32;
+        lf_field_list : 32;
+        mcast_grp : 16;
+        egress_rid : 16;
+	    priority : 8;
+        payload_len : 16;
+        dns_payload_len : 16;
+        srcPort: 16;
+        dstPort: 16;
+    }
+}
+
+header_type label_metadata_t {
+    fields {
+        label : 8 ;        
+    }
+}
+
+header_type dns_metadata_t {
+    fields {
+        data : 256 ;
+        _length: 16;
+    }
+}
+
+/* Metedata */
+metadata intrinsic_metadata_t intrinsic_metadata;
+metadata label_metadata_t label_metadata;
+metadata dns_metadata_t dns_metadata;
+
 /* Header_type */
 header_type ethernet_header_t {
     fields {
@@ -84,33 +117,27 @@ header_type label_header_t {
     }
 }
 
-header_type payload_t {
+header_type four_byte_payload_t {
     fields {
         data : 32 ; 
     }
 }
 
-
-/* Metedata Type */
-header_type intrinsic_metadata_t {
+/*
+header_type dns_payload_t {
     fields {
-        ingress_global_timestamp : 32;
-        lf_field_list : 32;
-        mcast_grp : 16;
-        egress_rid : 16;
-	    priority : 8;
-        payload_len : 16;
+        data : * ; 
+    }
+    length : intrinsic_metadata.dns_payload_len ;
+    max_length : 48;
+}
+*/
+
+header_type one_byte_payload_t {
+    fields {
+        data : 8;
     }
 }
-
-header_type label_metadata_t {
-    fields {
-        label : 8 ;
-        
-    }
-}
-
-
 
 /* Header */
 header ethernet_header_t ethernet_header;
@@ -119,12 +146,11 @@ header ipv6_header_t ipv6_header;
 header tcp_header_t tcp_header;
 header udp_header_t udp_header;
 header dns_header_t dns_header;
-header payload_t payload_data;
+header one_byte_payload_t one_byte_payload[32];
+header four_byte_payload_t four_byte_payload;
+//header dns_payload_t dns_payload ;
 header label_header_t label_header;
 
 
-/* Metedata */
-metadata intrinsic_metadata_t intrinsic_metadata;
-metadata label_metadata_t label_metadata;
 
 

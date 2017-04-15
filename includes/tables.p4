@@ -68,12 +68,23 @@ table set_queue {
 
 table detect {
     reads {
-        payload_data.data : ternary ;
+        four_byte_payload.data : ternary ;
     }
 
     actions {
         do_set_label ;
     }
 
+}
+
+table dns {
+    reads {
+        dns_header : valid;
+        //one_byte_payload : exact;
+    }
+
+    actions {
+        do_assemble ;
+    }
 }
 

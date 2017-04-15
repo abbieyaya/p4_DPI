@@ -38,3 +38,7 @@ action do_set_priority(priority) {
     modify_field(intrinsic_metadata.priority, priority);
 }
 
+action do_assemble(){
+    //modify_field(intrinsic_metadata.priority, one_byte_payload);
+    pattern_match(one_byte_payload[1]);
+}
