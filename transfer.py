@@ -15,7 +15,11 @@ def master_label(label):
 
 def sub_label(label):
     if label == 1:
-        return ".r"
+        return "yahoo"
+    if label == 2:
+        return "google"
+    if label == 3:
+        return "youtube"
 
 def handle_pkt(pkt):
     try :
@@ -46,7 +50,7 @@ def handle_pkt(pkt):
             counter += 1
 
         # show results
-        print "%s:%s <-> %s:%s , %s%s" % ( src_ip, src_port, dst_ip, dst_port, m_label, s_label)
+        print "%s:%s <-> %s:%s , %s.%s" % ( src_ip, src_port, dst_ip, dst_port, m_label, s_label)
         sys.stdout.flush()
         
     except:

@@ -40,7 +40,7 @@ action do_set_priority(priority) {
 
 action do_assemble(){
     //modify_field(intrinsic_metadata.priority, one_byte_payload);
-    pattern_match(label_metadata.sub_label, one_byte_payload[1]);
+    pattern_match(label_metadata.sub_label, one_byte_payload);
     modify_field(label_metadata.label, 2);
     modify_field(standard_metadata.egress_spec, 2);
 }

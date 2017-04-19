@@ -98,10 +98,7 @@ parser parse_dns_header {
 
 parser parse_dns_payload {
     extract(one_byte_payload[next]);
-    //set_metadata( dns_metadata.data, dns_metadata.data << 2 );
-    //set_metadata( dns_metadata.data, one_byte_payload[dns_metadata.count].data );
-    //set_metadata( dns_metadata._length, dns_metadata._length + 1 );
-    return select(latest.data){
+    return select(current(0, 8)){
         0x00: ingress;
         default: parse_dns_payload;
     }

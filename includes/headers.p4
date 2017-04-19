@@ -147,7 +147,7 @@ header ipv6_header_t ipv6_header;
 header tcp_header_t tcp_header;
 header udp_header_t udp_header;
 header dns_header_t dns_header;
-header one_byte_payload_t one_byte_payload[32];
+header one_byte_payload_t one_byte_payload[64];
 header four_byte_payload_t four_byte_payload;
 //header dns_payload_t dns_payload ;
 header label_header_t label_header;

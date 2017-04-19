@@ -12,7 +12,7 @@ import sys
 #SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch'
 #SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch --log-console'
 #SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch --nanolog ipc:///tmp/bm-log.ipc'
-SW_PATH='/home/abbie/bmv2/targets/l2_switch/l2_switch '
+SW_PATH='/home/abbie/bmv2/targets/l2_switch/l2_switch --log-console '
 JSON_PATH='learning.json'
 
 
