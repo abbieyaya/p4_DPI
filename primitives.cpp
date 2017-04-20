@@ -81,17 +81,18 @@ class pattern_match : public ActionPrimitive<Field &, HeaderStack &> {
     for (size_t i = 0; i < data.get_count(); i++) {
         auto &hdr_instance = data.at(i);
         assert(hdr_instance.is_valid());
-        hdr_instance.get_field(0).set_arith(1);
-        text[i] = hdr_instance.get_field(0).get_uint() ;
+        //auto &bc = hdr_instance.get_bytes();
+        //assert(bc.size() == 1);
+        // hdr_instance.get_field(0).set_arith(1);
+        //text[i] = hdr_instance.get_field(0).get_uint() ;
+        text[i] = (hdr_instance.get_field(0).get_bytes())[0] ;
         if ( text[i] == 0 ) {
             break ;
         }
         text[i] = text[i] < 32 ? '.' : text[i] ;
     }
-
-    
+ 
     BMLOG_DEBUG("~~~~~~~~~~~~~~~~~~~~~~~~~~~find {} \n", text );
-    //char pattern[100] = "r" ;
     if ( match( text, "yahoo" ) ) {
         BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find yahoo\n");
         result.set(1);
