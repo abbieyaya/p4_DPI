@@ -74,58 +74,14 @@ def name_lookup(type_, id_):
     return name_map.get_name(type_, id_)
 
 class MSG_TYPES:
-    (PACKET_IN, PACKET_OUT,
-     PARSER_START, PARSER_DONE, PARSER_EXTRACT,
-     DEPARSER_START, DEPARSER_DONE, DEPARSER_EMIT,
-     CHECKSUM_UPDATE,
-     PIPELINE_START, PIPELINE_DONE,
-     CONDITION_EVAL, TABLE_HIT, TABLE_MISS,
-     ACTION_EXECUTE) = range(15)
-    CONFIG_CHANGE = 999
-
     @staticmethod
     def get_msg_class(type_):
         classes = {
-            MSG_TYPES.PACKET_IN: PacketIn,
-            MSG_TYPES.PACKET_OUT: PacketOut,
-            MSG_TYPES.PARSER_START: ParserStart,
-            MSG_TYPES.PARSER_DONE: ParserDone,
-            MSG_TYPES.PARSER_EXTRACT: ParserExtract,
-            MSG_TYPES.DEPARSER_START: DeparserStart,
-            MSG_TYPES.DEPARSER_DONE: DeparserDone,
-            MSG_TYPES.DEPARSER_EMIT: DeparserEmit,
-            MSG_TYPES.CHECKSUM_UPDATE: ChecksumUpdate,
-            MSG_TYPES.PIPELINE_START: PipelineStart,
-            MSG_TYPES.PIPELINE_DONE: PipelineDone,
-            MSG_TYPES.CONDITION_EVAL: ConditionEval,
-            MSG_TYPES.TABLE_HIT: TableHit,
-            MSG_TYPES.TABLE_MISS: TableMiss,
-            MSG_TYPES.ACTION_EXECUTE: ActionExecute,
-            MSG_TYPES.CONFIG_CHANGE: ConfigChange,
+            "LEA": Learning,
+            "PRT": Port_monitor,
+            "AGE": Ageing,
         }
         return classes[type_]
-
-    @staticmethod
-    def get_str(type_):
-        strs = {
-            MSG_TYPES.PACKET_IN: "PACKET_IN",
-            MSG_TYPES.PACKET_OUT: "PACKET_OUT",
-            MSG_TYPES.PARSER_START: "PARSER_START",
-            MSG_TYPES.PARSER_DONE: "PARSER_DONE",
-            MSG_TYPES.PARSER_EXTRACT: "PARSER_EXTRACT",
-            MSG_TYPES.DEPARSER_START: "DEPARSER_START",
-            MSG_TYPES.DEPARSER_DONE: "DEPARSER_DONE",
-            MSG_TYPES.DEPARSER_EMIT: "DEPARSER_EMIT",
-            MSG_TYPES.CHECKSUM_UPDATE: "CHECKSUM_UPDATE",
-            MSG_TYPES.PIPELINE_START: "PIPELINE_START",
-            MSG_TYPES.PIPELINE_DONE: "PIPELINE_DONE",
-            MSG_TYPES.CONDITION_EVAL: "CONDITION_EVAL",
-            MSG_TYPES.TABLE_HIT: "TABLE_HIT",
-            MSG_TYPES.TABLE_MISS: "TABLE_MISS",
-            MSG_TYPES.ACTION_EXECUTE: "ACTION_EXECUTE",
-            MSG_TYPES.CONFIG_CHANGE: "CONFIG_CHANGE",
-        }
-        return strs[type_]
 
 class Msg(object):
     def __init__(self, msg):
@@ -144,23 +100,69 @@ class Msg(object):
         return self.struct_.unpack(msg_remainder)
 
     def __str__(self):
-        return "type: %s, switch_id: %d, cxt_id: %d, sig: %d, " \
+        return "type: LEARNING, switch_id: %d, cxt_id: %d, sig: %d, " \
             "id: %d, copy_id: %d" %\
-            (self.type_str, self.switch_id, self.cxt_id,
-             self.sig, self.id_, self.copy_id)
+            (self.switch_id, self.cxt_id, self.sig, self.id_, self.copy_id)
 
 class Learning(Msg):
-    def __init__(self, msg):
-        super(ConfigChange, self).__init__(msg)
-        self.type_ = MSG_TYPES.CONFIG_CHANGE
-        self.type_str = MSG_TYPES.get_str(self.type_)
-        self.struct_ = struct.Struct("")
+    def __init__(self, msg, length):
+        self.msg = msg 
+        self.length = length
 
     def extract(self):
-        super(ConfigChange, self).extract()
+        ( self.switch_id, self.cxt_id, self.list_id ) = struct.unpack('3i', self.msg[4:16])        
+        ( self.buffer_id, self.num_samples, self.padding ) = struct.unpack('QI4s', self.msg[16:32])        
+        #len_of_a_sample = ( length - 32 ) / self.num_samples
 
     def __str__(self):
-        return "type: %s, switch_id: %d" % (self.type_str, self.switch_id)
+        return "type: LEARNING, switch_id: %d, cxt_id: %d, list_id: %d," \
+                "buffer_id: %s, num_samples: %d, padding: %s" \
+                % (self.switch_id, self.cxt_id, self.list_id,
+                   self.buffer_id, self.num_samples, self.padding )
+
+    def data(self):
+        now = 32 
+        data_length = ( self.length - 32 ) / self.num_samples
+        while now < self.length :
+            end = now + data_length
+            print struct.unpack( '%ds' % data_length, self.msg[now:now+data_length] )
+            now = end
+
+
+class Port_monitor(Msg):
+    def __init__(self, msg, length):
+        self.msg = msg 
+
+    def extract(self):
+        ( self.switch_id, self.num_statuses, self.padding ) = struct.unpack('<iI20s', self.msg[4:32])        
+
+    def __str__(self):
+        return "type: LEARNING, switch_id: %d, num_statuses:%d, padding: %s" \
+                % (self.switch_id, self.num_statuses, self.padding )
+
+class Ageing(Msg):
+    def __init__(self, msg, length):
+        self.msg = msg 
+        self.length = length
+
+    def extract(self):
+        ( self.switch_id, self.cxt_id, 
+          self.buffer_id, self.table_id,
+          self.num_entries, self.padding ) = struct.unpack('iiQiI4s', self.msg[4:32])        
+
+    def __str__(self):
+        return "type: LEARNING, switch_id: %d, cxt_id: %d, buffer_id: %d, " \
+                "table_id: %d, num_entries:%d, padding: %s" \
+                % (self.switch_id, self.cxt_id, self.buffer_id, 
+                        self.table_id, self.num_entries, self.padding)
+
+    def data(self):
+        now = 32 
+        data_length = ( self.length - 32 ) / self.num_entries 
+        while now < self.length :
+            end = now + data_length
+            print struct.unpack( '%ds' % data_length, self.msg[now:end] )
+            now = end
 
 def json_init(client):
     json_cfg = utils.get_json_config(standard_client=client)
@@ -168,7 +170,7 @@ def json_init(client):
 
 def recv_msgs(socket_addr, client):
     def get_msg_type(msg):
-        type_, = struct.unpack('i', msg[:4])
+        type_, = struct.unpack('3s', msg[:3])
         return type_
 
     json_init(client)
@@ -179,19 +181,22 @@ def recv_msgs(socket_addr, client):
     while True:
         msg = sub.recv()
         msg_type = get_msg_type(msg)
-        length = len(msg) 
+        print msg_type
+        length = len(msg)
         #switch_id, cxt_id, list_id, buffer_id, num_samples = struct.unpack("<iiiQI", msg )
-        one = struct.unpack( "%dc" % length, msg[:length] )
+        one = struct.unpack( ">%dc" % length, msg[:length] )
+        #two = struct.unpack( "I" , msg[:2] )
         print one       
-        '''
+        
         try:
-            p = MSG_TYPES.get_msg_class(msg_type)(msg)
+            p = MSG_TYPES.get_msg_class(msg_type)(msg, length)
         except:
             print "Unknown msg type", msg_type
             continue
         p.extract()
         print p
-        '''
+        print p.data()
+        
 
 def main():
     deprecated_args = ["json"]
