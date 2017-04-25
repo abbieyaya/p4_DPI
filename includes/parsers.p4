@@ -27,6 +27,8 @@ parser parse_ethernet {
 
 parser parse_ipv4 {
     extract(ipv4_header);
+    set_metadata( five_tuple_metadata.srcAddr, ipv4_header.srcAddr );
+    set_metadata( five_tuple_metadata.dstAddr, ipv4_header.dstAddr );
     return select(latest.protocol) {
         IP_PROTOCOLS_TCP : parse_tcp;
         IP_PROTOCOLS_UDP : parse_udp;
@@ -36,6 +38,8 @@ parser parse_ipv4 {
 
 parser parse_ipv6 {
     extract(ipv6_header);
+    set_metadata( five_tuple_metadata.srcAddr, ipv6_header.srcAddr );
+    set_metadata( five_tuple_metadata.dstAddr, ipv6_header.dstAddr );
     return select(latest.nextHdr) {
         IP_PROTOCOLS_TCP : parse_tcp;
         IP_PROTOCOLS_UDP : parse_udp;
@@ -46,8 +50,8 @@ parser parse_ipv6 {
 parser parse_tcp {
     extract(tcp_header);
     set_metadata( intrinsic_metadata.payload_len, ipv4_header.totalLen - 40 );
-    set_metadata( intrinsic_metadata.srcPort, tcp_header.srcPort );
-    set_metadata( intrinsic_metadata.dstPort, tcp_header.dstPort );
+    set_metadata( five_tuple_metadata.srcPort, tcp_header.srcPort );
+    set_metadata( five_tuple_metadata.dstPort, tcp_header.dstPort );
     return select( intrinsic_metadata.payload_len ){
         0 : ingress ;
         1 : ingress ;
@@ -60,8 +64,8 @@ parser parse_tcp {
 parser parse_udp {
     extract(udp_header);
     set_metadata( intrinsic_metadata.payload_len, udp_header.length_ - 8 );
-    set_metadata( intrinsic_metadata.srcPort, udp_header.srcPort );
-    set_metadata( intrinsic_metadata.dstPort, udp_header.dstPort );
+    set_metadata( five_tuple_metadata.srcPort, udp_header.srcPort );
+    set_metadata( five_tuple_metadata.dstPort, udp_header.dstPort );
     return select( intrinsic_metadata.payload_len ){
         0 : ingress ;
         1 : ingress ;
@@ -72,14 +76,14 @@ parser parse_udp {
 }
 
 parser check_src_port {
-    return select( intrinsic_metadata.srcPort ) {
+    return select( five_tuple_metadata.srcPort ) {
         53 : parse_dns_header ;
         default : check_dst_port ;
     }
 }
 
 parser check_dst_port {
-    return select( intrinsic_metadata.dstPort ) {
+    return select( five_tuple_metadata.dstPort ) {
         53 : parse_dns_header ;
         default : parse_four_byte_payload ;
     }
@@ -92,7 +96,7 @@ parser parse_four_byte_payload {
 
 parser parse_dns_header {
     extract(dns_header);
-    set_metadata( intrinsic_metadata.dns_payload_len, intrinsic_metadata.payload_len - 12 );
+    //set_metadata( intrinsic_metadata.dns_payload_len, intrinsic_metadata.payload_len - 12 );
     return parse_dns_payload;
 }
 

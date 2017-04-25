@@ -11,12 +11,34 @@ header_type intrinsic_metadata_t {
         egress_rid : 16;
 	    priority : 8;
         payload_len : 16;
-        dns_payload_len : 16;
-        srcPort: 16;
-        dstPort: 16;
+        //dns_payload_len : 16;
     }
 }
 
+header_type ipv4_five_tuple_metadata_t {
+    fields {
+        srcAddr: 32;
+        dstAddr: 32;
+    }
+} 
+
+header_type ipv6_five_tuple_metadata_t {
+    fields {
+        srcAddr: 128;
+        dstAddr: 128;
+    }
+} 
+
+header_type five_tuple_metadata_t {
+    fields {
+        srcAddr: 128;
+        dstAddr: 128;
+        srcPort: 16;
+        dstPort: 16;
+        protocol: 8;
+    }
+}
+ 
 header_type label_metadata_t {
     fields {
         label : 8 ;
@@ -24,17 +46,29 @@ header_type label_metadata_t {
     }
 }
 
+header_type learning_metadata_t {
+    fields {
+        _type: 8;
+    }
+}
+
+/*
 header_type dns_metadata_t {
     fields {
         data : 256 ;
         _length: 16;
     }
 }
+*/
 
 /* Metedata */
 metadata intrinsic_metadata_t intrinsic_metadata;
+metadata five_tuple_metadata_t five_tuple_metadata;
+//metadata five_tuple_metadata_t ipv4_five_tuple_metadata;
+//metadata five_tuple_metadata_t ipv6_five_tuple_metadata;
 metadata label_metadata_t label_metadata;
-metadata dns_metadata_t dns_metadata;
+//metadata dns_metadata_t dns_metadata;
+metadata learning_metadata_t learning_metadata;
 
 /* Header_type */
 header_type ethernet_header_t {
@@ -151,7 +185,4 @@ header one_byte_payload_t one_byte_payload[64];
 header four_byte_payload_t four_byte_payload;
 //header dns_payload_t dns_payload ;
 header label_header_t label_header;
-
-
-
 

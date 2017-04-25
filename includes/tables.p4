@@ -1,6 +1,6 @@
 /*
-Forward and Mirror
-*/
+   Forward and Mirror
+ */
 
 /* Table */
 table copy_to_cpu {
@@ -10,10 +10,10 @@ table copy_to_cpu {
 
 table classifier_tcp {
     reads {
-	ipv4_header.srcAddr: exact;
-	ipv4_header.dstAddr: exact;
-	tcp_header.srcPort: exact;
-	tcp_header.dstPort: exact;
+        ipv4_header.srcAddr: exact;
+        ipv4_header.dstAddr: exact;
+        tcp_header.srcPort: exact;
+        tcp_header.dstPort: exact;
     }
 
     actions { 
@@ -24,15 +24,15 @@ table classifier_tcp {
 
 table classifier_udp {
     reads {
-	ipv4_header.srcAddr: exact;
-	ipv4_header.dstAddr: exact;
-	udp_header.srcPort: exact;
-	udp_header.dstPort: exact;
+        ipv4_header.srcAddr: exact;
+        ipv4_header.dstAddr: exact;
+        udp_header.srcPort: exact;
+        udp_header.dstPort: exact;
     }
 
     actions { 
         do_label_encap;
-	    do_forward;
+        do_forward;
     }
 }
 
@@ -41,7 +41,7 @@ table forward {
         ipv4_header.dstAddr: exact;
     }
 
-    actions {
+    actions { 
         do_forward;
         _nop;
     }
@@ -51,7 +51,10 @@ table label_encup {
     reads { 
         label_metadata.label : exact; 
     }
-    actions { _drop; do_label_encap; }
+    actions { 
+        _drop; 
+        do_label_encap; 
+    }
     size : 16;
 }
 
@@ -72,7 +75,7 @@ table detect {
     }
 
     actions {
-        do_set_label ;
+        do_set_label_by_detect ;
     }
 
 }
@@ -88,3 +91,15 @@ table dns {
     }
 }
 
+table rule_match {
+    reads {
+        five_tuple_metadata.srcAddr: exact;
+        five_tuple_metadata.dstAddr: exact;
+        five_tuple_metadata.srcPort: exact;
+        five_tuple_metadata.dstPort: exact;
+    }
+
+    actions {
+        do_set_label_by_match_rule;
+    }
+}
