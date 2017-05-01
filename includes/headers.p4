@@ -12,6 +12,11 @@ header_type intrinsic_metadata_t {
 	    priority : 8;
         payload_len : 16;
         //dns_payload_len : 16;
+        // Info I need
+        version_len : 8;
+        cid_len : 8;
+        seq_len : 8;
+        quic_header_len : 8;
     }
 }
 
@@ -174,6 +179,16 @@ header_type one_byte_payload_t {
     }
 }
 
+header_type quic_flags_t {
+    fields {
+        version : 1;
+        reset : 1;
+        cid_len : 2;
+        seq_len : 2;
+        reserved : 2; 
+    }
+}
+
 /* Header */
 header ethernet_header_t ethernet_header;
 header ipv4_header_t ipv4_header;
@@ -185,4 +200,5 @@ header one_byte_payload_t one_byte_payload[64];
 header four_byte_payload_t four_byte_payload;
 //header dns_payload_t dns_payload ;
 header label_header_t label_header;
+header quic_flags_t quic_flags ;
 

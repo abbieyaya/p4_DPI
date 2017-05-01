@@ -103,3 +103,20 @@ table rule_match {
         do_set_label_by_match_rule;
     }
 }
+
+table quic {
+    reads {
+        quic_flags : valid;
+        quic_flags.reset : exact;
+        quic_flags.reserved: exact ;
+    }
+    actions {
+        _nop ;
+    }
+}
+
+table set_quic {
+    actions {
+        do_set_label_by_detect ;
+    }
+}

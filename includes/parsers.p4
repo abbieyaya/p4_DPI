@@ -57,7 +57,7 @@ parser parse_tcp {
         1 : ingress ;
         2 : ingress ;
         3 : ingress ;
-        default : check_src_port;
+        default : check_tcp_port;
     }
 }
 
@@ -71,23 +71,30 @@ parser parse_udp {
         1 : ingress ;
         2 : ingress ;
         3 : ingress ;
-        default : check_src_port;
+        default : check_udp_port;
     }
 }
 
-parser check_src_port {
-    return select( five_tuple_metadata.srcPort ) {
-        53 : parse_dns_header ;
-        default : check_dst_port ;
-    }
-}
-
-parser check_dst_port {
-    return select( five_tuple_metadata.dstPort ) {
-        53 : parse_dns_header ;
+parser check_tcp_port {
+    return select( five_tuple_metadata.srcPort, five_tuple_metadata.dstPort ) {
+        0x00000035 mask 0x0000ffff : parse_dns_header ; // port = 53
+        0x00350000 mask 0xffff0000 : parse_dns_header ;
         default : parse_four_byte_payload ;
     }
 }
+
+parser check_udp_port {
+    return select( five_tuple_metadata.srcPort, five_tuple_metadata.dstPort ) {
+        0x00000035 mask 0x0000ffff : parse_dns_header ;  // port = 53
+        0x00350000 mask 0xffff0000 : parse_dns_header ;  
+        0x000001BB mask 0x0000ffff : parse_quic_flags ;  // port = 443
+        0x01BB0000 mask 0xffff0000 : parse_quic_flags ;  
+        0x00000050 mask 0x0000ffff : parse_quic_flags ;  // port = 80
+        0x00500000 mask 0xffff0000 : parse_quic_flags ;
+        default : parse_four_byte_payload ;
+    }
+}
+
 
 parser parse_four_byte_payload {
     extract(four_byte_payload);
@@ -113,3 +120,11 @@ parser parse_label_header {
     return parse_ethernet;
 }
 
+parser parse_quic_flags {
+    extract(quic_flags);
+    set_metadata( intrinsic_metadata.version_len, quic_flags.version << 2 );
+    set_metadata( intrinsic_metadata.cid_len, 1 << quic_flags.cid_len );
+    set_metadata( intrinsic_metadata.seq_len, 1 << quic_flags.seq_len );
+    set_metadata( intrinsic_metadata.quic_header_len, 1 /*flag len*/ + intrinsic_metadata.version_len + intrinsic_metadata.cid_len + intrinsic_metadata.seq_len );
+    return ingress ;
+}

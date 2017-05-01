@@ -12,6 +12,8 @@ def master_label(label):
         return "Skype"
     if label == 2:
         return "DNS"
+    if label == 3:
+        return "QUIC"
 
 def sub_label(label):
     if label == 1:
