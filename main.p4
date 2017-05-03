@@ -10,16 +10,15 @@ Main of Forward and Mirror
 control ingress {
     apply(rule_match);
     if( label_metadata.label == 0 ) {
-        apply(quic) {
+        apply(detect_quic) {
             hit {
                 if( intrinsic_metadata.payload_len > ( intrinsic_metadata.quic_header_len + 4 ) )apply(set_quic);
             }
         }
     }
-    //if( ipv4_header.protocol == IP_PROTOCOLS_TCP and label_metadata.label == 0 ) apply(classifier_tcp) ;
-    //else if( ipv4_header.protocol == IP_PROTOCOLS_UDP and label_metadata.label == 0 ) apply(classifier_udp) ;
-    if( label_metadata.label == 0 ) apply(dns);
-    if( label_metadata.label == 0 ) apply(detect);
+    if( label_metadata.label == 0 ) apply(detect_dns);
+    if( label_metadata.label == 0 ) apply(detect_whatsapp);
+    if( label_metadata.label == 0 ) apply(detect_four_byte_payload);
     //apply(forward);
     //apply(set_queue);
 }

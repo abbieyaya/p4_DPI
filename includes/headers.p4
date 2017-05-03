@@ -20,20 +20,6 @@ header_type intrinsic_metadata_t {
     }
 }
 
-header_type ipv4_five_tuple_metadata_t {
-    fields {
-        srcAddr: 32;
-        dstAddr: 32;
-    }
-} 
-
-header_type ipv6_five_tuple_metadata_t {
-    fields {
-        srcAddr: 128;
-        dstAddr: 128;
-    }
-} 
-
 header_type five_tuple_metadata_t {
     fields {
         srcAddr: 128;
@@ -69,8 +55,6 @@ header_type dns_metadata_t {
 /* Metedata */
 metadata intrinsic_metadata_t intrinsic_metadata;
 metadata five_tuple_metadata_t five_tuple_metadata;
-//metadata five_tuple_metadata_t ipv4_five_tuple_metadata;
-//metadata five_tuple_metadata_t ipv6_five_tuple_metadata;
 metadata label_metadata_t label_metadata;
 //metadata dns_metadata_t dns_metadata;
 metadata learning_metadata_t learning_metadata;
@@ -179,6 +163,14 @@ header_type one_byte_payload_t {
     }
 }
 
+header_type whatsapp_three_byte_payload_t {
+    fields {
+        payload_1 : 8;
+        payload_2 : 8;
+        payload_3 : 8; 
+    }
+}
+
 header_type quic_flags_t {
     fields {
         version : 1;
@@ -201,4 +193,4 @@ header four_byte_payload_t four_byte_payload;
 //header dns_payload_t dns_payload ;
 header label_header_t label_header;
 header quic_flags_t quic_flags ;
-
+header whatsapp_three_byte_payload_t whatsapp_three_byte_payload ; 

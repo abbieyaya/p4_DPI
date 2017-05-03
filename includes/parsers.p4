@@ -49,7 +49,7 @@ parser parse_ipv6 {
 
 parser parse_tcp {
     extract(tcp_header);
-    set_metadata( intrinsic_metadata.payload_len, ipv4_header.totalLen - 40 );
+    set_metadata( intrinsic_metadata.payload_len, ipv4_header.totalLen - 60 );
     set_metadata( five_tuple_metadata.srcPort, tcp_header.srcPort );
     set_metadata( five_tuple_metadata.dstPort, tcp_header.dstPort );
     return select( intrinsic_metadata.payload_len ){
@@ -79,7 +79,7 @@ parser check_tcp_port {
     return select( five_tuple_metadata.srcPort, five_tuple_metadata.dstPort ) {
         0x00000035 mask 0x0000ffff : parse_dns_header ; // port = 53
         0x00350000 mask 0xffff0000 : parse_dns_header ;
-        default : parse_four_byte_payload ;
+        default : parse_byte_payload ;
     }
 }
 
@@ -91,10 +91,23 @@ parser check_udp_port {
         0x01BB0000 mask 0xffff0000 : parse_quic_flags ;  
         0x00000050 mask 0x0000ffff : parse_quic_flags ;  // port = 80
         0x00500000 mask 0xffff0000 : parse_quic_flags ;
+        default : parse_byte_payload ;
+    }
+}
+
+parser parse_byte_payload {
+    return select(current(0,16)){
+        0x5741 : parse_whatsapp_three_byte_payload ;
         default : parse_four_byte_payload ;
     }
 }
 
+parser parse_whatsapp_three_byte_payload {
+    extract(one_byte_payload[next]);
+    extract(one_byte_payload[next]);
+    extract(whatsapp_three_byte_payload);
+    return ingress;
+}
 
 parser parse_four_byte_payload {
     extract(four_byte_payload);

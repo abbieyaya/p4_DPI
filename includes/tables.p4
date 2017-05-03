@@ -8,34 +8,6 @@ table copy_to_cpu {
     // size : 1;
 }
 
-table classifier_tcp {
-    reads {
-        ipv4_header.srcAddr: exact;
-        ipv4_header.dstAddr: exact;
-        tcp_header.srcPort: exact;
-        tcp_header.dstPort: exact;
-    }
-
-    actions { 
-        do_label_encap;
-        do_forward;
-    }
-}
-
-table classifier_udp {
-    reads {
-        ipv4_header.srcAddr: exact;
-        ipv4_header.dstAddr: exact;
-        udp_header.srcPort: exact;
-        udp_header.dstPort: exact;
-    }
-
-    actions { 
-        do_label_encap;
-        do_forward;
-    }
-}
-
 table forward {
     reads {
         ipv4_header.dstAddr: exact;
@@ -69,28 +41,6 @@ table set_queue {
     }
 } 
 
-table detect {
-    reads {
-        four_byte_payload.data : ternary ;
-    }
-
-    actions {
-        do_set_label_by_detect ;
-    }
-
-}
-
-table dns {
-    reads {
-        dns_header : valid;
-        //one_byte_payload : exact;
-    }
-
-    actions {
-        do_assemble ;
-    }
-}
-
 table rule_match {
     reads {
         five_tuple_metadata.srcAddr: exact;
@@ -104,7 +54,30 @@ table rule_match {
     }
 }
 
-table quic {
+table detect_four_byte_payload {
+    reads {
+        four_byte_payload.data : ternary ;
+        intrinsic_metadata.payload_len : ternary ;
+    }
+
+    actions {
+        do_set_label_by_detect ;
+    }
+
+}
+
+table detect_dns {
+    reads {
+        dns_header : valid;
+        //one_byte_payload : exact;
+    }
+
+    actions {
+        do_assemble ;
+    }
+}
+
+table detect_quic {
     reads {
         quic_flags : valid;
         quic_flags.reset : exact;
@@ -117,6 +90,19 @@ table quic {
 
 table set_quic {
     actions {
+        do_set_label_by_detect ;
+    }
+}
+
+table detect_whatsapp {
+    reads {
+        whatsapp_three_byte_payload : valid;
+        whatsapp_three_byte_payload.payload_1 : range;
+        whatsapp_three_byte_payload.payload_2 : range;
+        whatsapp_three_byte_payload.payload_3 : exact;
+    }
+
+    actions { 
         do_set_label_by_detect ;
     }
 }
