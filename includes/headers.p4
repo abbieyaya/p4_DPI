@@ -17,6 +17,7 @@ header_type intrinsic_metadata_t {
         cid_len : 8;
         seq_len : 8;
         quic_header_len : 8;
+        tcp_hdr_len : 8;
     }
 }
 
@@ -111,7 +112,11 @@ header_type tcp_header_t {
         window : 16;
         checksum : 16;
         urgentPtr : 16;
+        options: *;
     }
+
+    length : 4 * dataOffset ;
+    max_length : 512;
 }
 
 header_type udp_header_t {

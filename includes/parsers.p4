@@ -49,7 +49,8 @@ parser parse_ipv6 {
 
 parser parse_tcp {
     extract(tcp_header);
-    set_metadata( intrinsic_metadata.payload_len, ipv4_header.totalLen - 60 );
+    set_metadata( intrinsic_metadata.payload_len, ipv4_header.totalLen - 20 /*IP_header*/ - ( tcp_header.dataOffset * 4 ) /*TCP_header*/  );
+    set_metadata( intrinsic_metadata.tcp_hdr_len, tcp_header.dataOffset * 4 );
     set_metadata( five_tuple_metadata.srcPort, tcp_header.srcPort );
     set_metadata( five_tuple_metadata.dstPort, tcp_header.dstPort );
     return select( intrinsic_metadata.payload_len ){
