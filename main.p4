@@ -19,6 +19,7 @@ control ingress {
     if( label_metadata.label == 0 ) apply(detect_dns);
     if( label_metadata.label == 0 ) apply(detect_whatsapp);
     if( label_metadata.label == 0 ) apply(detect_four_byte_payload);
+    if( learning_metadata._type > 0 ) apply(learning);
     //apply(forward);
     //apply(set_queue);
 }

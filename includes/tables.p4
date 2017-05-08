@@ -106,3 +106,35 @@ table detect_whatsapp {
         do_set_label_by_detect ;
     }
 }
+
+table guess_by_tcp_port {
+    reads {
+        tcp_header.srcPort : exact;
+        tcp_header.dstPort : exact;
+    }
+
+    actions {
+        do_set_label_by_guess ;
+    }
+}
+
+table guess_by_udp_port {
+    reads {
+        udp_header.srcPort : exact;
+        tcp_header.dstPort : exact;
+    }
+
+    actions {
+        do_set_label_by_guess ;
+    }
+}
+
+table learning {
+    reads {
+        learning_metadata._type : range ;
+    }
+
+    actions {
+        do_learning ;
+    }
+}

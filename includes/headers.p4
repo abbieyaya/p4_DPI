@@ -34,7 +34,9 @@ header_type five_tuple_metadata_t {
 header_type label_metadata_t {
     fields {
         label : 8 ;
-        sub_label : 8 ;        
+        sub_label : 8 ;       
+        label_result : 8 ;
+        sub_label_result : 8 ;
     }
 }
 
@@ -143,6 +145,8 @@ header_type label_header_t {
     fields {
         label: 8;
         sub_label: 8;
+        label_result : 8 ;
+        sub_label_result : 8 ;
     }
 }
 
