@@ -129,6 +129,26 @@ table guess_by_udp_port {
     }
 }
 
+table guess_by_src_address {
+    reads {
+        ipv4_header.srcAddr: lpm;
+    }
+
+    actions {
+        do_set_sub_label_by_guess ;
+    }
+}
+
+table guess_by_dst_address {
+    reads {
+        ipv4_header.dstAddr: lpm;
+    }
+
+    actions {
+        do_set_sub_label_by_guess ;
+    }
+}
+
 table learning {
     reads {
         learning_metadata._type : range ;

@@ -16,28 +16,28 @@ def match(src_ip,src_port,dst_ip,dst_port,m_label,s_label, m_label_result, s_lab
         print "%s:%s <-> %s:%s , %s.%s (%s.%s)" % ( src_ip, src_port, dst_ip, dst_port, m_label, s_label, m_label_result, s_label_result)
 
 def master_label(label):
-    if label == 1:
-        return "Skype"
-    if label == 2:
-        return "DNS"
-    if label == 3:
-        return "QUIC"
-    if label == 4:
-        return "Whatsapp"
-    if label == 5:
-        return "BitTorrent"
-    if label == 6:
-        return "Teamviewer"
-    if label == 7:
-        return "Youku"
+    if label == 1: return "Skype"
+    if label == 2: return "DNS"
+    if label == 3: return "QUIC"
+    if label == 4: return "Whatsapp"
+    if label == 5: return "BitTorrent"
+    if label == 6: return "Teamviewer"
+    if label == 7: return "Youku"
 
 def sub_label(label):
-    if label == 1:
-        return "yahoo"
-    if label == 2:
-        return "google"
-    if label == 3:
-        return "youtube"
+    if label == 1: return "Skype"
+    if label == 4: return "Twitch"
+    if label == 5: return "BitTorrent"
+    if label == 8: return "Facebook"
+    if label == 9: return "Twitter"
+    if label == 10: return "Wechat"
+    if label == 11: return "Netflex"
+    if label == 12: return "Apple"
+    if label == 13: return "Google"
+    if label == 14: return "Dropbox"
+    if label == 15: return "Twitch"
+    if label == 16: return "Github"
+    if label == 17: return "Steam"
 
 def detect_or_guess(label):
     if label == 1:

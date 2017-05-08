@@ -28,6 +28,15 @@ action do_set_label_by_guess(label) {
     modify_field(standard_metadata.egress_spec, 2);
 }
 
+action do_set_sub_label_by_guess(sub_label) {
+    modify_field(label_metadata.sub_label, sub_label);
+    modify_field(label_metadata.sub_label_result, 2); // by guess
+
+    modify_field(learning_metadata._type, 1);
+
+    modify_field(standard_metadata.egress_spec, 2);
+}
+
 action do_set_label_by_detect(label, sub_label) {
     modify_field(label_metadata.label, label);
     modify_field(label_metadata.sub_label, sub_label);
