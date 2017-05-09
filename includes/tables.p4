@@ -109,8 +109,8 @@ table detect_whatsapp {
 
 table guess_by_tcp_port {
     reads {
-        tcp_header.srcPort : exact;
-        tcp_header.dstPort : exact;
+        tcp_header.srcPort : ternary;
+        tcp_header.dstPort : ternary;
     }
 
     actions {
@@ -120,8 +120,8 @@ table guess_by_tcp_port {
 
 table guess_by_udp_port {
     reads {
-        udp_header.srcPort : exact;
-        tcp_header.dstPort : exact;
+        udp_header.srcPort : ternary;
+        tcp_header.dstPort : ternary;
     }
 
     actions {

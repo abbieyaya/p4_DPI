@@ -20,6 +20,7 @@
 
 #include <bm/bm_sim/actions.h>
 #include <bm/bm_sim/calculations.h>
+#include <bm/bm_sim/core/primitives.h>
 #include <bm/bm_sim/counters.h>
 #include <bm/bm_sim/meters.h>
 #include <bm/bm_sim/packet.h>
@@ -92,18 +93,88 @@ class pattern_match : public ActionPrimitive<Field &, HeaderStack &> {
         text[i] = text[i] < 32 ? '.' : text[i] ;
     }
  
-    BMLOG_DEBUG("~~~~~~~~~~~~~~~~~~~~~~~~~~~find {} \n", text );
-    if ( match( text, "yahoo" ) ) {
-        BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find yahoo\n");
+    //BMLOG_DEBUG("~~~~~~~~~~~~~~~~~~~~~~~~~~~find {} \n", text );
+    if ( match( text, ".skype." ) || match( text, ".skypeassets." ) || match( text, ".skypedata." )
+             || match( text, ".skypeecs-" ) || match( text, ".skypeforbusiness." ) || match( text, ".lync.com" ) 
+             || match( text, "e7768.b.akamaiedge.net" ) || match( text, "e4593.dspg.akamaiedge.net" ) || match( text, "e4593.g.akamaiedge.net" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find SKYPE\n");
         result.set(1);
-    }else if ( match( text, "google" ) ) {
-        BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+    }else if ( match( text, ".yahoo." ) || match( text, ".yimg.com" ) || match( text, "yahooapis." ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find yahoo\n");
         result.set(2);
-    }else if ( match( text, "youtube" ) ) {
-        BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find youtube\n");
+    }else if ( match( text, "wikipedia." ) || match( text, "wikimedia." ) 
+             || match( text, "mediawiki." ) || match( text, "wikimediafoundation." ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
         result.set(3);
+    }else if ( match( text, ".whatsapp." ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(4);
+    }else if ( match( text, "torrent." ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(5);
+    }else if ( match( text, "maps.google." ) || match( text, "maps.gstatic.com" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(6);
+    }else if ( match( text, ".gmail." ) || match( text, "mail.google." ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(7);
+    }else if ( match( text, "facebook.com" ) || match( text, "fbstatic-a.akamaihd.net" ) || match( text, ".fbcdn.net" )
+             || match( text, "fbcdn-" ) || match( text, ".facebook.net" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(8);
+    }else if ( match( text, ".twttr.com" ) || match( text, "twitter." ) || match( text, "twimg.com" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(9);
+    }else if ( match( text, ".wechat.com" ) || match( text, ".wechat.org" ) || match( text, ".wechatapp.com" )
+             || match( text, ".we.chat" ) || match( text, ".wx." ) || match( text, ".weixin." ) 
+            || match( text, ".mmsns.qpic.cn" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(10);
+    }else if ( match( text, "netflix.com" ) || match( text, "nflxext.com" ) || match( text, "nflximg.com" )
+             || match( text, "nflximg.net" ) || match( text, "nflxvideo.net" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(11);
+    }else if ( match( text, ".apple.com" ) || match( text, ".mzstatic.com" ) 
+             || match( text, ".icloud.com" ) || match( text, "itunes.apple.com" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(12);
+    }else if ( match( text, ".google." ) || match( text, ".gstatic.com" ) || match( text, ".googlesyndication.com" )
+             || match( text, ".googletagservices.com" ) || match( text, ".2mdn.net" ) || match( text, ".doubleclick.net" ) 
+             || match( text, "googleads." ) || match( text, "google-analytics." ) || match( text, "googleusercontent." ) 
+             || match( text, "googleadservices." ) || match( text, "googleapis.com" ) || match( text, "ggpht.com" ) 
+             || match( text, "1e100.net" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(13);
+    }else if ( match( text, ".dropbox.com" ) || match( text, "log.getdropbox.com" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(14);
+    }else if ( match( text, "ttvnw.net" ) || match( text, "static-cdn.jtvnw.net" ) || match( text, "www-cdn.jtvnw.net"  ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(15);
+    }else if ( match( text, "github.com" ) || match( text, "github.io" ) || match( text, "githubusercontent.com" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(16);
+    }else if ( match( text, ".steampowered.com" ) || match( text, "steamcommunity.com" ) || match( text, ".steamcontent.com" )
+             || match( text, ".steamstatic.com" ) || match( text, "steamcommunity-a.akamaihd.net" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(17);
+    }else if ( match( text, ".ppstream.com" ) || match( text, ".pps.tv" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(18);
+    }else if ( match( text, ".cdninstagram.com" ) || match( text, "instagram." ) || match( text, ".instagram." )
+             || match( text, "igcdn-photos-" ) || match( text, "instagramimages-" ) || match( text, "instagramstatic-" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(19);
+    }else if ( match( text, ".cnn.c" ) || match( text, ".cnn.net" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(20);
+    }else if ( match( text, "youtube." ) || match( text, "youtu.be." ) || match( text, "yt3.ggpht.com" )
+             || match( text, ".googlevideo.com" ) || match( text, ".ytimg.com" ) || match( text, "youtube-nocookie." ) 
+             || match( text, "ggpht.com" ) || match( text, "googleusercontent.com" ) ) {
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(21);
     }else {
-        BMLOG_DEBUG("NO QQQQQQQQQQQQQQQQQQQQQ \n");
+        //BMLOG_DEBUG("NO QQQQQQQQQQQQQQQQQQQQQ \n");
         result.set(0);
     }
   }
@@ -113,7 +184,7 @@ REGISTER_PRIMITIVE(pattern_match);
 
 class modify_field : public ActionPrimitive<Data &, const Data &> {
   void operator ()(Data &dst, const Data &src) {
-    dst.set(src);
+    bm::core::assign()(dst, src);
   }
 };
 
@@ -276,15 +347,7 @@ REGISTER_PRIMITIVE(remove_header);
 
 class copy_header : public ActionPrimitive<Header &, const Header &> {
   void operator ()(Header &dst, const Header &src) {
-    if (!src.is_valid()) {
-      dst.mark_invalid();
-      return;
-    }
-    dst.mark_valid();
-    assert(dst.get_header_type_id() == src.get_header_type_id());
-    for (unsigned int i = 0; i < dst.size(); i++) {
-      dst[i].set(src[i]);
-    }
+    bm::core::assign_header()(dst, src);
   }
 };
 
@@ -391,22 +454,6 @@ class register_write
 };
 
 REGISTER_PRIMITIVE(register_write);
-
-class push : public ActionPrimitive<HeaderStack &, const Data &> {
-  void operator ()(HeaderStack &stack, const Data &num) {
-    stack.push_front(num.get_uint());
-  }
-};
-
-REGISTER_PRIMITIVE(push);
-
-class pop : public ActionPrimitive<HeaderStack &, const Data &> {
-  void operator ()(HeaderStack &stack, const Data &num) {
-    stack.pop_front(num.get_uint());
-  }
-};
-
-REGISTER_PRIMITIVE(pop);
 
 // I cannot name this "truncate" and register it with the usual
 // REGISTER_PRIMITIVE macro, because of a name conflict:
