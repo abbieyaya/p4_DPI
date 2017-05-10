@@ -9,6 +9,7 @@ to_hex = lambda x:" ".join([hex(ord(c)) for c in x])
 
 table=dict()
 def match(src_ip,src_port,dst_ip,dst_port,m_label,s_label, m_label_result, s_label_result):
+    #print "in_match"
     key = frozenset({src_ip+":"+str(src_port), dst_ip+":"+str(dst_port)})
     value = set({m_label,s_label})
     if key not in table :
@@ -140,13 +141,14 @@ def detect_or_guess(label):
         return "guess"
 
 def handle_pkt(pkt):
+    #pkt.show()
     try :
         # get label name
         m_label = master_label(int(to_hex((str(pkt))[0:1]), 16))
         s_label = sub_label(int(to_hex((str(pkt))[1:2]), 16))
         m_label_result = detect_or_guess(int(to_hex((str(pkt))[2:3]), 16))
         s_label_result = detect_or_guess(int(to_hex((str(pkt))[3:4]), 16))
-      
+
         packet = Ether((str(pkt))[4:])
         # parse five tuple
         ether_packet = Ether((str(pkt))[4:18])
@@ -166,43 +168,48 @@ def handle_pkt(pkt):
     except:
         print "Parse Wrong"
 
-    
-    #packet.show()
+
+    #print m_label, s_label
     #ether_packet.show()
     #ip_packet.show()
-    packet = ip_packet 
-    try :
-        counter = 0
-        while True:
-            layer = ip_packet.getlayer(counter)
+    #packet = ip_packet 
+    #try :
+    counter = 0
+    src_port = 0 
+    dst_port = 0
+    while True:
+        layer = ip_packet.getlayer(counter)
 
-            #print "layer = ", layer.name
-            if layer.name == 'IP' :
-                src_ip = packet['IP'].fields['src']
-                dst_ip = packet['IP'].fields['dst']
-            elif layer.name == 'IPv6':
-                src_ip = packet['IPv6'].fields['src']
-                dst_ip = packet['IPv6'].fields['dst']
-            elif layer.name == 'TCP' :
-                src_port = packet['TCP'].fields['sport']
-                dst_port = packet['TCP'].fields['dport']
-                break ;
-            elif layer.name == 'UDP' :
-                src_port = packet['UDP'].fields['sport']
-                dst_port = packet['UDP'].fields['dport']
-                break ;
-            elif layer == None : break
-
-            counter += 1
-    except:
-        print "Get five tuple Wrong"
-
-
-    try :
-        match(src_ip,src_port,dst_ip,dst_port,m_label,s_label,m_label_result,s_label_result)
-    except:
-        print "Print Wrong"
+        if layer == None : break
         
+        #print "layer = ", layer.name
+        if layer.name == 'IP' :
+            src_ip = packet['IP'].fields['src']
+            dst_ip = packet['IP'].fields['dst']
+        elif layer.name == 'IPv6':
+            src_ip = packet['IPv6'].fields['src']
+            dst_ip = packet['IPv6'].fields['dst']
+        elif layer.name == 'TCP' :
+            src_port = packet['TCP'].fields['sport']
+            dst_port = packet['TCP'].fields['dport']
+            break 
+        elif layer.name == 'UDP' :
+            src_port = packet['UDP'].fields['sport']
+            dst_port = packet['UDP'].fields['dport']
+            break 
+
+        counter += 1
+    #except:
+    #    print "Get five tuple Wrong"
+    
+    if src_port == 0 : 
+        print "%s:0 <-> %s:0 , %s.%s (%s.%s)" % ( src_ip, dst_ip, m_label, s_label, m_label_result, s_label_result)
+    else :
+        try :
+            match(src_ip,src_port,dst_ip,dst_port,m_label,s_label,m_label_result,s_label_result)
+        except:
+            print "Print Wrong"
+    #print "-----------------------------------------------------------"
 
 def main():
     from sys import argv
@@ -213,7 +220,7 @@ def main():
     #if argv[1].find(".pcap") == -1 : target =  "h%s-eth1" % (argv[1])
     if argv[1].find(".pcap") == -1 : target =  argv[1]
     else : target = "h%s-eth1" % (argv[1])
-    
+
     print "Listen on %s to transfer label of the packet" % target
     if target.find(".pcap") == -1 : sniff(iface=target, prn=handle_pkt )
     else : sniff(offline=target, prn=handle_pkt)

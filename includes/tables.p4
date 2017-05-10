@@ -3,10 +3,6 @@
  */
 
 /* Table */
-table copy_to_cpu {
-    actions {do_copy_to_cpu;}
-    // size : 1;
-}
 
 table forward {
     reads {
@@ -19,9 +15,30 @@ table forward {
     }
 }
 
+table host_to_physical {
+    reads {
+        ethernet_header.srcAddr : exact ;
+    }
+
+    actions {
+        do_forward;
+    }
+}
+
+table physical_to_host {
+    reads {
+        ethernet_header.dstAddr : exact ;
+    }
+
+    actions {
+        do_forward;
+    }
+}
+
 table label_encup {
     reads { 
-        label_metadata.label : exact; 
+        //label_metadata.label : exact; 
+        standard_metadata.instance_type : exact ;
     }
     actions { 
         _drop; 

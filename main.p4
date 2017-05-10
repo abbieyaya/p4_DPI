@@ -8,6 +8,9 @@ Main of Forward and Mirror
 #include "includes/actions.p4"
 
 control ingress {
+    apply(host_to_physical);
+    apply(physical_to_host);
+
     apply(rule_match);
     if( label_metadata.label == 0 ) {
         apply(detect_quic) {
@@ -24,10 +27,12 @@ control ingress {
     if( label_metadata.label == 0 and valid(udp_header) ) apply(guess_by_udp_port);
     if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_src_address);
     if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_dst_address);
-
+    
     if( learning_metadata._type > 0 ) apply(learning);
     //apply(forward);
     //apply(set_queue);
+    
+
 }
 
 control egress {
