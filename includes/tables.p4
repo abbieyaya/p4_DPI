@@ -138,7 +138,7 @@ table guess_by_tcp_port {
 table guess_by_udp_port {
     reads {
         udp_header.srcPort : ternary;
-        tcp_header.dstPort : ternary;
+        udp_header.dstPort : ternary;
     }
 
     actions {
