@@ -46,6 +46,29 @@ header_type learning_metadata_t {
     }
 }
 
+header_type direction_metadata_t {
+    fields {
+        hash_index : 16;
+
+        payload_A1 : 32;
+        payload_A2 : 32;
+        payload_A3 : 32;
+        payload_B1 : 32;
+        payload_B2 : 32;
+        payload_B3 : 32;
+
+        length_A1 : 16;
+        length_A2 : 16;
+        length_A3 : 16;
+        length_B1 : 16;
+        length_B2 : 16;
+        length_B3 : 16;
+
+        counter_A : 16;
+        counter_B : 16;
+    }
+}
+
 /*
 header_type dns_metadata_t {
     fields {
@@ -61,6 +84,7 @@ metadata five_tuple_metadata_t five_tuple_metadata;
 metadata label_metadata_t label_metadata;
 //metadata dns_metadata_t dns_metadata;
 metadata learning_metadata_t learning_metadata;
+metadata direction_metadata_t direction_metadata;
 
 /* Header_type */
 header_type ethernet_header_t {
@@ -114,11 +138,11 @@ header_type tcp_header_t {
         window : 16;
         checksum : 16;
         urgentPtr : 16;
-        //options: *;
+        options: *;
     }
 
-    //length : 4 * dataOffset ;
-    //max_length : 512;
+    length : 4 * dataOffset ;
+    max_length : 512;
 }
 
 header_type udp_header_t {

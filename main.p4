@@ -7,6 +7,7 @@ Main of Forward and Mirror
 #include "includes/tables.p4"
 #include "includes/actions.p4"
 #include "includes/port_counters.p4"
+#include "includes/libprotoident.p4"
 control ingress {
     apply(table0);
     process_port_counters();
@@ -24,9 +25,10 @@ control ingress {
     }
      
     if( label_metadata.label == 0 and valid(dns_header) ) apply(detect_dns);
-    //if( label_metadata.label == 0 ) apply(detect_whatsapp);
+    if( label_metadata.label == 0 and valid(whatsapp_three_byte_payload) ) apply(detect_whatsapp);
     if( label_metadata.label == 0 ) apply(detect_four_byte_payload);
 
+    process_libprotoident();
     if( label_metadata.label == 0 and valid(tcp_header) ) apply(guess_by_tcp_port);
     if( label_metadata.label == 0 and valid(udp_header) ) apply(guess_by_udp_port);
     if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_src_address);

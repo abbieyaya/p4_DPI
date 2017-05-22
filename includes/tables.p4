@@ -122,9 +122,8 @@ table set_quic {
 
 table detect_whatsapp {
     reads {
-        whatsapp_three_byte_payload : valid;
-        whatsapp_three_byte_payload.payload_1 : range;
-        whatsapp_three_byte_payload.payload_2 : range;
+        whatsapp_three_byte_payload.payload_1 : ternary;
+        whatsapp_three_byte_payload.payload_2 : ternary;
         whatsapp_three_byte_payload.payload_3 : exact;
     }
 

@@ -29,6 +29,7 @@ parser parse_ipv4 {
     extract(ipv4_header);
     set_metadata( five_tuple_metadata.srcAddr, ipv4_header.srcAddr );
     set_metadata( five_tuple_metadata.dstAddr, ipv4_header.dstAddr );
+    set_metadata( five_tuple_metadata.protocol, ipv4_header.protocol );
     return select(latest.protocol) {
         IP_PROTOCOLS_TCP : parse_tcp;
         IP_PROTOCOLS_UDP : parse_udp;
@@ -40,6 +41,7 @@ parser parse_ipv6 {
     extract(ipv6_header);
     set_metadata( five_tuple_metadata.srcAddr, ipv6_header.srcAddr );
     set_metadata( five_tuple_metadata.dstAddr, ipv6_header.dstAddr );
+    set_metadata( five_tuple_metadata.protocol, ipv6_header.nextHdr );
     return select(latest.nextHdr) {
         IP_PROTOCOLS_TCP : parse_tcp;
         IP_PROTOCOLS_UDP : parse_udp;

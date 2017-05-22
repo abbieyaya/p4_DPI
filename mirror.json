@@ -1223,6 +1223,25 @@
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            "op": "set",
+                            "parameters": [
+                                {
+                                    "type": "field",
+                                    "value": [
+                                        "five_tuple_metadata",
+                                        "protocol"
+                                    ]
+                                },
+                                {
+                                    "type": "field",
+                                    "value": [
+                                        "ipv4_header",
+                                        "protocol"
+                                    ]
+                                }
+                            ]
                         }
                     ],
                     "transition_key": [
@@ -2052,6 +2071,25 @@
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            "op": "set",
+                            "parameters": [
+                                {
+                                    "type": "field",
+                                    "value": [
+                                        "five_tuple_metadata",
+                                        "protocol"
+                                    ]
+                                },
+                                {
+                                    "type": "field",
+                                    "value": [
+                                        "ipv6_header",
+                                        "nextHdr"
+                                    ]
+                                }
+                            ]
                         }
                     ],
                     "transition_key": [
@@ -2095,12 +2133,11 @@
             "order": [
                 "label_header",
                 "ethernet_header",
-                "ipv4_header",
                 "ipv6_header",
+                "ipv4_header",
                 "tcp_header",
                 "udp_header",
                 "quic_flags",
-                "four_byte_payload",
                 "dns_header",
                 "one_byte_payload[0]",
                 "one_byte_payload[1]",
@@ -2118,6 +2155,7 @@
                 "one_byte_payload[12]",
                 "one_byte_payload[13]",
                 "one_byte_payload[14]",
+                "four_byte_payload",
                 "one_byte_payload[15]",
                 "one_byte_payload[16]",
                 "one_byte_payload[17]",
@@ -2173,52 +2211,8 @@
     "meter_arrays": [],
     "actions": [
         {
-            "name": "do_learning",
-            "id": 0,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "generate_digest",
-                    "parameters": [
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "clone_ingress_pkt_to_egress",
-                    "parameters": [
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "_nop",
-            "id": 1,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "no_op",
-                    "parameters": []
-                }
-            ]
-        },
-        {
             "name": "do_assemble",
-            "id": 2,
+            "id": 0,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2234,22 +2228,6 @@
                         {
                             "type": "hexstr",
                             "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "pattern_match",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "header_stack",
-                            "value": "one_byte_payload"
                         }
                     ]
                 },
@@ -2304,22 +2282,15 @@
             ]
         },
         {
-            "name": "_drop",
-            "id": 3,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "drop",
-                    "parameters": []
-                }
-            ]
-        },
-        {
-            "name": "do_set_sub_label_by_guess",
-            "id": 4,
+            "name": "do_set_label_by_detect",
+            "id": 1,
             "runtime_data": [
                 {
-                    "name": "sub_label",
+                    "name": "label",
+                    "bitwidth": 8
+                },
+                {
+                    "name": "sublabel",
                     "bitwidth": 8
                 }
             ],
@@ -2331,7 +2302,7 @@
                             "type": "field",
                             "value": [
                                 "label_metadata",
-                                "sub_label"
+                                "label"
                             ]
                         },
                         {
@@ -2347,12 +2318,44 @@
                             "type": "field",
                             "value": [
                                 "label_metadata",
+                                "sub_label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
                                 "sub_label_result"
                             ]
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x2"
+                            "value": "0x1"
                         }
                     ]
                 },
@@ -2371,12 +2374,177 @@
                             "value": "0x1"
                         }
                     ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "egress_spec"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "set_egress_port",
+            "id": 2,
+            "runtime_data": [
+                {
+                    "name": "port",
+                    "bitwidth": 9
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "egress_spec"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "_nop",
+            "id": 3,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "no_op",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "name": "count_packet",
+            "id": 4,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "count",
+                    "parameters": [
+                        {
+                            "type": "counter_array",
+                            "value": "ingress_port_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "ingress_port"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "count",
+                    "parameters": [
+                        {
+                            "type": "counter_array",
+                            "value": "egress_port_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "egress_spec"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "send_to_cpu",
+            "id": 5,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "egress_spec"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0xff"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_set_label_by_match_rule",
+            "id": 6,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                },
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 1
+                        }
+                    ]
                 }
             ]
         },
         {
             "name": "do_label_encap",
-            "id": 5,
+            "id": 7,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2467,8 +2635,68 @@
             ]
         },
         {
+            "name": "do_set_sub_label_by_guess",
+            "id": 8,
+            "runtime_data": [
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name": "do_set_label_by_guess",
-            "id": 6,
+            "id": 9,
             "runtime_data": [
                 {
                     "name": "label",
@@ -2527,174 +2755,13 @@
             ]
         },
         {
-            "name": "do_set_label_by_match_rule",
-            "id": 7,
-            "runtime_data": [
-                {
-                    "name": "label",
-                    "bitwidth": 8
-                },
-                {
-                    "name": "sub_label",
-                    "bitwidth": 8
-                }
-            ],
+            "name": "_drop",
+            "id": 10,
+            "runtime_data": [],
             "primitives": [
                 {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 1
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_set_label_by_detect",
-            "id": 8,
-            "runtime_data": [
-                {
-                    "name": "label",
-                    "bitwidth": 8
-                },
-                {
-                    "name": "sub_label",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 1
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_forward",
-            "id": 9,
-            "runtime_data": [
-                {
-                    "name": "out_port",
-                    "bitwidth": 9
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
+                    "op": "drop",
+                    "parameters": []
                 }
             ]
         }
@@ -2703,65 +2770,66 @@
         {
             "name": "ingress",
             "id": 0,
-            "init_table": "host_to_physical",
+            "init_table": "table0",
             "tables": [
                 {
-                    "name": "host_to_physical",
+                    "name": "table0",
                     "id": 0,
-                    "match_type": "exact",
+                    "match_type": "ternary",
                     "type": "simple",
                     "max_size": 16384,
                     "with_counters": false,
                     "direct_meters": null,
-                    "support_timeout": false,
+                    "support_timeout": true,
                     "key": [
                         {
-                            "match_type": "exact",
+                            "match_type": "ternary",
                             "target": [
-                                "ethernet_header",
-                                "srcAddr"
+                                "standard_metadata",
+                                "ingress_port"
                             ],
                             "mask": null
-                        }
-                    ],
-                    "actions": [
-                        "do_forward"
-                    ],
-                    "next_tables": {
-                        "do_forward": "physical_to_host"
-                    },
-                    "base_default_next": "physical_to_host"
-                },
-                {
-                    "name": "physical_to_host",
-                    "id": 1,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 16384,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [
+                        },
                         {
-                            "match_type": "exact",
+                            "match_type": "ternary",
                             "target": [
                                 "ethernet_header",
                                 "dstAddr"
                             ],
                             "mask": null
+                        },
+                        {
+                            "match_type": "ternary",
+                            "target": [
+                                "ethernet_header",
+                                "srcAddr"
+                            ],
+                            "mask": null
+                        },
+                        {
+                            "match_type": "ternary",
+                            "target": [
+                                "ethernet_header",
+                                "etherType"
+                            ],
+                            "mask": null
                         }
                     ],
                     "actions": [
-                        "do_forward"
+                        "set_egress_port",
+                        "send_to_cpu",
+                        "_drop"
                     ],
                     "next_tables": {
-                        "do_forward": "rule_match"
+                        "set_egress_port": "_condition_0",
+                        "send_to_cpu": "_condition_0",
+                        "_drop": "_condition_0"
                     },
-                    "base_default_next": "rule_match"
+                    "base_default_next": "_condition_0"
                 },
                 {
                     "name": "rule_match",
-                    "id": 2,
+                    "id": 1,
                     "match_type": "exact",
                     "type": "simple",
                     "max_size": 16384,
@@ -2806,13 +2874,13 @@
                         "do_set_label_by_match_rule"
                     ],
                     "next_tables": {
-                        "do_set_label_by_match_rule": "_condition_0"
+                        "do_set_label_by_match_rule": "_condition_1"
                     },
-                    "base_default_next": "_condition_0"
+                    "base_default_next": "_condition_1"
                 },
                 {
                     "name": "detect_four_byte_payload",
-                    "id": 3,
+                    "id": 2,
                     "match_type": "ternary",
                     "type": "simple",
                     "max_size": 16384,
@@ -2841,12 +2909,30 @@
                         "do_set_label_by_detect"
                     ],
                     "next_tables": {
-                        "do_set_label_by_detect": "_condition_5"
+                        "do_set_label_by_detect": "_condition_6"
                     },
-                    "base_default_next": "_condition_5"
+                    "base_default_next": "_condition_6"
                 },
                 {
                     "name": "detect_dns",
+                    "id": 3,
+                    "match_type": "exact",
+                    "type": "simple",
+                    "max_size": 16384,
+                    "with_counters": false,
+                    "direct_meters": null,
+                    "support_timeout": false,
+                    "key": [],
+                    "actions": [
+                        "do_assemble"
+                    ],
+                    "next_tables": {
+                        "do_assemble": "_condition_5"
+                    },
+                    "base_default_next": "_condition_4"
+                },
+                {
+                    "name": "detect_quic",
                     "id": 4,
                     "match_type": "exact",
                     "type": "simple",
@@ -2855,35 +2941,6 @@
                     "direct_meters": null,
                     "support_timeout": false,
                     "key": [
-                        {
-                            "match_type": "valid",
-                            "target": "dns_header",
-                            "mask": null
-                        }
-                    ],
-                    "actions": [
-                        "do_assemble"
-                    ],
-                    "next_tables": {
-                        "do_assemble": "_condition_3"
-                    },
-                    "base_default_next": "_condition_3"
-                },
-                {
-                    "name": "detect_quic",
-                    "id": 5,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 16384,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [
-                        {
-                            "match_type": "valid",
-                            "target": "quic_flags",
-                            "mask": null
-                        },
                         {
                             "match_type": "exact",
                             "target": [
@@ -2905,14 +2962,14 @@
                         "_nop"
                     ],
                     "next_tables": {
-                        "__HIT__": "_condition_1",
-                        "__MISS__": "_condition_2"
+                        "__HIT__": "_condition_2",
+                        "__MISS__": "_condition_5"
                     },
-                    "base_default_next": "_condition_2"
+                    "base_default_next": "_condition_3"
                 },
                 {
                     "name": "set_quic",
-                    "id": 6,
+                    "id": 5,
                     "match_type": "exact",
                     "type": "simple",
                     "max_size": 16384,
@@ -2924,14 +2981,14 @@
                         "do_set_label_by_detect"
                     ],
                     "next_tables": {
-                        "do_set_label_by_detect": "_condition_2"
+                        "do_set_label_by_detect": "_condition_5"
                     },
-                    "base_default_next": "_condition_2"
+                    "base_default_next": "_condition_3"
                 },
                 {
                     "name": "detect_whatsapp",
-                    "id": 7,
-                    "match_type": "range",
+                    "id": 6,
+                    "match_type": "ternary",
                     "type": "simple",
                     "max_size": 16384,
                     "with_counters": false,
@@ -2939,12 +2996,7 @@
                     "support_timeout": false,
                     "key": [
                         {
-                            "match_type": "valid",
-                            "target": "whatsapp_three_byte_payload",
-                            "mask": null
-                        },
-                        {
-                            "match_type": "range",
+                            "match_type": "ternary",
                             "target": [
                                 "whatsapp_three_byte_payload",
                                 "payload_1"
@@ -2952,7 +3004,7 @@
                             "mask": null
                         },
                         {
-                            "match_type": "range",
+                            "match_type": "ternary",
                             "target": [
                                 "whatsapp_three_byte_payload",
                                 "payload_2"
@@ -2972,12 +3024,47 @@
                         "do_set_label_by_detect"
                     ],
                     "next_tables": {
-                        "do_set_label_by_detect": "_condition_4"
+                        "do_set_label_by_detect": "_condition_5"
                     },
-                    "base_default_next": "_condition_4"
+                    "base_default_next": "_condition_5"
                 },
                 {
                     "name": "guess_by_tcp_port",
+                    "id": 7,
+                    "match_type": "ternary",
+                    "type": "simple",
+                    "max_size": 16384,
+                    "with_counters": false,
+                    "direct_meters": null,
+                    "support_timeout": false,
+                    "key": [
+                        {
+                            "match_type": "ternary",
+                            "target": [
+                                "tcp_header",
+                                "srcPort"
+                            ],
+                            "mask": null
+                        },
+                        {
+                            "match_type": "ternary",
+                            "target": [
+                                "tcp_header",
+                                "dstPort"
+                            ],
+                            "mask": null
+                        }
+                    ],
+                    "actions": [
+                        "do_set_label_by_guess"
+                    ],
+                    "next_tables": {
+                        "do_set_label_by_guess": "_condition_8"
+                    },
+                    "base_default_next": "_condition_7"
+                },
+                {
+                    "name": "guess_by_udp_port",
                     "id": 8,
                     "match_type": "ternary",
                     "type": "simple",
@@ -2989,41 +3076,6 @@
                         {
                             "match_type": "ternary",
                             "target": [
-                                "tcp_header",
-                                "srcPort"
-                            ],
-                            "mask": null
-                        },
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "tcp_header",
-                                "dstPort"
-                            ],
-                            "mask": null
-                        }
-                    ],
-                    "actions": [
-                        "do_set_label_by_guess"
-                    ],
-                    "next_tables": {
-                        "do_set_label_by_guess": "_condition_7"
-                    },
-                    "base_default_next": "_condition_6"
-                },
-                {
-                    "name": "guess_by_udp_port",
-                    "id": 9,
-                    "match_type": "ternary",
-                    "type": "simple",
-                    "max_size": 16384,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [
-                        {
-                            "match_type": "ternary",
-                            "target": [
                                 "udp_header",
                                 "srcPort"
                             ],
@@ -3042,13 +3094,13 @@
                         "do_set_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_label_by_guess": "_condition_7"
+                        "do_set_label_by_guess": "_condition_8"
                     },
-                    "base_default_next": "_condition_7"
+                    "base_default_next": "_condition_8"
                 },
                 {
                     "name": "guess_by_src_address",
-                    "id": 10,
+                    "id": 9,
                     "match_type": "lpm",
                     "type": "simple",
                     "max_size": 16384,
@@ -3069,13 +3121,13 @@
                         "do_set_sub_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_sub_label_by_guess": "_condition_8"
+                        "do_set_sub_label_by_guess": "_condition_9"
                     },
-                    "base_default_next": "_condition_8"
+                    "base_default_next": "_condition_9"
                 },
                 {
                     "name": "guess_by_dst_address",
-                    "id": 11,
+                    "id": 10,
                     "match_type": "lpm",
                     "type": "simple",
                     "max_size": 16384,
@@ -3096,36 +3148,27 @@
                         "do_set_sub_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_sub_label_by_guess": "_condition_9"
+                        "do_set_sub_label_by_guess": null
                     },
-                    "base_default_next": "_condition_9"
+                    "base_default_next": null
                 },
                 {
-                    "name": "learning",
-                    "id": 12,
-                    "match_type": "range",
+                    "name": "port_count_table",
+                    "id": 11,
+                    "match_type": "exact",
                     "type": "simple",
                     "max_size": 16384,
                     "with_counters": false,
                     "direct_meters": null,
                     "support_timeout": false,
-                    "key": [
-                        {
-                            "match_type": "range",
-                            "target": [
-                                "learning_metadata",
-                                "_type"
-                            ],
-                            "mask": null
-                        }
-                    ],
+                    "key": [],
                     "actions": [
-                        "do_learning"
+                        "count_packet"
                     ],
                     "next_tables": {
-                        "do_learning": null
+                        "count_packet": "rule_match"
                     },
-                    "base_default_next": null
+                    "base_default_next": "rule_match"
                 }
             ],
             "action_profiles": [],
@@ -3136,26 +3179,66 @@
                     "expression": {
                         "type": "expression",
                         "value": {
-                            "op": "==",
+                            "op": "<",
                             "left": {
                                 "type": "field",
                                 "value": [
-                                    "label_metadata",
-                                    "label"
+                                    "standard_metadata",
+                                    "egress_spec"
                                 ]
                             },
                             "right": {
                                 "type": "hexstr",
-                                "value": "0x0"
+                                "value": "0xfe"
                             }
                         }
                     },
-                    "true_next": "detect_quic",
-                    "false_next": "_condition_2"
+                    "true_next": "port_count_table",
+                    "false_next": "rule_match"
                 },
                 {
                     "name": "_condition_1",
                     "id": 1,
+                    "expression": {
+                        "type": "expression",
+                        "value": {
+                            "op": "and",
+                            "left": {
+                                "type": "expression",
+                                "value": {
+                                    "op": "==",
+                                    "left": {
+                                        "type": "field",
+                                        "value": [
+                                            "label_metadata",
+                                            "label"
+                                        ]
+                                    },
+                                    "right": {
+                                        "type": "hexstr",
+                                        "value": "0x0"
+                                    }
+                                }
+                            },
+                            "right": {
+                                "type": "expression",
+                                "value": {
+                                    "op": "valid",
+                                    "left": null,
+                                    "right": {
+                                        "type": "header",
+                                        "value": "quic_flags"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "true_next": "detect_quic",
+                    "false_next": "_condition_3"
+                },
+                {
+                    "name": "_condition_2",
+                    "id": 2,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -3187,30 +3270,7 @@
                         }
                     },
                     "true_next": "set_quic",
-                    "false_next": "_condition_2"
-                },
-                {
-                    "name": "_condition_2",
-                    "id": 2,
-                    "expression": {
-                        "type": "expression",
-                        "value": {
-                            "op": "==",
-                            "left": {
-                                "type": "field",
-                                "value": [
-                                    "label_metadata",
-                                    "label"
-                                ]
-                            },
-                            "right": {
-                                "type": "hexstr",
-                                "value": "0x0"
-                            }
-                        }
-                    },
-                    "true_next": "detect_dns",
-                    "false_next": "_condition_3"
+                    "false_next": "_condition_5"
                 },
                 {
                     "name": "_condition_3",
@@ -3218,26 +3278,83 @@
                     "expression": {
                         "type": "expression",
                         "value": {
-                            "op": "==",
+                            "op": "and",
                             "left": {
-                                "type": "field",
-                                "value": [
-                                    "label_metadata",
-                                    "label"
-                                ]
+                                "type": "expression",
+                                "value": {
+                                    "op": "==",
+                                    "left": {
+                                        "type": "field",
+                                        "value": [
+                                            "label_metadata",
+                                            "label"
+                                        ]
+                                    },
+                                    "right": {
+                                        "type": "hexstr",
+                                        "value": "0x0"
+                                    }
+                                }
                             },
                             "right": {
-                                "type": "hexstr",
-                                "value": "0x0"
+                                "type": "expression",
+                                "value": {
+                                    "op": "valid",
+                                    "left": null,
+                                    "right": {
+                                        "type": "header",
+                                        "value": "dns_header"
+                                    }
+                                }
                             }
                         }
                     },
-                    "true_next": "detect_whatsapp",
+                    "true_next": "detect_dns",
                     "false_next": "_condition_4"
                 },
                 {
                     "name": "_condition_4",
                     "id": 4,
+                    "expression": {
+                        "type": "expression",
+                        "value": {
+                            "op": "and",
+                            "left": {
+                                "type": "expression",
+                                "value": {
+                                    "op": "==",
+                                    "left": {
+                                        "type": "field",
+                                        "value": [
+                                            "label_metadata",
+                                            "label"
+                                        ]
+                                    },
+                                    "right": {
+                                        "type": "hexstr",
+                                        "value": "0x0"
+                                    }
+                                }
+                            },
+                            "right": {
+                                "type": "expression",
+                                "value": {
+                                    "op": "valid",
+                                    "left": null,
+                                    "right": {
+                                        "type": "header",
+                                        "value": "whatsapp_three_byte_payload"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "true_next": "detect_whatsapp",
+                    "false_next": "_condition_5"
+                },
+                {
+                    "name": "_condition_5",
+                    "id": 5,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -3256,11 +3373,11 @@
                         }
                     },
                     "true_next": "detect_four_byte_payload",
-                    "false_next": "_condition_5"
+                    "false_next": "_condition_6"
                 },
                 {
-                    "name": "_condition_5",
-                    "id": 5,
+                    "name": "_condition_6",
+                    "id": 6,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -3296,11 +3413,11 @@
                         }
                     },
                     "true_next": "guess_by_tcp_port",
-                    "false_next": "_condition_6"
+                    "false_next": "_condition_7"
                 },
                 {
-                    "name": "_condition_6",
-                    "id": 6,
+                    "name": "_condition_7",
+                    "id": 7,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -3336,46 +3453,6 @@
                         }
                     },
                     "true_next": "guess_by_udp_port",
-                    "false_next": "_condition_7"
-                },
-                {
-                    "name": "_condition_7",
-                    "id": 7,
-                    "expression": {
-                        "type": "expression",
-                        "value": {
-                            "op": "and",
-                            "left": {
-                                "type": "expression",
-                                "value": {
-                                    "op": "==",
-                                    "left": {
-                                        "type": "field",
-                                        "value": [
-                                            "label_metadata",
-                                            "sub_label"
-                                        ]
-                                    },
-                                    "right": {
-                                        "type": "hexstr",
-                                        "value": "0x0"
-                                    }
-                                }
-                            },
-                            "right": {
-                                "type": "expression",
-                                "value": {
-                                    "op": "valid",
-                                    "left": null,
-                                    "right": {
-                                        "type": "header",
-                                        "value": "ipv4_header"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "true_next": "guess_by_src_address",
                     "false_next": "_condition_8"
                 },
                 {
@@ -3415,7 +3492,7 @@
                             }
                         }
                     },
-                    "true_next": "guess_by_dst_address",
+                    "true_next": "guess_by_src_address",
                     "false_next": "_condition_9"
                 },
                 {
@@ -3424,21 +3501,38 @@
                     "expression": {
                         "type": "expression",
                         "value": {
-                            "op": ">",
+                            "op": "and",
                             "left": {
-                                "type": "field",
-                                "value": [
-                                    "learning_metadata",
-                                    "_type"
-                                ]
+                                "type": "expression",
+                                "value": {
+                                    "op": "==",
+                                    "left": {
+                                        "type": "field",
+                                        "value": [
+                                            "label_metadata",
+                                            "sub_label"
+                                        ]
+                                    },
+                                    "right": {
+                                        "type": "hexstr",
+                                        "value": "0x0"
+                                    }
+                                }
                             },
                             "right": {
-                                "type": "hexstr",
-                                "value": "0x0"
+                                "type": "expression",
+                                "value": {
+                                    "op": "valid",
+                                    "left": null,
+                                    "right": {
+                                        "type": "header",
+                                        "value": "ipv4_header"
+                                    }
+                                }
                             }
                         }
                     },
-                    "true_next": "learning",
+                    "true_next": "guess_by_dst_address",
                     "false_next": null
                 }
             ]
@@ -3450,7 +3544,7 @@
             "tables": [
                 {
                     "name": "label_encup",
-                    "id": 13,
+                    "id": 12,
                     "match_type": "exact",
                     "type": "simple",
                     "max_size": 16,
@@ -3461,8 +3555,8 @@
                         {
                             "match_type": "exact",
                             "target": [
-                                "standard_metadata",
-                                "instance_type"
+                                "learning_metadata",
+                                "_type"
                             ],
                             "mask": null
                         }
@@ -3484,156 +3578,22 @@
     ],
     "calculations": [],
     "checksums": [],
-    "learn_lists": [
+    "learn_lists": [],
+    "field_lists": [],
+    "counter_arrays": [
         {
+            "name": "ingress_port_counter",
+            "id": 0,
+            "is_direct": false,
+            "size": 254
+        },
+        {
+            "name": "egress_port_counter",
             "id": 1,
-            "name": "rule_info",
-            "elements": [
-                {
-                    "type": "field",
-                    "value": [
-                        "learning_metadata",
-                        "_type"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "five_tuple_metadata",
-                        "srcAddr"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "five_tuple_metadata",
-                        "dstAddr"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "five_tuple_metadata",
-                        "srcPort"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "five_tuple_metadata",
-                        "dstPort"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "label_metadata",
-                        "label"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "label_metadata",
-                        "sub_label"
-                    ]
-                }
-            ]
+            "is_direct": false,
+            "size": 254
         }
     ],
-    "field_lists": [
-        {
-            "id": 1,
-            "name": "copy_to_cpu_fields",
-            "elements": [
-                {
-                    "type": "field",
-                    "value": [
-                        "standard_metadata",
-                        "ingress_port"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "standard_metadata",
-                        "packet_length"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "standard_metadata",
-                        "egress_spec"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "standard_metadata",
-                        "egress_port"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "standard_metadata",
-                        "egress_instance"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "standard_metadata",
-                        "instance_type"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "standard_metadata",
-                        "clone_spec"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "standard_metadata",
-                        "_padding"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "label_metadata",
-                        "label"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "label_metadata",
-                        "sub_label"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "label_metadata",
-                        "label_result"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "label_metadata",
-                        "sub_label_result"
-                    ]
-                }
-            ]
-        }
-    ],
-    "counter_arrays": [],
     "register_arrays": [],
     "force_arith": [
         [
