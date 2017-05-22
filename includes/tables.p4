@@ -183,3 +183,44 @@ table learning {
         do_learning ;
     }
 }
+
+table calculate_index {
+    actions { do_calculate_index; }
+    size: 1;
+}
+
+table read_counter {
+    actions { do_read_counter; }
+    size: 1;
+}
+
+table update_A {
+    reads { 
+        direction_metadata.counter_A : exact;
+    }
+    actions {
+        do_updateA_1;
+        do_updateA_2;
+        do_updateA_3;
+    }
+
+    size: 3;
+}
+
+table update_B {
+    reads { 
+        direction_metadata.counter_B : exact;
+    }
+    actions {
+        do_updateB_1;
+        do_updateB_2;
+        do_updateB_3;
+    }
+
+    size: 3;
+}
+
+table read_all {
+    actions { do_read_all; }
+    size: 1;
+}

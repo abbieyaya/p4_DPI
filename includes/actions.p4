@@ -133,79 +133,79 @@ field_list_calculation index_hash_cal {
 
 register dirA_payload_1{
     width : 32;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirA_payload_2{
     width : 32;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirA_payload_3{
     width : 32;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirB_payload_1{
     width : 32;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirB_payload_2{
     width : 32;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirB_payload_3{
     width : 32;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirA_length_1{
     width : 16;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirA_length_2{
     width : 16;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirA_length_3{
     width : 16;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirB_length_1{
     width : 16;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirB_length_2{
     width : 16;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirB_length_3{
     width : 16;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirA_counter{
     width : 16;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
 register dirB_counter{
     width : 16;
-    instance_count : 16;
+    instance_count : 1024;
 }
 
-action _do_calculate_index(){
+action do_calculate_index(){
     modify_field_with_hash_based_offset(direction_metadata.hash_index, 0, index_hash_cal, 1024);
 }
 
-action do_update_all(){
+action do_read_all(){
     register_read(direction_metadata.payload_A1 , dirA_payload_1, direction_metadata.hash_index);
     register_read(direction_metadata.payload_A2 , dirA_payload_2, direction_metadata.hash_index);
     register_read(direction_metadata.payload_A3 , dirA_payload_3, direction_metadata.hash_index);

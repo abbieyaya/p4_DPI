@@ -164,8 +164,76 @@
             "max_length": null
         },
         {
-            "name": "ethernet_header_t",
+            "name": "direction_metadata_t",
             "id": 5,
+            "fields": [
+                [
+                    "hash_index",
+                    16
+                ],
+                [
+                    "payload_A1",
+                    32
+                ],
+                [
+                    "payload_A2",
+                    32
+                ],
+                [
+                    "payload_A3",
+                    32
+                ],
+                [
+                    "payload_B1",
+                    32
+                ],
+                [
+                    "payload_B2",
+                    32
+                ],
+                [
+                    "payload_B3",
+                    32
+                ],
+                [
+                    "length_A1",
+                    16
+                ],
+                [
+                    "length_A2",
+                    16
+                ],
+                [
+                    "length_A3",
+                    16
+                ],
+                [
+                    "length_B1",
+                    16
+                ],
+                [
+                    "length_B2",
+                    16
+                ],
+                [
+                    "length_B3",
+                    16
+                ],
+                [
+                    "counter_A",
+                    16
+                ],
+                [
+                    "counter_B",
+                    16
+                ]
+            ],
+            "length_exp": null,
+            "max_length": null
+        },
+        {
+            "name": "ethernet_header_t",
+            "id": 6,
             "fields": [
                 [
                     "dstAddr",
@@ -185,7 +253,7 @@
         },
         {
             "name": "ipv4_header_t",
-            "id": 6,
+            "id": 7,
             "fields": [
                 [
                     "version",
@@ -241,7 +309,7 @@
         },
         {
             "name": "ipv6_header_t",
-            "id": 7,
+            "id": 8,
             "fields": [
                 [
                     "version",
@@ -281,7 +349,7 @@
         },
         {
             "name": "tcp_header_t",
-            "id": 8,
+            "id": 9,
             "fields": [
                 [
                     "srcPort",
@@ -370,7 +438,7 @@
         },
         {
             "name": "udp_header_t",
-            "id": 9,
+            "id": 10,
             "fields": [
                 [
                     "srcPort",
@@ -394,7 +462,7 @@
         },
         {
             "name": "dns_header_t",
-            "id": 10,
+            "id": 11,
             "fields": [
                 [
                     "tr_id",
@@ -426,7 +494,7 @@
         },
         {
             "name": "label_header_t",
-            "id": 11,
+            "id": 12,
             "fields": [
                 [
                     "label",
@@ -450,7 +518,7 @@
         },
         {
             "name": "four_byte_payload_t",
-            "id": 12,
+            "id": 13,
             "fields": [
                 [
                     "data",
@@ -462,7 +530,7 @@
         },
         {
             "name": "one_byte_payload_t",
-            "id": 13,
+            "id": 14,
             "fields": [
                 [
                     "data",
@@ -474,7 +542,7 @@
         },
         {
             "name": "whatsapp_three_byte_payload_t",
-            "id": 14,
+            "id": 15,
             "fields": [
                 [
                     "payload_1",
@@ -494,7 +562,7 @@
         },
         {
             "name": "quic_flags_t",
-            "id": 15,
+            "id": 16,
             "fields": [
                 [
                     "version",
@@ -553,446 +621,452 @@
             "metadata": true
         },
         {
-            "name": "ethernet_header",
+            "name": "direction_metadata",
             "id": 5,
+            "header_type": "direction_metadata_t",
+            "metadata": true
+        },
+        {
+            "name": "ethernet_header",
+            "id": 6,
             "header_type": "ethernet_header_t",
             "metadata": false
         },
         {
             "name": "ipv4_header",
-            "id": 6,
+            "id": 7,
             "header_type": "ipv4_header_t",
             "metadata": false
         },
         {
             "name": "ipv6_header",
-            "id": 7,
+            "id": 8,
             "header_type": "ipv6_header_t",
             "metadata": false
         },
         {
             "name": "tcp_header",
-            "id": 8,
+            "id": 9,
             "header_type": "tcp_header_t",
             "metadata": false
         },
         {
             "name": "udp_header",
-            "id": 9,
+            "id": 10,
             "header_type": "udp_header_t",
             "metadata": false
         },
         {
             "name": "dns_header",
-            "id": 10,
+            "id": 11,
             "header_type": "dns_header_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[0]",
-            "id": 11,
-            "header_type": "one_byte_payload_t",
-            "metadata": false
-        },
-        {
-            "name": "one_byte_payload[1]",
             "id": 12,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[2]",
+            "name": "one_byte_payload[1]",
             "id": 13,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[3]",
+            "name": "one_byte_payload[2]",
             "id": 14,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[4]",
+            "name": "one_byte_payload[3]",
             "id": 15,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[5]",
+            "name": "one_byte_payload[4]",
             "id": 16,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[6]",
+            "name": "one_byte_payload[5]",
             "id": 17,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[7]",
+            "name": "one_byte_payload[6]",
             "id": 18,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[8]",
+            "name": "one_byte_payload[7]",
             "id": 19,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[9]",
+            "name": "one_byte_payload[8]",
             "id": 20,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[10]",
+            "name": "one_byte_payload[9]",
             "id": 21,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[11]",
+            "name": "one_byte_payload[10]",
             "id": 22,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[12]",
+            "name": "one_byte_payload[11]",
             "id": 23,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[13]",
+            "name": "one_byte_payload[12]",
             "id": 24,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[14]",
+            "name": "one_byte_payload[13]",
             "id": 25,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[15]",
+            "name": "one_byte_payload[14]",
             "id": 26,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[16]",
+            "name": "one_byte_payload[15]",
             "id": 27,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[17]",
+            "name": "one_byte_payload[16]",
             "id": 28,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[18]",
+            "name": "one_byte_payload[17]",
             "id": 29,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[19]",
+            "name": "one_byte_payload[18]",
             "id": 30,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[20]",
+            "name": "one_byte_payload[19]",
             "id": 31,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[21]",
+            "name": "one_byte_payload[20]",
             "id": 32,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[22]",
+            "name": "one_byte_payload[21]",
             "id": 33,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[23]",
+            "name": "one_byte_payload[22]",
             "id": 34,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[24]",
+            "name": "one_byte_payload[23]",
             "id": 35,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[25]",
+            "name": "one_byte_payload[24]",
             "id": 36,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[26]",
+            "name": "one_byte_payload[25]",
             "id": 37,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[27]",
+            "name": "one_byte_payload[26]",
             "id": 38,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[28]",
+            "name": "one_byte_payload[27]",
             "id": 39,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[29]",
+            "name": "one_byte_payload[28]",
             "id": 40,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[30]",
+            "name": "one_byte_payload[29]",
             "id": 41,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[31]",
+            "name": "one_byte_payload[30]",
             "id": 42,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[32]",
+            "name": "one_byte_payload[31]",
             "id": 43,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[33]",
+            "name": "one_byte_payload[32]",
             "id": 44,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[34]",
+            "name": "one_byte_payload[33]",
             "id": 45,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[35]",
+            "name": "one_byte_payload[34]",
             "id": 46,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[36]",
+            "name": "one_byte_payload[35]",
             "id": 47,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[37]",
+            "name": "one_byte_payload[36]",
             "id": 48,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[38]",
+            "name": "one_byte_payload[37]",
             "id": 49,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[39]",
+            "name": "one_byte_payload[38]",
             "id": 50,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[40]",
+            "name": "one_byte_payload[39]",
             "id": 51,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[41]",
+            "name": "one_byte_payload[40]",
             "id": 52,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[42]",
+            "name": "one_byte_payload[41]",
             "id": 53,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[43]",
+            "name": "one_byte_payload[42]",
             "id": 54,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[44]",
+            "name": "one_byte_payload[43]",
             "id": 55,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[45]",
+            "name": "one_byte_payload[44]",
             "id": 56,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[46]",
+            "name": "one_byte_payload[45]",
             "id": 57,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[47]",
+            "name": "one_byte_payload[46]",
             "id": 58,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[48]",
+            "name": "one_byte_payload[47]",
             "id": 59,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[49]",
+            "name": "one_byte_payload[48]",
             "id": 60,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[50]",
+            "name": "one_byte_payload[49]",
             "id": 61,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[51]",
+            "name": "one_byte_payload[50]",
             "id": 62,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[52]",
+            "name": "one_byte_payload[51]",
             "id": 63,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[53]",
+            "name": "one_byte_payload[52]",
             "id": 64,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[54]",
+            "name": "one_byte_payload[53]",
             "id": 65,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[55]",
+            "name": "one_byte_payload[54]",
             "id": 66,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[56]",
+            "name": "one_byte_payload[55]",
             "id": 67,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[57]",
+            "name": "one_byte_payload[56]",
             "id": 68,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[58]",
+            "name": "one_byte_payload[57]",
             "id": 69,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[59]",
+            "name": "one_byte_payload[58]",
             "id": 70,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[60]",
+            "name": "one_byte_payload[59]",
             "id": 71,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[61]",
+            "name": "one_byte_payload[60]",
             "id": 72,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[62]",
+            "name": "one_byte_payload[61]",
             "id": 73,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "one_byte_payload[63]",
+            "name": "one_byte_payload[62]",
             "id": 74,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
-            "name": "four_byte_payload",
+            "name": "one_byte_payload[63]",
             "id": 75,
+            "header_type": "one_byte_payload_t",
+            "metadata": false
+        },
+        {
+            "name": "four_byte_payload",
+            "id": 76,
             "header_type": "four_byte_payload_t",
             "metadata": false
         },
         {
             "name": "label_header",
-            "id": 76,
+            "id": 77,
             "header_type": "label_header_t",
             "metadata": false
         },
         {
             "name": "quic_flags",
-            "id": 77,
+            "id": 78,
             "header_type": "quic_flags_t",
             "metadata": false
         },
         {
             "name": "whatsapp_three_byte_payload",
-            "id": 78,
+            "id": 79,
             "header_type": "whatsapp_three_byte_payload_t",
             "metadata": false
         }
@@ -1004,7 +1078,6 @@
             "size": 64,
             "header_type": "one_byte_payload_t",
             "header_ids": [
-                11,
                 12,
                 13,
                 14,
@@ -1067,7 +1140,8 @@
                 71,
                 72,
                 73,
-                74
+                74,
+                75
             ]
         }
     ],
@@ -2133,17 +2207,18 @@
             "order": [
                 "label_header",
                 "ethernet_header",
-                "ipv6_header",
                 "ipv4_header",
-                "tcp_header",
+                "ipv6_header",
                 "udp_header",
-                "quic_flags",
+                "tcp_header",
                 "dns_header",
                 "one_byte_payload[0]",
                 "one_byte_payload[1]",
-                "whatsapp_three_byte_payload",
                 "one_byte_payload[2]",
                 "one_byte_payload[3]",
+                "whatsapp_three_byte_payload",
+                "four_byte_payload",
+                "quic_flags",
                 "one_byte_payload[4]",
                 "one_byte_payload[5]",
                 "one_byte_payload[6]",
@@ -2155,7 +2230,6 @@
                 "one_byte_payload[12]",
                 "one_byte_payload[13]",
                 "one_byte_payload[14]",
-                "four_byte_payload",
                 "one_byte_payload[15]",
                 "one_byte_payload[16]",
                 "one_byte_payload[17]",
@@ -2282,8 +2356,748 @@
             ]
         },
         {
-            "name": "do_set_label_by_detect",
+            "name": "do_updateB_2",
             "id": 1,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_payload_2"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "four_byte_payload",
+                                "data"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_length_2"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "intrinsic_metadata",
+                                "payload_len"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "count_packet",
+            "id": 2,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "count",
+                    "parameters": [
+                        {
+                            "type": "counter_array",
+                            "value": "ingress_port_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "ingress_port"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "count",
+                    "parameters": [
+                        {
+                            "type": "counter_array",
+                            "value": "egress_port_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "egress_spec"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_updateA_2",
+            "id": 3,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_payload_2"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "four_byte_payload",
+                                "data"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_length_2"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "intrinsic_metadata",
+                                "payload_len"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_set_label_by_match_rule",
+            "id": 4,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                },
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_set_label_by_guess",
+            "id": 5,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_read_counter",
+            "id": 6,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_A"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_B"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_updateB_3",
+            "id": 7,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_payload_3"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "four_byte_payload",
+                                "data"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_length_3"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "intrinsic_metadata",
+                                "payload_len"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_updateA_1",
+            "id": 8,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_payload_1"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "four_byte_payload",
+                                "data"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_length_1"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "intrinsic_metadata",
+                                "payload_len"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "_nop",
+            "id": 9,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "no_op",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "name": "do_calculate_index",
+            "id": 10,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "modify_field_with_hash_based_offset",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x0"
+                        },
+                        {
+                            "type": "calculation",
+                            "value": "index_hash_cal"
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x400"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_updateB_1",
+            "id": 11,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_payload_1"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "four_byte_payload",
+                                "data"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_length_1"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "intrinsic_metadata",
+                                "payload_len"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_set_sub_label_by_guess",
+            "id": 12,
+            "runtime_data": [
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_updateA_3",
+            "id": 13,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_payload_3"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "four_byte_payload",
+                                "data"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_length_3"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "intrinsic_metadata",
+                                "payload_len"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x3"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_set_label_by_detect",
+            "id": 14,
             "runtime_data": [
                 {
                     "name": "label",
@@ -2394,157 +3208,8 @@
             ]
         },
         {
-            "name": "set_egress_port",
-            "id": 2,
-            "runtime_data": [
-                {
-                    "name": "port",
-                    "bitwidth": 9
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "_nop",
-            "id": 3,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "no_op",
-                    "parameters": []
-                }
-            ]
-        },
-        {
-            "name": "count_packet",
-            "id": 4,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "count",
-                    "parameters": [
-                        {
-                            "type": "counter_array",
-                            "value": "ingress_port_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "ingress_port"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "count",
-                    "parameters": [
-                        {
-                            "type": "counter_array",
-                            "value": "egress_port_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "send_to_cpu",
-            "id": 5,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0xff"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_set_label_by_match_rule",
-            "id": 6,
-            "runtime_data": [
-                {
-                    "name": "label",
-                    "bitwidth": 8
-                },
-                {
-                    "name": "sublabel",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 1
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "do_label_encap",
-            "id": 7,
+            "id": 15,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2635,12 +3300,12 @@
             ]
         },
         {
-            "name": "do_set_sub_label_by_guess",
-            "id": 8,
+            "name": "set_egress_port",
+            "id": 16,
             "runtime_data": [
                 {
-                    "name": "sublabel",
-                    "bitwidth": 8
+                    "name": "port",
+                    "bitwidth": 9
                 }
             ],
             "primitives": [
@@ -2650,59 +3315,305 @@
                         {
                             "type": "field",
                             "value": [
-                                "label_metadata",
-                                "sub_label"
+                                "standard_metadata",
+                                "egress_spec"
                             ]
                         },
                         {
                             "type": "runtime_data",
                             "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
                         }
                     ]
                 }
             ]
         },
         {
-            "name": "do_set_label_by_guess",
-            "id": 9,
-            "runtime_data": [
+            "name": "do_read_all",
+            "id": 17,
+            "runtime_data": [],
+            "primitives": [
                 {
-                    "name": "label",
-                    "bitwidth": 8
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_A1"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_payload_1"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_A2"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_payload_2"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_A3"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_payload_3"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_B1"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_payload_1"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_B2"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_payload_2"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_B3"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_payload_3"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_A1"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_length_1"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_A2"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_length_2"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_A3"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_length_3"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_B1"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_length_1"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_B2"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_length_2"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_B3"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_length_3"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
                 }
-            ],
+            ]
+        },
+        {
+            "name": "send_to_cpu",
+            "id": 18,
+            "runtime_data": [],
             "primitives": [
                 {
                     "op": "modify_field",
@@ -2710,45 +3621,13 @@
                         {
                             "type": "field",
                             "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label_result"
+                                "standard_metadata",
+                                "egress_spec"
                             ]
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
+                            "value": "0xff"
                         }
                     ]
                 }
@@ -2756,7 +3635,7 @@
         },
         {
             "name": "_drop",
-            "id": 10,
+            "id": 19,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2909,9 +3788,9 @@
                         "do_set_label_by_detect"
                     ],
                     "next_tables": {
-                        "do_set_label_by_detect": "_condition_6"
+                        "do_set_label_by_detect": "calculate_index"
                     },
-                    "base_default_next": "_condition_6"
+                    "base_default_next": "calculate_index"
                 },
                 {
                     "name": "detect_dns",
@@ -3059,9 +3938,9 @@
                         "do_set_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_label_by_guess": "_condition_8"
+                        "do_set_label_by_guess": "_condition_9"
                     },
-                    "base_default_next": "_condition_7"
+                    "base_default_next": "_condition_8"
                 },
                 {
                     "name": "guess_by_udp_port",
@@ -3094,9 +3973,9 @@
                         "do_set_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_label_by_guess": "_condition_8"
+                        "do_set_label_by_guess": "_condition_9"
                     },
-                    "base_default_next": "_condition_8"
+                    "base_default_next": "_condition_9"
                 },
                 {
                     "name": "guess_by_src_address",
@@ -3121,9 +4000,9 @@
                         "do_set_sub_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_sub_label_by_guess": "_condition_9"
+                        "do_set_sub_label_by_guess": "_condition_10"
                     },
-                    "base_default_next": "_condition_9"
+                    "base_default_next": "_condition_10"
                 },
                 {
                     "name": "guess_by_dst_address",
@@ -3153,8 +4032,124 @@
                     "base_default_next": null
                 },
                 {
-                    "name": "port_count_table",
+                    "name": "calculate_index",
                     "id": 11,
+                    "match_type": "exact",
+                    "type": "simple",
+                    "max_size": 1,
+                    "with_counters": false,
+                    "direct_meters": null,
+                    "support_timeout": false,
+                    "key": [],
+                    "actions": [
+                        "do_calculate_index"
+                    ],
+                    "next_tables": {
+                        "do_calculate_index": "read_counter"
+                    },
+                    "base_default_next": "read_counter"
+                },
+                {
+                    "name": "read_counter",
+                    "id": 12,
+                    "match_type": "exact",
+                    "type": "simple",
+                    "max_size": 1,
+                    "with_counters": false,
+                    "direct_meters": null,
+                    "support_timeout": false,
+                    "key": [],
+                    "actions": [
+                        "do_read_counter"
+                    ],
+                    "next_tables": {
+                        "do_read_counter": "_condition_6"
+                    },
+                    "base_default_next": "_condition_6"
+                },
+                {
+                    "name": "update_A",
+                    "id": 13,
+                    "match_type": "exact",
+                    "type": "simple",
+                    "max_size": 3,
+                    "with_counters": false,
+                    "direct_meters": null,
+                    "support_timeout": false,
+                    "key": [
+                        {
+                            "match_type": "exact",
+                            "target": [
+                                "direction_metadata",
+                                "counter_A"
+                            ],
+                            "mask": null
+                        }
+                    ],
+                    "actions": [
+                        "do_updateA_1",
+                        "do_updateA_2",
+                        "do_updateA_3"
+                    ],
+                    "next_tables": {
+                        "do_updateA_1": "read_all",
+                        "do_updateA_2": "read_all",
+                        "do_updateA_3": "read_all"
+                    },
+                    "base_default_next": "read_all"
+                },
+                {
+                    "name": "update_B",
+                    "id": 14,
+                    "match_type": "exact",
+                    "type": "simple",
+                    "max_size": 3,
+                    "with_counters": false,
+                    "direct_meters": null,
+                    "support_timeout": false,
+                    "key": [
+                        {
+                            "match_type": "exact",
+                            "target": [
+                                "direction_metadata",
+                                "counter_B"
+                            ],
+                            "mask": null
+                        }
+                    ],
+                    "actions": [
+                        "do_updateB_1",
+                        "do_updateB_2",
+                        "do_updateB_3"
+                    ],
+                    "next_tables": {
+                        "do_updateB_1": "read_all",
+                        "do_updateB_2": "read_all",
+                        "do_updateB_3": "read_all"
+                    },
+                    "base_default_next": "read_all"
+                },
+                {
+                    "name": "read_all",
+                    "id": 15,
+                    "match_type": "exact",
+                    "type": "simple",
+                    "max_size": 1,
+                    "with_counters": false,
+                    "direct_meters": null,
+                    "support_timeout": false,
+                    "key": [],
+                    "actions": [
+                        "do_read_all"
+                    ],
+                    "next_tables": {
+                        "do_read_all": "_condition_7"
+                    },
+                    "base_default_next": "_condition_7"
+                },
+                {
+                    "name": "port_count_table",
+                    "id": 16,
                     "match_type": "exact",
                     "type": "simple",
                     "max_size": 16384,
@@ -3373,11 +4368,37 @@
                         }
                     },
                     "true_next": "detect_four_byte_payload",
-                    "false_next": "_condition_6"
+                    "false_next": "calculate_index"
                 },
                 {
                     "name": "_condition_6",
                     "id": 6,
+                    "expression": {
+                        "type": "expression",
+                        "value": {
+                            "op": "<",
+                            "left": {
+                                "type": "field",
+                                "value": [
+                                    "five_tuple_metadata",
+                                    "srcPort"
+                                ]
+                            },
+                            "right": {
+                                "type": "field",
+                                "value": [
+                                    "five_tuple_metadata",
+                                    "dstPort"
+                                ]
+                            }
+                        }
+                    },
+                    "true_next": "update_A",
+                    "false_next": "update_B"
+                },
+                {
+                    "name": "_condition_7",
+                    "id": 7,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -3413,11 +4434,11 @@
                         }
                     },
                     "true_next": "guess_by_tcp_port",
-                    "false_next": "_condition_7"
+                    "false_next": "_condition_8"
                 },
                 {
-                    "name": "_condition_7",
-                    "id": 7,
+                    "name": "_condition_8",
+                    "id": 8,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -3453,11 +4474,11 @@
                         }
                     },
                     "true_next": "guess_by_udp_port",
-                    "false_next": "_condition_8"
+                    "false_next": "_condition_9"
                 },
                 {
-                    "name": "_condition_8",
-                    "id": 8,
+                    "name": "_condition_9",
+                    "id": 9,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -3493,11 +4514,11 @@
                         }
                     },
                     "true_next": "guess_by_src_address",
-                    "false_next": "_condition_9"
+                    "false_next": "_condition_10"
                 },
                 {
-                    "name": "_condition_9",
-                    "id": 9,
+                    "name": "_condition_10",
+                    "id": 10,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -3544,7 +4565,7 @@
             "tables": [
                 {
                     "name": "label_encup",
-                    "id": 12,
+                    "id": 17,
                     "match_type": "exact",
                     "type": "simple",
                     "max_size": 16,
@@ -3576,7 +4597,50 @@
             "conditionals": []
         }
     ],
-    "calculations": [],
+    "calculations": [
+        {
+            "name": "index_hash_cal",
+            "id": 0,
+            "input": [
+                {
+                    "type": "field",
+                    "value": [
+                        "five_tuple_metadata",
+                        "srcAddr"
+                    ]
+                },
+                {
+                    "type": "field",
+                    "value": [
+                        "five_tuple_metadata",
+                        "dstAddr"
+                    ]
+                },
+                {
+                    "type": "field",
+                    "value": [
+                        "five_tuple_metadata",
+                        "srcPort"
+                    ]
+                },
+                {
+                    "type": "field",
+                    "value": [
+                        "five_tuple_metadata",
+                        "dstPort"
+                    ]
+                },
+                {
+                    "type": "field",
+                    "value": [
+                        "five_tuple_metadata",
+                        "protocol"
+                    ]
+                }
+            ],
+            "algo": "crc16"
+        }
+    ],
     "checksums": [],
     "learn_lists": [],
     "field_lists": [],
@@ -3594,7 +4658,92 @@
             "size": 254
         }
     ],
-    "register_arrays": [],
+    "register_arrays": [
+        {
+            "name": "dirA_payload_1",
+            "id": 0,
+            "bitwidth": 32,
+            "size": 16
+        },
+        {
+            "name": "dirA_payload_2",
+            "id": 1,
+            "bitwidth": 32,
+            "size": 16
+        },
+        {
+            "name": "dirA_payload_3",
+            "id": 2,
+            "bitwidth": 32,
+            "size": 16
+        },
+        {
+            "name": "dirB_payload_1",
+            "id": 3,
+            "bitwidth": 32,
+            "size": 16
+        },
+        {
+            "name": "dirB_payload_2",
+            "id": 4,
+            "bitwidth": 32,
+            "size": 16
+        },
+        {
+            "name": "dirB_payload_3",
+            "id": 5,
+            "bitwidth": 32,
+            "size": 16
+        },
+        {
+            "name": "dirA_length_1",
+            "id": 6,
+            "bitwidth": 16,
+            "size": 16
+        },
+        {
+            "name": "dirA_length_2",
+            "id": 7,
+            "bitwidth": 16,
+            "size": 16
+        },
+        {
+            "name": "dirA_length_3",
+            "id": 8,
+            "bitwidth": 16,
+            "size": 16
+        },
+        {
+            "name": "dirB_length_1",
+            "id": 9,
+            "bitwidth": 16,
+            "size": 16
+        },
+        {
+            "name": "dirB_length_2",
+            "id": 10,
+            "bitwidth": 16,
+            "size": 16
+        },
+        {
+            "name": "dirB_length_3",
+            "id": 11,
+            "bitwidth": 16,
+            "size": 16
+        },
+        {
+            "name": "dirA_counter",
+            "id": 12,
+            "bitwidth": 16,
+            "size": 16
+        },
+        {
+            "name": "dirB_counter",
+            "id": 13,
+            "bitwidth": 16,
+            "size": 16
+        }
+    ],
     "force_arith": [
         [
             "standard_metadata",
