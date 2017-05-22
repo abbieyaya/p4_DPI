@@ -114,11 +114,11 @@ header_type tcp_header_t {
         window : 16;
         checksum : 16;
         urgentPtr : 16;
-        options: *;
+        //options: *;
     }
 
-    length : 4 * dataOffset ;
-    max_length : 512;
+    //length : 4 * dataOffset ;
+    //max_length : 512;
 }
 
 header_type udp_header_t {
@@ -145,8 +145,8 @@ header_type label_header_t {
     fields {
         label: 8;
         sub_label: 8;
-        label_result : 8 ;
-        sub_label_result : 8 ;
+        label_result : 8;
+        sub_label_result : 8;
     }
 }
 

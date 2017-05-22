@@ -4,6 +4,21 @@
 
 /* Table */
 
+table table0 {
+    reads {
+        standard_metadata.ingress_port : ternary;
+        ethernet_header.dstAddr : ternary;
+        ethernet_header.srcAddr : ternary;
+        ethernet_header.etherType : ternary;
+    }
+    actions {
+        set_egress_port;
+        send_to_cpu;
+        _drop;
+    }
+    support_timeout: true;
+}
+
 table forward {
     reads {
         ipv4_header.dstAddr: exact;
@@ -37,8 +52,8 @@ table physical_to_host {
 
 table label_encup {
     reads { 
-        //label_metadata.label : exact; 
-        standard_metadata.instance_type : exact ;
+        //standard_metadata.instance_type : exact ;
+        learning_metadata._type : exact ;
     }
     actions { 
         _drop; 
@@ -84,11 +99,6 @@ table detect_four_byte_payload {
 }
 
 table detect_dns {
-    reads {
-        dns_header : valid;
-        //one_byte_payload : exact;
-    }
-
     actions {
         do_assemble ;
     }
@@ -96,7 +106,6 @@ table detect_dns {
 
 table detect_quic {
     reads {
-        quic_flags : valid;
         quic_flags.reset : exact;
         quic_flags.reserved: exact ;
     }
@@ -138,7 +147,7 @@ table guess_by_tcp_port {
 table guess_by_udp_port {
     reads {
         udp_header.srcPort : ternary;
-        tcp_header.dstPort : ternary;
+        udp_header.dstPort : ternary;
     }
 
     actions {
