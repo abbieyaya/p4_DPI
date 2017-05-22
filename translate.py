@@ -149,6 +149,7 @@ def handle_pkt(pkt):
         m_label_result = detect_or_guess(int(to_hex((str(pkt))[2:3]), 16))
         s_label_result = detect_or_guess(int(to_hex((str(pkt))[3:4]), 16))
 
+        if m_label == "" and s_label == "" : return ;
         packet = Ether((str(pkt))[4:])
         # parse five tuple
         ether_packet = Ether((str(pkt))[4:18])
@@ -172,7 +173,7 @@ def handle_pkt(pkt):
     #print m_label, s_label
     #ether_packet.show()
     #ip_packet.show()
-    #packet = ip_packet 
+    packet = ip_packet 
     #try :
     counter = 0
     src_port = 0 
