@@ -127,66 +127,26 @@ field_list_calculation index_hash_cal {
     input { 
         hash_fields;
     }
-    algorithm : crc16;
+    algorithm : csum16;
     output_width : 16;
 }
 
-register dirA_payload_1{
+register dirA_payload{
     width : 32;
     instance_count : 1024;
 }
 
-register dirA_payload_2{
+register dirB_payload{
     width : 32;
     instance_count : 1024;
 }
 
-register dirA_payload_3{
-    width : 32;
-    instance_count : 1024;
-}
-
-register dirB_payload_1{
-    width : 32;
-    instance_count : 1024;
-}
-
-register dirB_payload_2{
-    width : 32;
-    instance_count : 1024;
-}
-
-register dirB_payload_3{
-    width : 32;
-    instance_count : 1024;
-}
-
-register dirA_length_1{
+register dirA_length{
     width : 16;
     instance_count : 1024;
 }
 
-register dirA_length_2{
-    width : 16;
-    instance_count : 1024;
-}
-
-register dirA_length_3{
-    width : 16;
-    instance_count : 1024;
-}
-
-register dirB_length_1{
-    width : 16;
-    instance_count : 1024;
-}
-
-register dirB_length_2{
-    width : 16;
-    instance_count : 1024;
-}
-
-register dirB_length_3{
+register dirB_length{
     width : 16;
     instance_count : 1024;
 }
@@ -206,61 +166,38 @@ action do_calculate_index(){
 }
 
 action do_read_all(){
-    register_read(direction_metadata.payload_A1 , dirA_payload_1, direction_metadata.hash_index);
-    register_read(direction_metadata.payload_A2 , dirA_payload_2, direction_metadata.hash_index);
-    register_read(direction_metadata.payload_A3 , dirA_payload_3, direction_metadata.hash_index);
-    register_read(direction_metadata.payload_B1 , dirB_payload_1, direction_metadata.hash_index);
-    register_read(direction_metadata.payload_B2 , dirB_payload_2, direction_metadata.hash_index);
-    register_read(direction_metadata.payload_B3 , dirB_payload_3, direction_metadata.hash_index);
+    register_read(direction_metadata.payload_A , dirA_payload, direction_metadata.hash_index);
+    register_read(direction_metadata.payload_B , dirB_payload, direction_metadata.hash_index);
 
-    register_read(direction_metadata.length_A1 , dirA_length_1, direction_metadata.hash_index);
-    register_read(direction_metadata.length_A2 , dirA_length_2, direction_metadata.hash_index);
-    register_read(direction_metadata.length_A3 , dirA_length_3, direction_metadata.hash_index);
-    register_read(direction_metadata.length_B1 , dirB_length_1, direction_metadata.hash_index);
-    register_read(direction_metadata.length_B2 , dirB_length_2, direction_metadata.hash_index);
-    register_read(direction_metadata.length_B3 , dirB_length_3, direction_metadata.hash_index);
+    register_read(direction_metadata.length_A , dirA_length, direction_metadata.hash_index);
+    register_read(direction_metadata.length_B , dirB_length, direction_metadata.hash_index);
 }
 
 action do_read_counter(){
     register_read(direction_metadata.counter_A , dirA_counter, direction_metadata.hash_index);
-    register_read(direction_metadata.counter_B , dirA_counter, direction_metadata.hash_index);
-
+    register_read(direction_metadata.counter_B , dirB_counter, direction_metadata.hash_index);
 }
 
-action do_updateA_1(){
-    register_write( dirA_payload_1, direction_metadata.hash_index, four_byte_payload.data );
-    register_write( dirA_length_1, direction_metadata.hash_index, intrinsic_metadata.payload_len );
+action do_updateA(){
+    register_write( dirA_payload, direction_metadata.hash_index, four_byte_payload.data );
+    register_write( dirA_length, direction_metadata.hash_index, intrinsic_metadata.payload_len );
+    modify_field( direction_metadata.counter_A, 1 );
     register_write( dirA_counter, direction_metadata.hash_index, 1 );
-    
 }
 
-action do_updateA_2(){
-    register_write( dirA_payload_2, direction_metadata.hash_index, four_byte_payload.data );
-    register_write( dirA_length_2, direction_metadata.hash_index, intrinsic_metadata.payload_len );
-    register_write( dirA_counter, direction_metadata.hash_index, 2 );
+action do_update_counter_A(number){
+    modify_field( direction_metadata.counter_A, number );
+    register_write( dirA_counter, direction_metadata.hash_index, number );
 }
 
-action do_updateA_3(){
-    register_write( dirA_payload_3, direction_metadata.hash_index, four_byte_payload.data );
-    register_write( dirA_length_3, direction_metadata.hash_index, intrinsic_metadata.payload_len );
-    register_write( dirA_counter, direction_metadata.hash_index, 3 );
-}
-
-action do_updateB_1(){
-    register_write( dirB_payload_1, direction_metadata.hash_index, four_byte_payload.data );
-    register_write( dirB_length_1, direction_metadata.hash_index, intrinsic_metadata.payload_len );
+action do_updateB(){
+    register_write( dirB_payload, direction_metadata.hash_index, four_byte_payload.data );
+    register_write( dirB_length, direction_metadata.hash_index, intrinsic_metadata.payload_len );
+    modify_field( direction_metadata.counter_B, 1 );
     register_write( dirB_counter, direction_metadata.hash_index, 1 );
 }
 
-action do_updateB_2(){
-    register_write( dirB_payload_2, direction_metadata.hash_index, four_byte_payload.data );
-    register_write( dirB_length_2, direction_metadata.hash_index, intrinsic_metadata.payload_len );
-    register_write( dirB_counter, direction_metadata.hash_index, 2 );
+action do_update_counter_B(number){
+    modify_field( direction_metadata.counter_B, number );
+    register_write( dirB_counter, direction_metadata.hash_index, number );
 }
-
-action do_updateB_3(){
-    register_write( dirB_payload_3, direction_metadata.hash_index, four_byte_payload.data );
-    register_write( dirB_length_3, direction_metadata.hash_index, intrinsic_metadata.payload_len );
-    register_write( dirB_counter, direction_metadata.hash_index, 3 );
-}
-

@@ -50,19 +50,11 @@ header_type direction_metadata_t {
     fields {
         hash_index : 16;
 
-        payload_A1 : 32;
-        payload_A2 : 32;
-        payload_A3 : 32;
-        payload_B1 : 32;
-        payload_B2 : 32;
-        payload_B3 : 32;
+        payload_A : 32;
+        payload_B : 32;
 
-        length_A1 : 16;
-        length_A2 : 16;
-        length_A3 : 16;
-        length_B1 : 16;
-        length_B2 : 16;
-        length_B3 : 16;
+        length_A : 16;
+        length_B : 16;
 
         counter_A : 16;
         counter_B : 16;

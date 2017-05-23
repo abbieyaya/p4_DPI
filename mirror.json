@@ -172,51 +172,19 @@
                     16
                 ],
                 [
-                    "payload_A1",
+                    "payload_A",
                     32
                 ],
                 [
-                    "payload_A2",
+                    "payload_B",
                     32
                 ],
                 [
-                    "payload_A3",
-                    32
-                ],
-                [
-                    "payload_B1",
-                    32
-                ],
-                [
-                    "payload_B2",
-                    32
-                ],
-                [
-                    "payload_B3",
-                    32
-                ],
-                [
-                    "length_A1",
+                    "length_A",
                     16
                 ],
                 [
-                    "length_A2",
-                    16
-                ],
-                [
-                    "length_A3",
-                    16
-                ],
-                [
-                    "length_B1",
-                    16
-                ],
-                [
-                    "length_B2",
-                    16
-                ],
-                [
-                    "length_B3",
+                    "length_B",
                     16
                 ],
                 [
@@ -2207,18 +2175,18 @@
             "order": [
                 "label_header",
                 "ethernet_header",
-                "ipv4_header",
                 "ipv6_header",
+                "ipv4_header",
                 "udp_header",
+                "quic_flags",
                 "tcp_header",
                 "dns_header",
+                "four_byte_payload",
                 "one_byte_payload[0]",
                 "one_byte_payload[1]",
+                "whatsapp_three_byte_payload",
                 "one_byte_payload[2]",
                 "one_byte_payload[3]",
-                "whatsapp_three_byte_payload",
-                "four_byte_payload",
-                "quic_flags",
                 "one_byte_payload[4]",
                 "one_byte_payload[5]",
                 "one_byte_payload[6]",
@@ -2285,9 +2253,14 @@
     "meter_arrays": [],
     "actions": [
         {
-            "name": "do_assemble",
+            "name": "do_update_counter_A",
             "id": 0,
-            "runtime_data": [],
+            "runtime_data": [
+                {
+                    "name": "number",
+                    "bitwidth": 16
+                }
+            ],
             "primitives": [
                 {
                     "op": "modify_field",
@@ -2295,77 +2268,56 @@
                         {
                             "type": "field",
                             "value": [
-                                "label_metadata",
-                                "label"
+                                "direction_metadata",
+                                "counter_A"
                             ]
                         },
                         {
-                            "type": "hexstr",
-                            "value": "0x2"
+                            "type": "runtime_data",
+                            "value": 0
                         }
                     ]
                 },
                 {
-                    "op": "modify_field",
+                    "op": "register_write",
                     "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_counter"
+                        },
                         {
                             "type": "field",
                             "value": [
-                                "label_metadata",
-                                "label_result"
+                                "direction_metadata",
+                                "hash_index"
                             ]
                         },
                         {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
+                            "type": "runtime_data",
+                            "value": 0
                         }
                     ]
                 }
             ]
         },
         {
-            "name": "do_updateB_2",
+            "name": "do_read_counter",
             "id": 1,
             "runtime_data": [],
             "primitives": [
                 {
-                    "op": "register_write",
+                    "op": "register_read",
                     "parameters": [
                         {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_A"
+                            ]
+                        },
+                        {
                             "type": "register_array",
-                            "value": "dirB_payload_2"
+                            "value": "dirA_counter"
                         },
                         {
                             "type": "field",
@@ -2373,42 +2325,19 @@
                                 "direction_metadata",
                                 "hash_index"
                             ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "four_byte_payload",
-                                "data"
-                            ]
                         }
                     ]
                 },
                 {
-                    "op": "register_write",
+                    "op": "register_read",
                     "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length_2"
-                        },
                         {
                             "type": "field",
                             "value": [
                                 "direction_metadata",
-                                "hash_index"
+                                "counter_B"
                             ]
                         },
-                        {
-                            "type": "field",
-                            "value": [
-                                "intrinsic_metadata",
-                                "payload_len"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
                         {
                             "type": "register_array",
                             "value": "dirB_counter"
@@ -2419,10 +2348,6 @@
                                 "direction_metadata",
                                 "hash_index"
                             ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
                         }
                     ]
                 }
@@ -2468,503 +2393,8 @@
             ]
         },
         {
-            "name": "do_updateA_2",
-            "id": 3,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_payload_2"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "four_byte_payload",
-                                "data"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_length_2"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "intrinsic_metadata",
-                                "payload_len"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_set_label_by_match_rule",
-            "id": 4,
-            "runtime_data": [
-                {
-                    "name": "label",
-                    "bitwidth": 8
-                },
-                {
-                    "name": "sublabel",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 1
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_set_label_by_guess",
-            "id": 5,
-            "runtime_data": [
-                {
-                    "name": "label",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_read_counter",
-            "id": 6,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_A"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_B"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_updateB_3",
-            "id": 7,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_payload_3"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "four_byte_payload",
-                                "data"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length_3"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "intrinsic_metadata",
-                                "payload_len"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x3"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_updateA_1",
-            "id": 8,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_payload_1"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "four_byte_payload",
-                                "data"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_length_1"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "intrinsic_metadata",
-                                "payload_len"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "_nop",
-            "id": 9,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "no_op",
-                    "parameters": []
-                }
-            ]
-        },
-        {
-            "name": "do_calculate_index",
-            "id": 10,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field_with_hash_based_offset",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x0"
-                        },
-                        {
-                            "type": "calculation",
-                            "value": "index_hash_cal"
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x400"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_updateB_1",
-            "id": 11,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_payload_1"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "four_byte_payload",
-                                "data"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length_1"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "intrinsic_metadata",
-                                "payload_len"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "do_set_sub_label_by_guess",
-            "id": 12,
+            "id": 3,
             "runtime_data": [
                 {
                     "name": "sublabel",
@@ -3023,81 +2453,8 @@
             ]
         },
         {
-            "name": "do_updateA_3",
-            "id": 13,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_payload_3"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "four_byte_payload",
-                                "data"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_length_3"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "intrinsic_metadata",
-                                "payload_len"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x3"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "do_set_label_by_detect",
-            "id": 14,
+            "id": 4,
             "runtime_data": [
                 {
                     "name": "label",
@@ -3208,8 +2565,155 @@
             ]
         },
         {
+            "name": "do_read_all",
+            "id": 5,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_A"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_payload"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_B"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_payload"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_A"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_length"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_B"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_length"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_update_counter_B",
+            "id": 6,
+            "runtime_data": [
+                {
+                    "name": "number",
+                    "bitwidth": 16
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_B"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name": "do_label_encap",
-            "id": 15,
+            "id": 7,
             "runtime_data": [],
             "primitives": [
                 {
@@ -3300,8 +2804,139 @@
             ]
         },
         {
+            "name": "do_updateA",
+            "id": 8,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_payload"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "four_byte_payload",
+                                "data"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_length"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "intrinsic_metadata",
+                                "payload_len"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_A"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "_drop",
+            "id": 9,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "drop",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "name": "do_calculate_index",
+            "id": 10,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "modify_field_with_hash_based_offset",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x0"
+                        },
+                        {
+                            "type": "calculation",
+                            "value": "index_hash_cal"
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x400"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name": "set_egress_port",
-            "id": 16,
+            "id": 11,
             "runtime_data": [
                 {
                     "name": "port",
@@ -3328,92 +2963,78 @@
             ]
         },
         {
-            "name": "do_read_all",
-            "id": 17,
+            "name": "do_updateB",
+            "id": 12,
             "runtime_data": [],
             "primitives": [
                 {
-                    "op": "register_read",
+                    "op": "register_write",
                     "parameters": [
                         {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_A1"
-                            ]
-                        },
-                        {
                             "type": "register_array",
-                            "value": "dirA_payload_1"
+                            "value": "dirB_payload"
                         },
                         {
                             "type": "field",
                             "value": [
                                 "direction_metadata",
                                 "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "four_byte_payload",
+                                "data"
                             ]
                         }
                     ]
                 },
                 {
-                    "op": "register_read",
+                    "op": "register_write",
                     "parameters": [
                         {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_A2"
-                            ]
-                        },
-                        {
                             "type": "register_array",
-                            "value": "dirA_payload_2"
+                            "value": "dirB_length"
                         },
                         {
                             "type": "field",
                             "value": [
                                 "direction_metadata",
                                 "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "intrinsic_metadata",
+                                "payload_len"
                             ]
                         }
                     ]
                 },
                 {
-                    "op": "register_read",
+                    "op": "modify_field",
                     "parameters": [
                         {
                             "type": "field",
                             "value": [
                                 "direction_metadata",
-                                "payload_A3"
+                                "counter_B"
                             ]
                         },
                         {
-                            "type": "register_array",
-                            "value": "dirA_payload_3"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
+                            "type": "hexstr",
+                            "value": "0x1"
                         }
                     ]
                 },
                 {
-                    "op": "register_read",
+                    "op": "register_write",
                     "parameters": [
                         {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_B1"
-                            ]
-                        },
-                        {
                             "type": "register_array",
-                            "value": "dirB_payload_1"
+                            "value": "dirB_counter"
                         },
                         {
                             "type": "field",
@@ -3421,190 +3042,10 @@
                                 "direction_metadata",
                                 "hash_index"
                             ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_B2"
-                            ]
                         },
                         {
-                            "type": "register_array",
-                            "value": "dirB_payload_2"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_B3"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirB_payload_3"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_A1"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_length_1"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_A2"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_length_2"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_A3"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_length_3"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_B1"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length_1"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_B2"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length_2"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_B3"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length_3"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
+                            "type": "hexstr",
+                            "value": "0x1"
                         }
                     ]
                 }
@@ -3612,7 +3053,7 @@
         },
         {
             "name": "send_to_cpu",
-            "id": 18,
+            "id": 13,
             "runtime_data": [],
             "primitives": [
                 {
@@ -3634,12 +3075,191 @@
             ]
         },
         {
-            "name": "_drop",
-            "id": 19,
+            "name": "do_set_label_by_guess",
+            "id": 14,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_assemble",
+            "id": 15,
             "runtime_data": [],
             "primitives": [
                 {
-                    "op": "drop",
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_set_label_by_match_rule",
+            "id": 16,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                },
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "_nop",
+            "id": 17,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "no_op",
                     "parameters": []
                 }
             ]
@@ -3938,9 +3558,9 @@
                         "do_set_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_label_by_guess": "_condition_9"
+                        "do_set_label_by_guess": "_condition_11"
                     },
-                    "base_default_next": "_condition_8"
+                    "base_default_next": "_condition_10"
                 },
                 {
                     "name": "guess_by_udp_port",
@@ -3973,9 +3593,9 @@
                         "do_set_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_label_by_guess": "_condition_9"
+                        "do_set_label_by_guess": "_condition_11"
                     },
-                    "base_default_next": "_condition_9"
+                    "base_default_next": "_condition_11"
                 },
                 {
                     "name": "guess_by_src_address",
@@ -4000,9 +3620,9 @@
                         "do_set_sub_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_sub_label_by_guess": "_condition_10"
+                        "do_set_sub_label_by_guess": "_condition_12"
                     },
-                    "base_default_next": "_condition_10"
+                    "base_default_next": "_condition_12"
                 },
                 {
                     "name": "guess_by_dst_address",
@@ -4072,7 +3692,25 @@
                     "id": 13,
                     "match_type": "exact",
                     "type": "simple",
-                    "max_size": 3,
+                    "max_size": 1,
+                    "with_counters": false,
+                    "direct_meters": null,
+                    "support_timeout": false,
+                    "key": [],
+                    "actions": [
+                        "do_updateA"
+                    ],
+                    "next_tables": {
+                        "do_updateA": "read_all"
+                    },
+                    "base_default_next": "read_all"
+                },
+                {
+                    "name": "update_counter_A",
+                    "id": 14,
+                    "match_type": "exact",
+                    "type": "simple",
+                    "max_size": 2,
                     "with_counters": false,
                     "direct_meters": null,
                     "support_timeout": false,
@@ -4087,23 +3725,37 @@
                         }
                     ],
                     "actions": [
-                        "do_updateA_1",
-                        "do_updateA_2",
-                        "do_updateA_3"
+                        "do_update_counter_A"
                     ],
                     "next_tables": {
-                        "do_updateA_1": "read_all",
-                        "do_updateA_2": "read_all",
-                        "do_updateA_3": "read_all"
+                        "do_update_counter_A": "read_all"
                     },
                     "base_default_next": "read_all"
                 },
                 {
                     "name": "update_B",
-                    "id": 14,
+                    "id": 15,
                     "match_type": "exact",
                     "type": "simple",
-                    "max_size": 3,
+                    "max_size": 1,
+                    "with_counters": false,
+                    "direct_meters": null,
+                    "support_timeout": false,
+                    "key": [],
+                    "actions": [
+                        "do_updateB"
+                    ],
+                    "next_tables": {
+                        "do_updateB": "read_all"
+                    },
+                    "base_default_next": "read_all"
+                },
+                {
+                    "name": "update_counter_B",
+                    "id": 16,
+                    "match_type": "exact",
+                    "type": "simple",
+                    "max_size": 2,
                     "with_counters": false,
                     "direct_meters": null,
                     "support_timeout": false,
@@ -4118,20 +3770,16 @@
                         }
                     ],
                     "actions": [
-                        "do_updateB_1",
-                        "do_updateB_2",
-                        "do_updateB_3"
+                        "do_update_counter_B"
                     ],
                     "next_tables": {
-                        "do_updateB_1": "read_all",
-                        "do_updateB_2": "read_all",
-                        "do_updateB_3": "read_all"
+                        "do_update_counter_B": "read_all"
                     },
                     "base_default_next": "read_all"
                 },
                 {
                     "name": "read_all",
-                    "id": 15,
+                    "id": 17,
                     "match_type": "exact",
                     "type": "simple",
                     "max_size": 1,
@@ -4143,13 +3791,13 @@
                         "do_read_all"
                     ],
                     "next_tables": {
-                        "do_read_all": "_condition_7"
+                        "do_read_all": "_condition_9"
                     },
-                    "base_default_next": "_condition_7"
+                    "base_default_next": "_condition_9"
                 },
                 {
                     "name": "port_count_table",
-                    "id": 16,
+                    "id": 18,
                     "match_type": "exact",
                     "type": "simple",
                     "max_size": 16384,
@@ -4393,12 +4041,58 @@
                             }
                         }
                     },
-                    "true_next": "update_A",
-                    "false_next": "update_B"
+                    "true_next": "_condition_7",
+                    "false_next": "_condition_8"
                 },
                 {
                     "name": "_condition_7",
                     "id": 7,
+                    "expression": {
+                        "type": "expression",
+                        "value": {
+                            "op": "==",
+                            "left": {
+                                "type": "field",
+                                "value": [
+                                    "direction_metadata",
+                                    "counter_A"
+                                ]
+                            },
+                            "right": {
+                                "type": "hexstr",
+                                "value": "0x0"
+                            }
+                        }
+                    },
+                    "true_next": "update_A",
+                    "false_next": "update_counter_A"
+                },
+                {
+                    "name": "_condition_8",
+                    "id": 8,
+                    "expression": {
+                        "type": "expression",
+                        "value": {
+                            "op": "==",
+                            "left": {
+                                "type": "field",
+                                "value": [
+                                    "direction_metadata",
+                                    "counter_B"
+                                ]
+                            },
+                            "right": {
+                                "type": "hexstr",
+                                "value": "0x0"
+                            }
+                        }
+                    },
+                    "true_next": "update_B",
+                    "false_next": "update_counter_B"
+                },
+                {
+                    "name": "_condition_9",
+                    "id": 9,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4434,11 +4128,11 @@
                         }
                     },
                     "true_next": "guess_by_tcp_port",
-                    "false_next": "_condition_8"
+                    "false_next": "_condition_10"
                 },
                 {
-                    "name": "_condition_8",
-                    "id": 8,
+                    "name": "_condition_10",
+                    "id": 10,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4474,11 +4168,11 @@
                         }
                     },
                     "true_next": "guess_by_udp_port",
-                    "false_next": "_condition_9"
+                    "false_next": "_condition_11"
                 },
                 {
-                    "name": "_condition_9",
-                    "id": 9,
+                    "name": "_condition_11",
+                    "id": 11,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4514,11 +4208,11 @@
                         }
                     },
                     "true_next": "guess_by_src_address",
-                    "false_next": "_condition_10"
+                    "false_next": "_condition_12"
                 },
                 {
-                    "name": "_condition_10",
-                    "id": 10,
+                    "name": "_condition_12",
+                    "id": 12,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4565,7 +4259,7 @@
             "tables": [
                 {
                     "name": "label_encup",
-                    "id": 17,
+                    "id": 19,
                     "match_type": "exact",
                     "type": "simple",
                     "max_size": 16,
@@ -4638,7 +4332,7 @@
                     ]
                 }
             ],
-            "algo": "crc16"
+            "algo": "csum16"
         }
     ],
     "checksums": [],
@@ -4660,88 +4354,40 @@
     ],
     "register_arrays": [
         {
-            "name": "dirA_payload_1",
+            "name": "dirA_payload",
             "id": 0,
             "bitwidth": 32,
-            "size": 16
+            "size": 1024
         },
         {
-            "name": "dirA_payload_2",
+            "name": "dirB_payload",
             "id": 1,
             "bitwidth": 32,
-            "size": 16
+            "size": 1024
         },
         {
-            "name": "dirA_payload_3",
+            "name": "dirA_length",
             "id": 2,
-            "bitwidth": 32,
-            "size": 16
+            "bitwidth": 16,
+            "size": 1024
         },
         {
-            "name": "dirB_payload_1",
+            "name": "dirB_length",
             "id": 3,
-            "bitwidth": 32,
-            "size": 16
-        },
-        {
-            "name": "dirB_payload_2",
-            "id": 4,
-            "bitwidth": 32,
-            "size": 16
-        },
-        {
-            "name": "dirB_payload_3",
-            "id": 5,
-            "bitwidth": 32,
-            "size": 16
-        },
-        {
-            "name": "dirA_length_1",
-            "id": 6,
             "bitwidth": 16,
-            "size": 16
-        },
-        {
-            "name": "dirA_length_2",
-            "id": 7,
-            "bitwidth": 16,
-            "size": 16
-        },
-        {
-            "name": "dirA_length_3",
-            "id": 8,
-            "bitwidth": 16,
-            "size": 16
-        },
-        {
-            "name": "dirB_length_1",
-            "id": 9,
-            "bitwidth": 16,
-            "size": 16
-        },
-        {
-            "name": "dirB_length_2",
-            "id": 10,
-            "bitwidth": 16,
-            "size": 16
-        },
-        {
-            "name": "dirB_length_3",
-            "id": 11,
-            "bitwidth": 16,
-            "size": 16
+            "size": 1024
         },
         {
             "name": "dirA_counter",
-            "id": 12,
+            "id": 4,
             "bitwidth": 16,
-            "size": 16
+            "size": 1024
         },
         {
             "name": "dirB_counter",
-            "id": 13,
+            "id": 5,
             "bitwidth": 16,
-            "size": 16
+            "size": 1024
         }
     ],
     "force_arith": [

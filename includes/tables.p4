@@ -195,29 +195,35 @@ table read_counter {
 }
 
 table update_A {
+    actions { do_updateA; }
+    size: 1;
+}
+
+table update_counter_A {
     reads { 
         direction_metadata.counter_A : exact;
     }
     actions {
-        do_updateA_1;
-        do_updateA_2;
-        do_updateA_3;
+        do_update_counter_A;
     }
 
-    size: 3;
+    size: 2;
 }
 
 table update_B {
+    actions { do_updateB; }
+    size: 1;
+}
+
+table update_counter_B {
     reads { 
         direction_metadata.counter_B : exact;
     }
     actions {
-        do_updateB_1;
-        do_updateB_2;
-        do_updateB_3;
+        do_update_counter_B;
     }
 
-    size: 3;
+    size: 2;
 }
 
 table read_all {

@@ -2,8 +2,14 @@ control process_libprotoident {
     // update data
     apply(calculate_index);
     apply(read_counter);
-    if( five_tuple_metadata.srcPort < five_tuple_metadata.dstPort ) { apply(update_A); }
-    else { apply(update_B); }
+    if( five_tuple_metadata.srcPort < five_tuple_metadata.dstPort ) { 
+        if( direction_metadata.counter_A == 0 ) { apply(update_A); }
+        else { apply(update_counter_A); }
+    }
+    else {
+        if( direction_metadata.counter_B == 0 ) { apply(update_B); }
+        else { apply(update_counter_B); }
+    }
     apply(read_all);
 
     /*
