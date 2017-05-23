@@ -2183,17 +2183,17 @@
             "order": [
                 "label_header",
                 "ethernet_header",
-                "ipv6_header",
                 "ipv4_header",
-                "tcp_header",
+                "ipv6_header",
                 "udp_header",
+                "quic_flags",
+                "tcp_header",
+                "four_byte_payload",
                 "dns_header",
                 "one_byte_payload[0]",
                 "one_byte_payload[1]",
-                "one_byte_payload[2]",
-                "quic_flags",
-                "four_byte_payload",
                 "whatsapp_three_byte_payload",
+                "one_byte_payload[2]",
                 "one_byte_payload[3]",
                 "one_byte_payload[4]",
                 "one_byte_payload[5]",
@@ -2261,129 +2261,112 @@
     "meter_arrays": [],
     "actions": [
         {
-            "name": "do_copy_A_fields",
+            "name": "do_set_label_by_detect",
             "id": 0,
-            "runtime_data": [],
-            "primitives": [
+            "runtime_data": [
                 {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "_payload"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_A"
-                            ]
-                        }
-                    ]
+                    "name": "label",
+                    "bitwidth": 8
                 },
                 {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "_length"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_A"
-                            ]
-                        }
-                    ]
+                    "name": "sublabel",
+                    "bitwidth": 8
                 }
-            ]
-        },
-        {
-            "name": "count_packet",
-            "id": 1,
-            "runtime_data": [],
+            ],
             "primitives": [
                 {
-                    "op": "count",
+                    "op": "modify_field",
                     "parameters": [
-                        {
-                            "type": "counter_array",
-                            "value": "ingress_port_counter"
-                        },
                         {
                             "type": "field",
                             "value": [
-                                "standard_metadata",
-                                "ingress_port"
+                                "label_metadata",
+                                "label"
                             ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
                         }
                     ]
                 },
                 {
-                    "op": "count",
+                    "op": "modify_field",
                     "parameters": [
                         {
-                            "type": "counter_array",
-                            "value": "egress_port_counter"
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label"
+                            ]
                         },
+                        {
+                            "type": "runtime_data",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
                         {
                             "type": "field",
                             "value": [
                                 "standard_metadata",
                                 "egress_spec"
                             ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_copy_B_fields",
-            "id": 2,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "_payload"
-                            ]
                         },
                         {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_B"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "_length"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_B"
-                            ]
+                            "type": "hexstr",
+                            "value": "0x2"
                         }
                     ]
                 }
@@ -2391,7 +2374,7 @@
         },
         {
             "name": "do_assemble",
-            "id": 3,
+            "id": 1,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2461,12 +2444,12 @@
             ]
         },
         {
-            "name": "do_set_label_by_guess",
-            "id": 4,
+            "name": "set_egress_port",
+            "id": 2,
             "runtime_data": [
                 {
-                    "name": "label",
-                    "bitwidth": 8
+                    "name": "port",
+                    "bitwidth": 9
                 }
             ],
             "primitives": [
@@ -2476,8 +2459,8 @@
                         {
                             "type": "field",
                             "value": [
-                                "label_metadata",
-                                "label"
+                                "standard_metadata",
+                                "egress_spec"
                             ]
                         },
                         {
@@ -2485,36 +2468,35 @@
                             "value": 0
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "name": "do_calculate_index",
+            "id": 3,
+            "runtime_data": [],
+            "primitives": [
                 {
-                    "op": "modify_field",
+                    "op": "modify_field_with_hash_based_offset",
                     "parameters": [
                         {
                             "type": "field",
                             "value": [
-                                "label_metadata",
-                                "label_result"
+                                "direction_metadata",
+                                "hash_index"
                             ]
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
+                            "value": "0x0"
+                        },
                         {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
+                            "type": "calculation",
+                            "value": "index_hash_cal"
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x1"
+                            "value": "0x400"
                         }
                     ]
                 }
@@ -2522,7 +2504,7 @@
         },
         {
             "name": "do_label_encap",
-            "id": 5,
+            "id": 4,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2614,7 +2596,7 @@
         },
         {
             "name": "do_reset_direction",
-            "id": 6,
+            "id": 5,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2740,148 +2722,8 @@
             ]
         },
         {
-            "name": "set_egress_port",
-            "id": 7,
-            "runtime_data": [
-                {
-                    "name": "port",
-                    "bitwidth": 9
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_update_counter_A",
-            "id": 8,
-            "runtime_data": [
-                {
-                    "name": "number",
-                    "bitwidth": 16
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_A"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "_nop",
-            "id": 9,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "no_op",
-                    "parameters": []
-                }
-            ]
-        },
-        {
-            "name": "do_read_counter",
-            "id": 10,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_A"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_B"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirB_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "send_to_cpu",
-            "id": 11,
+            "id": 6,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2903,8 +2745,8 @@
             ]
         },
         {
-            "name": "do_update_counter_B",
-            "id": 12,
+            "name": "do_update_counter_A",
+            "id": 7,
             "runtime_data": [
                 {
                     "name": "number",
@@ -2919,7 +2761,7 @@
                             "type": "field",
                             "value": [
                                 "direction_metadata",
-                                "counter_B"
+                                "counter_A"
                             ]
                         },
                         {
@@ -2933,7 +2775,7 @@
                     "parameters": [
                         {
                             "type": "register_array",
-                            "value": "dirB_counter"
+                            "value": "dirA_counter"
                         },
                         {
                             "type": "field",
@@ -2952,7 +2794,7 @@
         },
         {
             "name": "do_set_label_by_match_rule",
-            "id": 13,
+            "id": 8,
             "runtime_data": [
                 {
                     "name": "label",
@@ -2999,8 +2841,335 @@
             ]
         },
         {
-            "name": "do_updateA",
+            "name": "count_packet",
+            "id": 9,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "count",
+                    "parameters": [
+                        {
+                            "type": "counter_array",
+                            "value": "ingress_port_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "ingress_port"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "count",
+                    "parameters": [
+                        {
+                            "type": "counter_array",
+                            "value": "egress_port_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "egress_spec"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "_drop",
+            "id": 10,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "drop",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "name": "do_set_label_by_guess",
+            "id": 11,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_set_sub_label_by_guess",
+            "id": 12,
+            "runtime_data": [
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_update_counter_B",
+            "id": 13,
+            "runtime_data": [
+                {
+                    "name": "number",
+                    "bitwidth": 16
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_B"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_read_counter",
             "id": 14,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_A"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_B"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "_nop",
+            "id": 15,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "no_op",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "name": "do_copy_A_fields",
+            "id": 16,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "_payload"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_A"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "_length"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_A"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_updateB",
+            "id": 17,
             "runtime_data": [],
             "primitives": [
                 {
@@ -3008,7 +3177,7 @@
                     "parameters": [
                         {
                             "type": "register_array",
-                            "value": "dirA_payload"
+                            "value": "dirB_payload"
                         },
                         {
                             "type": "field",
@@ -3031,7 +3200,7 @@
                     "parameters": [
                         {
                             "type": "register_array",
-                            "value": "dirA_length"
+                            "value": "dirB_length"
                         },
                         {
                             "type": "field",
@@ -3056,7 +3225,7 @@
                             "type": "field",
                             "value": [
                                 "direction_metadata",
-                                "counter_A"
+                                "counter_B"
                             ]
                         },
                         {
@@ -3070,7 +3239,7 @@
                     "parameters": [
                         {
                             "type": "register_array",
-                            "value": "dirA_counter"
+                            "value": "dirB_counter"
                         },
                         {
                             "type": "field",
@@ -3088,18 +3257,9 @@
             ]
         },
         {
-            "name": "do_set_label_by_detect",
-            "id": 15,
-            "runtime_data": [
-                {
-                    "name": "label",
-                    "bitwidth": 8
-                },
-                {
-                    "name": "sublabel",
-                    "bitwidth": 8
-                }
-            ],
+            "name": "do_copy_B_fields",
+            "id": 18,
+            "runtime_data": [],
             "primitives": [
                 {
                     "op": "modify_field",
@@ -3107,13 +3267,16 @@
                         {
                             "type": "field",
                             "value": [
-                                "label_metadata",
-                                "label"
+                                "direction_metadata",
+                                "_payload"
                             ]
                         },
                         {
-                            "type": "runtime_data",
-                            "value": 0
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_B"
+                            ]
                         }
                     ]
                 },
@@ -3123,77 +3286,16 @@
                         {
                             "type": "field",
                             "value": [
-                                "label_metadata",
-                                "sub_label"
+                                "direction_metadata",
+                                "_length"
                             ]
                         },
-                        {
-                            "type": "runtime_data",
-                            "value": 1
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
                         {
                             "type": "field",
                             "value": [
-                                "label_metadata",
-                                "label_result"
+                                "direction_metadata",
+                                "length_B"
                             ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
                         }
                     ]
                 }
@@ -3201,7 +3303,7 @@
         },
         {
             "name": "do_read_all",
-            "id": 16,
+            "id": 19,
             "runtime_data": [],
             "primitives": [
                 {
@@ -3299,99 +3401,8 @@
             ]
         },
         {
-            "name": "do_set_sub_label_by_guess",
-            "id": 17,
-            "runtime_data": [
-                {
-                    "name": "sublabel",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_calculate_index",
-            "id": 18,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field_with_hash_based_offset",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x0"
-                        },
-                        {
-                            "type": "calculation",
-                            "value": "index_hash_cal"
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x400"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_updateB",
-            "id": 19,
+            "name": "do_updateA",
+            "id": 20,
             "runtime_data": [],
             "primitives": [
                 {
@@ -3399,7 +3410,7 @@
                     "parameters": [
                         {
                             "type": "register_array",
-                            "value": "dirB_payload"
+                            "value": "dirA_payload"
                         },
                         {
                             "type": "field",
@@ -3422,7 +3433,7 @@
                     "parameters": [
                         {
                             "type": "register_array",
-                            "value": "dirB_length"
+                            "value": "dirA_length"
                         },
                         {
                             "type": "field",
@@ -3447,7 +3458,7 @@
                             "type": "field",
                             "value": [
                                 "direction_metadata",
-                                "counter_B"
+                                "counter_A"
                             ]
                         },
                         {
@@ -3461,7 +3472,7 @@
                     "parameters": [
                         {
                             "type": "register_array",
-                            "value": "dirB_counter"
+                            "value": "dirA_counter"
                         },
                         {
                             "type": "field",
@@ -3477,24 +3488,13 @@
                     ]
                 }
             ]
-        },
-        {
-            "name": "_drop",
-            "id": 20,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "drop",
-                    "parameters": []
-                }
-            ]
         }
     ],
     "pipelines": [
         {
             "name": "ingress",
             "id": 0,
-            "init_table": "table0",
+            "init_table": "_condition_0",
             "tables": [
                 {
                     "name": "table0",
@@ -3545,11 +3545,11 @@
                         "_drop"
                     ],
                     "next_tables": {
-                        "set_egress_port": "_condition_0",
-                        "send_to_cpu": "_condition_0",
-                        "_drop": "_condition_0"
+                        "set_egress_port": "_condition_1",
+                        "send_to_cpu": "_condition_1",
+                        "_drop": "_condition_1"
                     },
-                    "base_default_next": "_condition_0"
+                    "base_default_next": "_condition_1"
                 },
                 {
                     "name": "rule_match",
@@ -3598,9 +3598,9 @@
                         "do_set_label_by_match_rule"
                     ],
                     "next_tables": {
-                        "do_set_label_by_match_rule": "_condition_1"
+                        "do_set_label_by_match_rule": "_condition_2"
                     },
-                    "base_default_next": "_condition_1"
+                    "base_default_next": "_condition_2"
                 },
                 {
                     "name": "detect_four_byte_payload",
@@ -3651,9 +3651,9 @@
                         "do_assemble"
                     ],
                     "next_tables": {
-                        "do_assemble": "_condition_5"
+                        "do_assemble": "_condition_6"
                     },
-                    "base_default_next": "_condition_4"
+                    "base_default_next": "_condition_5"
                 },
                 {
                     "name": "detect_quic",
@@ -3686,10 +3686,10 @@
                         "_nop"
                     ],
                     "next_tables": {
-                        "__HIT__": "_condition_2",
-                        "__MISS__": "_condition_5"
+                        "__HIT__": "_condition_3",
+                        "__MISS__": "_condition_6"
                     },
-                    "base_default_next": "_condition_3"
+                    "base_default_next": "_condition_4"
                 },
                 {
                     "name": "set_quic",
@@ -3705,9 +3705,9 @@
                         "do_set_label_by_detect"
                     ],
                     "next_tables": {
-                        "do_set_label_by_detect": "_condition_5"
+                        "do_set_label_by_detect": "_condition_6"
                     },
-                    "base_default_next": "_condition_3"
+                    "base_default_next": "_condition_4"
                 },
                 {
                     "name": "detect_whatsapp",
@@ -3748,9 +3748,9 @@
                         "do_set_label_by_detect"
                     ],
                     "next_tables": {
-                        "do_set_label_by_detect": "_condition_5"
+                        "do_set_label_by_detect": "_condition_6"
                     },
-                    "base_default_next": "_condition_5"
+                    "base_default_next": "_condition_6"
                 },
                 {
                     "name": "guess_by_tcp_port",
@@ -3783,9 +3783,9 @@
                         "do_set_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_label_by_guess": "_condition_14"
+                        "do_set_label_by_guess": "_condition_15"
                     },
-                    "base_default_next": "_condition_13"
+                    "base_default_next": "_condition_14"
                 },
                 {
                     "name": "guess_by_udp_port",
@@ -3818,9 +3818,9 @@
                         "do_set_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_label_by_guess": "_condition_14"
+                        "do_set_label_by_guess": "_condition_15"
                     },
-                    "base_default_next": "_condition_14"
+                    "base_default_next": "_condition_15"
                 },
                 {
                     "name": "guess_by_src_address",
@@ -3845,9 +3845,9 @@
                         "do_set_sub_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_sub_label_by_guess": "_condition_15"
+                        "do_set_sub_label_by_guess": "_condition_16"
                     },
-                    "base_default_next": "_condition_15"
+                    "base_default_next": "_condition_16"
                 },
                 {
                     "name": "guess_by_dst_address",
@@ -3908,9 +3908,9 @@
                         "do_read_counter"
                     ],
                     "next_tables": {
-                        "do_read_counter": "_condition_6"
+                        "do_read_counter": "_condition_7"
                     },
-                    "base_default_next": "_condition_6"
+                    "base_default_next": "_condition_7"
                 },
                 {
                     "name": "update_A",
@@ -4016,9 +4016,9 @@
                         "do_read_all"
                     ],
                     "next_tables": {
-                        "do_read_all": "_condition_9"
+                        "do_read_all": "_condition_10"
                     },
-                    "base_default_next": "_condition_9"
+                    "base_default_next": "_condition_10"
                 },
                 {
                     "name": "detect_two_direction",
@@ -4156,9 +4156,9 @@
                         "do_reset_direction"
                     ],
                     "next_tables": {
-                        "do_reset_direction": "_condition_12"
+                        "do_reset_direction": "_condition_13"
                     },
-                    "base_default_next": "_condition_12"
+                    "base_default_next": "_condition_13"
                 },
                 {
                     "name": "port_count_table",
@@ -4187,6 +4187,40 @@
                     "expression": {
                         "type": "expression",
                         "value": {
+                            "op": "or",
+                            "left": {
+                                "type": "expression",
+                                "value": {
+                                    "op": "valid",
+                                    "left": null,
+                                    "right": {
+                                        "type": "header",
+                                        "value": "ipv4_header"
+                                    }
+                                }
+                            },
+                            "right": {
+                                "type": "expression",
+                                "value": {
+                                    "op": "valid",
+                                    "left": null,
+                                    "right": {
+                                        "type": "header",
+                                        "value": "ipv6_header"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "true_next": "table0",
+                    "false_next": null
+                },
+                {
+                    "name": "_condition_1",
+                    "id": 1,
+                    "expression": {
+                        "type": "expression",
+                        "value": {
                             "op": "<",
                             "left": {
                                 "type": "field",
@@ -4205,8 +4239,8 @@
                     "false_next": "rule_match"
                 },
                 {
-                    "name": "_condition_1",
-                    "id": 1,
+                    "name": "_condition_2",
+                    "id": 2,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4242,11 +4276,11 @@
                         }
                     },
                     "true_next": "detect_quic",
-                    "false_next": "_condition_3"
+                    "false_next": "_condition_4"
                 },
                 {
-                    "name": "_condition_2",
-                    "id": 2,
+                    "name": "_condition_3",
+                    "id": 3,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4278,11 +4312,11 @@
                         }
                     },
                     "true_next": "set_quic",
-                    "false_next": "_condition_5"
+                    "false_next": "_condition_6"
                 },
                 {
-                    "name": "_condition_3",
-                    "id": 3,
+                    "name": "_condition_4",
+                    "id": 4,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4318,11 +4352,11 @@
                         }
                     },
                     "true_next": "detect_dns",
-                    "false_next": "_condition_4"
+                    "false_next": "_condition_5"
                 },
                 {
-                    "name": "_condition_4",
-                    "id": 4,
+                    "name": "_condition_5",
+                    "id": 5,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4358,11 +4392,11 @@
                         }
                     },
                     "true_next": "detect_whatsapp",
-                    "false_next": "_condition_5"
+                    "false_next": "_condition_6"
                 },
                 {
-                    "name": "_condition_5",
-                    "id": 5,
+                    "name": "_condition_6",
+                    "id": 6,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4384,8 +4418,8 @@
                     "false_next": "calculate_index"
                 },
                 {
-                    "name": "_condition_6",
-                    "id": 6,
+                    "name": "_condition_7",
+                    "id": 7,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4406,12 +4440,12 @@
                             }
                         }
                     },
-                    "true_next": "_condition_7",
-                    "false_next": "_condition_8"
+                    "true_next": "_condition_8",
+                    "false_next": "_condition_9"
                 },
                 {
-                    "name": "_condition_7",
-                    "id": 7,
+                    "name": "_condition_8",
+                    "id": 8,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4433,8 +4467,8 @@
                     "false_next": "update_counter_A"
                 },
                 {
-                    "name": "_condition_8",
-                    "id": 8,
+                    "name": "_condition_9",
+                    "id": 9,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4456,8 +4490,8 @@
                     "false_next": "update_counter_B"
                 },
                 {
-                    "name": "_condition_9",
-                    "id": 9,
+                    "name": "_condition_10",
+                    "id": 10,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4545,11 +4579,11 @@
                         }
                     },
                     "true_next": "detect_two_direction",
-                    "false_next": "_condition_10"
+                    "false_next": "_condition_11"
                 },
                 {
-                    "name": "_condition_10",
-                    "id": 10,
+                    "name": "_condition_11",
+                    "id": 11,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4590,12 +4624,12 @@
                             }
                         }
                     },
-                    "true_next": "_condition_11",
-                    "false_next": "_condition_12"
+                    "true_next": "_condition_12",
+                    "false_next": "_condition_13"
                 },
                 {
-                    "name": "_condition_11",
-                    "id": 11,
+                    "name": "_condition_12",
+                    "id": 12,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4617,8 +4651,8 @@
                     "false_next": "copy_B_fields"
                 },
                 {
-                    "name": "_condition_12",
-                    "id": 12,
+                    "name": "_condition_13",
+                    "id": 13,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4654,11 +4688,11 @@
                         }
                     },
                     "true_next": "guess_by_tcp_port",
-                    "false_next": "_condition_13"
+                    "false_next": "_condition_14"
                 },
                 {
-                    "name": "_condition_13",
-                    "id": 13,
+                    "name": "_condition_14",
+                    "id": 14,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4694,11 +4728,11 @@
                         }
                     },
                     "true_next": "guess_by_udp_port",
-                    "false_next": "_condition_14"
+                    "false_next": "_condition_15"
                 },
                 {
-                    "name": "_condition_14",
-                    "id": 14,
+                    "name": "_condition_15",
+                    "id": 15,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -4734,11 +4768,11 @@
                         }
                     },
                     "true_next": "guess_by_src_address",
-                    "false_next": "_condition_15"
+                    "false_next": "_condition_16"
                 },
                 {
-                    "name": "_condition_15",
-                    "id": 15,
+                    "name": "_condition_16",
+                    "id": 16,
                     "expression": {
                         "type": "expression",
                         "value": {
