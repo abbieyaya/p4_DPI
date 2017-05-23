@@ -230,3 +230,38 @@ table read_all {
     actions { do_read_all; }
     size: 1;
 }
+
+table detect_two_direction {
+    reads {
+        direction_metadata.payload_A : ternary;
+        direction_metadata.length_A : ternary;
+        direction_metadata.payload_B : ternary;
+        direction_metadata.length_B : ternary;
+    }
+
+    actions { do_set_label_by_detect; }
+}
+
+table detect_one_direction {
+    reads {
+        direction_metadata._payload : ternary;
+        direction_metadata._length : ternary;
+    }
+
+    actions { do_set_label_by_detect; }
+}
+
+table copy_A_fields {
+    actions { do_copy_A_fields; }
+    size : 1;
+}
+
+table copy_B_fields {
+    actions { do_copy_B_fields; }
+    size : 1;
+}
+
+table reset_direction{
+    actions { do_reset_direction; }
+    size : 1;
+}

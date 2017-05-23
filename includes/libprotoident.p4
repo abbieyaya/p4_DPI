@@ -12,11 +12,18 @@ control process_libprotoident {
     }
     apply(read_all);
 
-    /*
+    
     // Start to detect
-    if( direction_metadata.counter_A == 1 and direction_metadata.counter_B > 0 ) { apply(detect_A_two_direction); }
-    else if( direction_metadata.counter_B == 1 and direction_metadata.counter_A > 0 ) { apply(detect_B_two_direction); }
-    else if( direction_metadata.counter_A == 3 ){ apply(detect_A_one_direction); }
-    else if( direction_metadata.counter_B == 3 ){ apply(detect_B_one_direction); }
-    */
+    
+    if( ( direction_metadata.counter_A == 1 and direction_metadata.counter_B > 0 ) or 
+        ( direction_metadata.counter_B == 1 and direction_metadata.counter_A > 0 ) ) { 
+            apply(detect_two_direction); 
+            apply(reset_direction); 
+    }
+    else if( direction_metadata.counter_A == 3 or direction_metadata.counter_B == 3 ) {
+        if( direction_metadata.counter_A == 3 ){ apply(copy_A_fields); }
+        else { apply(copy_B_fields); }
+        apply(detect_one_direction); 
+        apply(reset_direction); 
+    }
 }

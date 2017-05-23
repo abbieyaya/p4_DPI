@@ -113,8 +113,6 @@ action do_learning() {
     clone_ingress_pkt_to_egress( 2, copy_to_cpu_fields );
 }
 
-
-
 field_list hash_fields {
     five_tuple_metadata.srcAddr;
     five_tuple_metadata.dstAddr;
@@ -200,4 +198,23 @@ action do_updateB(){
 action do_update_counter_B(number){
     modify_field( direction_metadata.counter_B, number );
     register_write( dirB_counter, direction_metadata.hash_index, number );
+}
+
+action do_copy_A_fields(){
+    modify_field( direction_metadata._payload, direction_metadata.payload_A );
+    modify_field( direction_metadata._length, direction_metadata.length_A );
+}
+
+action do_copy_B_fields(){
+    modify_field( direction_metadata._payload, direction_metadata.payload_B );
+    modify_field( direction_metadata._length, direction_metadata.length_B );
+}
+
+action do_reset_direction(){
+    register_write( dirA_payload, direction_metadata.hash_index, 0 );
+    register_write( dirA_length, direction_metadata.hash_index, 0 );
+    register_write( dirB_payload, direction_metadata.hash_index, 0 );
+    register_write( dirB_length, direction_metadata.hash_index, 0 );
+    register_write( dirA_counter, direction_metadata.hash_index, 0 );
+    register_write( dirB_counter, direction_metadata.hash_index, 0 );
 }
