@@ -4,22 +4,47 @@ import struct
 from scapy.all import *
 from struct import pack
 from struct import unpack
+from sys import argv
+import csv
 
 to_hex = lambda x:" ".join([hex(ord(c)) for c in x])
 
+fo = None
+fo_writer = None
 table=dict()
-def match(src_ip,src_port,dst_ip,dst_port,m_label,s_label, m_label_result, s_label_result):
+
+def dict2csv(src, dst, protocol, label):
+    global fo_writer, fo
+    result = []
+    result.append(src)
+    result.append(dst)
+    result.append(protocol)
+    result.append(label)
+    fo_writer.writerow(result)
+
+def match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label, m_label_result, s_label_result):
     #print "in_match"
-    key = frozenset({src_ip+":"+str(src_port), dst_ip+":"+str(dst_port)})
+    global table
+    key = frozenset({src_ip+":"+str(src_port), dst_ip+":"+str(dst_port), protocol})
     value = set({m_label,s_label})
     if key not in table :
         table.update({key:value})
+        src = "%s:%s" % ( src_ip, src_port )
+        dst = "%s:%s" % ( dst_ip, dst_port )
         if m_label == "" : 
-            print "%s:%s <-> %s:%s , %s (%s)" % ( src_ip, src_port, dst_ip, dst_port, s_label, s_label_result)
+            label = "%s" % s_label
+            way = "%s" % s_label_result
+
         elif s_label == "" : 
-            print "%s:%s <-> %s:%s , %s (%s)" % ( src_ip, src_port, dst_ip, dst_port, m_label, m_label_result)
+            label = "%s" % m_label
+            way = "%s" % m_label_result
+
         else : 
-            print "%s:%s <-> %s:%s , %s.%s (%s.%s)" % ( src_ip, src_port, dst_ip, dst_port, m_label, s_label, m_label_result, s_label_result)
+            label = "%s.%s" % ( m_label, s_label)
+            way = "%s.%s" % ( m_label_result, s_label_result)
+
+        print "%s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
+        dict2csv( src, dst, protocol, label)
 
 def master_label(label):
     #print label
@@ -191,10 +216,12 @@ def handle_pkt(pkt):
             src_ip = packet['IPv6'].fields['src']
             dst_ip = packet['IPv6'].fields['dst']
         elif layer.name == 'TCP' :
+            protocol = "TCP"
             src_port = packet['TCP'].fields['sport']
             dst_port = packet['TCP'].fields['dport']
             break 
         elif layer.name == 'UDP' :
+            protocol = "UDP"
             src_port = packet['UDP'].fields['sport']
             dst_port = packet['UDP'].fields['dport']
             break 
@@ -207,24 +234,36 @@ def handle_pkt(pkt):
         print "%s:0 <-> %s:0 , %s.%s (%s.%s)" % ( src_ip, dst_ip, m_label, s_label, m_label_result, s_label_result)
     else :
         try :
-            match(src_ip,src_port,dst_ip,dst_port,m_label,s_label,m_label_result,s_label_result)
+            match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label,m_label_result,s_label_result)
         except:
             print "Print Wrong"
     #print "-----------------------------------------------------------"
 
 def main():
-    from sys import argv
-    if len(argv) < 2:
-        print "Usage transfer.py [host number/file]"
+    global fo_writer, fo
+    if len(argv) == 2:
+        file_out = 'essence.csv'
+    elif len(argv) == 3:
+        file_out = argv[2]
+    else:
+        print "Usage transfer.py [host number/file] [output.csv]"
+        return
+
+    try:
+        fo = open(file_out, 'w')
+        fo_writer = csv.writer(fo)
+    except IOError as (errno, strerror):
+        print "I/O error({0}): {1}".format(errno, strerror)
         return
 
     #if argv[1].find(".pcap") == -1 : target =  "h%s-eth1" % (argv[1])
-    if argv[1].find(".pcap") == -1 : target =  argv[1]
+    if argv[1].find(".pcap") == -1 : target = argv[1]
     else : target = "h%s-eth1" % (argv[1])
 
     print "Listen on %s to transfer label of the packet" % target
     if target.find(".pcap") == -1 : sniff(iface=target, prn=handle_pkt )
-    else : sniff(offline=target, prn=handle_pkt)
+    else : sniff(offline=target, prn=handle_pkt )
+    fo.close()
 
 if __name__ == '__main__':
     main()
