@@ -18,6 +18,7 @@ header_type intrinsic_metadata_t {
         seq_len : 8;
         quic_header_len : 8;
         tcp_hdr_len : 8;
+        ssl_host_name : 16;
     }
 }
 
@@ -209,6 +210,73 @@ header_type quic_flags_t {
     }
 }
 
+header_type tls_records_header_t {
+    fields {
+        _type : 8;
+        version : 16;
+        _length : 16;
+    }
+}
+
+header_type handshake_protocol_t {
+    fields {
+        _type : 8;
+        _length : 24;
+    }
+}
+
+header_type client_hello_t {
+    fields {
+        version : 16;
+        random : 256;
+        session_id_length : 8;
+    }
+}
+
+header_type cipher_suites_t {
+    fields {
+        _length : 16;
+        values : * ;
+    }
+    length : _length ;
+    max_length : 1024;
+}
+
+header_type compression_methods_t {
+    fields {
+        _length : 8;
+        values : * ;
+        extenstions_length : 2;
+    }
+    length : _length ;
+    max_length : 64;
+}
+
+header_type server_extension_t {
+    fields {
+        _type : 2;
+        _length : 2;
+    }
+}
+
+header_type server_name_indication_t{
+    fields {
+        list_length : 2;
+        _type : 1;
+        name_length: 2;
+    }
+}
+
+header_type other_extension_t {
+    fields {
+        _type : 2;
+        _length: 2;
+        values : *;
+    }
+    length : _length ;
+    max_length : 1024;
+}
+
 /* Header */
 header ethernet_header_t ethernet_header;
 header ipv4_header_t ipv4_header;
@@ -222,3 +290,11 @@ header four_byte_payload_t four_byte_payload;
 header label_header_t label_header;
 header quic_flags_t quic_flags ;
 header whatsapp_three_byte_payload_t whatsapp_three_byte_payload ; 
+header tls_records_header_t tls_records_header;
+header handshake_protocol_t handshake_protocol;
+header client_hello_t client_hello;
+header cipher_suites_t cipher_suites;
+header compression_methods_t compression_methods;
+header server_extension_t server_extension;
+header server_name_indication_t server_name_indication;
+header other_extension_t other_extension;
