@@ -94,6 +94,10 @@
                 [
                     "tcp_hdr_len",
                     8
+                ],
+                [
+                    "ssl_host_name",
+                    16
                 ]
             ],
             "length_exp": null,
@@ -563,6 +567,290 @@
             ],
             "length_exp": null,
             "max_length": null
+        },
+        {
+            "name": "tls_records_header_t",
+            "id": 17,
+            "fields": [
+                [
+                    "_type",
+                    8
+                ],
+                [
+                    "version",
+                    16
+                ],
+                [
+                    "_length",
+                    16
+                ]
+            ],
+            "length_exp": null,
+            "max_length": null
+        },
+        {
+            "name": "handshake_protocol_t",
+            "id": 18,
+            "fields": [
+                [
+                    "_type",
+                    8
+                ],
+                [
+                    "_length",
+                    24
+                ]
+            ],
+            "length_exp": null,
+            "max_length": null
+        },
+        {
+            "name": "client_hello_t",
+            "id": 19,
+            "fields": [
+                [
+                    "version",
+                    16
+                ],
+                [
+                    "random",
+                    256
+                ],
+                [
+                    "session_id_length",
+                    8
+                ],
+                [
+                    "session_id",
+                    "*"
+                ]
+            ],
+            "length_exp": {
+                "type": "expression",
+                "value": {
+                    "op": "-",
+                    "left": {
+                        "type": "expression",
+                        "value": {
+                            "op": "*",
+                            "left": {
+                                "type": "expression",
+                                "value": {
+                                    "op": "+",
+                                    "left": {
+                                        "type": "local",
+                                        "value": 2
+                                    },
+                                    "right": {
+                                        "type": "hexstr",
+                                        "value": "0x23"
+                                    }
+                                }
+                            },
+                            "right": {
+                                "type": "hexstr",
+                                "value": "0x8"
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "hexstr",
+                        "value": "0x118"
+                    }
+                }
+            },
+            "max_length": 72
+        },
+        {
+            "name": "cipher_suites_t",
+            "id": 20,
+            "fields": [
+                [
+                    "_length",
+                    16
+                ],
+                [
+                    "values",
+                    "*"
+                ]
+            ],
+            "length_exp": {
+                "type": "expression",
+                "value": {
+                    "op": "-",
+                    "left": {
+                        "type": "expression",
+                        "value": {
+                            "op": "*",
+                            "left": {
+                                "type": "expression",
+                                "value": {
+                                    "op": "+",
+                                    "left": {
+                                        "type": "local",
+                                        "value": 0
+                                    },
+                                    "right": {
+                                        "type": "hexstr",
+                                        "value": "0x2"
+                                    }
+                                }
+                            },
+                            "right": {
+                                "type": "hexstr",
+                                "value": "0x8"
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "hexstr",
+                        "value": "0x10"
+                    }
+                }
+            },
+            "max_length": 128
+        },
+        {
+            "name": "compression_methods_t",
+            "id": 21,
+            "fields": [
+                [
+                    "_length",
+                    8
+                ],
+                [
+                    "values",
+                    "*"
+                ],
+                [
+                    "extenstions_length",
+                    16
+                ]
+            ],
+            "length_exp": {
+                "type": "expression",
+                "value": {
+                    "op": "-",
+                    "left": {
+                        "type": "expression",
+                        "value": {
+                            "op": "*",
+                            "left": {
+                                "type": "expression",
+                                "value": {
+                                    "op": "+",
+                                    "left": {
+                                        "type": "local",
+                                        "value": 0
+                                    },
+                                    "right": {
+                                        "type": "hexstr",
+                                        "value": "0x3"
+                                    }
+                                }
+                            },
+                            "right": {
+                                "type": "hexstr",
+                                "value": "0x8"
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "hexstr",
+                        "value": "0x18"
+                    }
+                }
+            },
+            "max_length": 64
+        },
+        {
+            "name": "server_extension_t",
+            "id": 22,
+            "fields": [
+                [
+                    "_type",
+                    16
+                ],
+                [
+                    "_length",
+                    16
+                ]
+            ],
+            "length_exp": null,
+            "max_length": null
+        },
+        {
+            "name": "server_name_indication_t",
+            "id": 23,
+            "fields": [
+                [
+                    "list_length",
+                    16
+                ],
+                [
+                    "_type",
+                    8
+                ],
+                [
+                    "name_length",
+                    16
+                ]
+            ],
+            "length_exp": null,
+            "max_length": null
+        },
+        {
+            "name": "other_extension_t",
+            "id": 24,
+            "fields": [
+                [
+                    "_type",
+                    16
+                ],
+                [
+                    "_length",
+                    16
+                ],
+                [
+                    "values",
+                    "*"
+                ]
+            ],
+            "length_exp": {
+                "type": "expression",
+                "value": {
+                    "op": "-",
+                    "left": {
+                        "type": "expression",
+                        "value": {
+                            "op": "*",
+                            "left": {
+                                "type": "expression",
+                                "value": {
+                                    "op": "+",
+                                    "left": {
+                                        "type": "local",
+                                        "value": 1
+                                    },
+                                    "right": {
+                                        "type": "hexstr",
+                                        "value": "0x4"
+                                    }
+                                }
+                            },
+                            "right": {
+                                "type": "hexstr",
+                                "value": "0x8"
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "hexstr",
+                        "value": "0x20"
+                    }
+                }
+            },
+            "max_length": 1024
         }
     ],
     "headers": [
@@ -1045,6 +1333,432 @@
             "id": 79,
             "header_type": "whatsapp_three_byte_payload_t",
             "metadata": false
+        },
+        {
+            "name": "tls_records_header",
+            "id": 80,
+            "header_type": "tls_records_header_t",
+            "metadata": false
+        },
+        {
+            "name": "handshake_protocol",
+            "id": 81,
+            "header_type": "handshake_protocol_t",
+            "metadata": false
+        },
+        {
+            "name": "client_hello",
+            "id": 82,
+            "header_type": "client_hello_t",
+            "metadata": false
+        },
+        {
+            "name": "cipher_suites",
+            "id": 83,
+            "header_type": "cipher_suites_t",
+            "metadata": false
+        },
+        {
+            "name": "compression_methods",
+            "id": 84,
+            "header_type": "compression_methods_t",
+            "metadata": false
+        },
+        {
+            "name": "server_extension",
+            "id": 85,
+            "header_type": "server_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "server_name_indication",
+            "id": 86,
+            "header_type": "server_name_indication_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[0]",
+            "id": 87,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[1]",
+            "id": 88,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[2]",
+            "id": 89,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[3]",
+            "id": 90,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[4]",
+            "id": 91,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[5]",
+            "id": 92,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[6]",
+            "id": 93,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[7]",
+            "id": 94,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[8]",
+            "id": 95,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[9]",
+            "id": 96,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[10]",
+            "id": 97,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[11]",
+            "id": 98,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[12]",
+            "id": 99,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[13]",
+            "id": 100,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[14]",
+            "id": 101,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[15]",
+            "id": 102,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[16]",
+            "id": 103,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[17]",
+            "id": 104,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[18]",
+            "id": 105,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[19]",
+            "id": 106,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[20]",
+            "id": 107,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[21]",
+            "id": 108,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[22]",
+            "id": 109,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[23]",
+            "id": 110,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[24]",
+            "id": 111,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[25]",
+            "id": 112,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[26]",
+            "id": 113,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[27]",
+            "id": 114,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[28]",
+            "id": 115,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[29]",
+            "id": 116,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[30]",
+            "id": 117,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[31]",
+            "id": 118,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[32]",
+            "id": 119,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[33]",
+            "id": 120,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[34]",
+            "id": 121,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[35]",
+            "id": 122,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[36]",
+            "id": 123,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[37]",
+            "id": 124,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[38]",
+            "id": 125,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[39]",
+            "id": 126,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[40]",
+            "id": 127,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[41]",
+            "id": 128,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[42]",
+            "id": 129,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[43]",
+            "id": 130,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[44]",
+            "id": 131,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[45]",
+            "id": 132,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[46]",
+            "id": 133,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[47]",
+            "id": 134,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[48]",
+            "id": 135,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[49]",
+            "id": 136,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[50]",
+            "id": 137,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[51]",
+            "id": 138,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[52]",
+            "id": 139,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[53]",
+            "id": 140,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[54]",
+            "id": 141,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[55]",
+            "id": 142,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[56]",
+            "id": 143,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[57]",
+            "id": 144,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[58]",
+            "id": 145,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[59]",
+            "id": 146,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[60]",
+            "id": 147,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[61]",
+            "id": 148,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[62]",
+            "id": 149,
+            "header_type": "other_extension_t",
+            "metadata": false
+        },
+        {
+            "name": "other_extension[63]",
+            "id": 150,
+            "header_type": "other_extension_t",
+            "metadata": false
         }
     ],
     "header_stacks": [
@@ -1118,6 +1832,78 @@
                 73,
                 74,
                 75
+            ]
+        },
+        {
+            "name": "other_extension",
+            "id": 1,
+            "size": 64,
+            "header_type": "other_extension_t",
+            "header_ids": [
+                87,
+                88,
+                89,
+                90,
+                91,
+                92,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                106,
+                107,
+                108,
+                109,
+                110,
+                111,
+                112,
+                113,
+                114,
+                115,
+                116,
+                117,
+                118,
+                119,
+                120,
+                121,
+                122,
+                123,
+                124,
+                125,
+                126,
+                127,
+                128,
+                129,
+                130,
+                131,
+                132,
+                133,
+                134,
+                135,
+                136,
+                137,
+                138,
+                139,
+                140,
+                141,
+                142,
+                143,
+                144,
+                145,
+                146,
+                147,
+                148,
+                149,
+                150
             ]
         }
     ],
@@ -1539,6 +2325,18 @@
                             "next_state": "parse_dns_header"
                         },
                         {
+                            "type": "hexstr",
+                            "value": "0x000001bb",
+                            "mask": "0x0000ffff",
+                            "next_state": "parse_tls_header"
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x01bb0000",
+                            "mask": "0xffff0000",
+                            "next_state": "parse_tls_header"
+                        },
+                        {
                             "type": "default",
                             "value": null,
                             "mask": null,
@@ -1609,8 +2407,330 @@
                     ]
                 },
                 {
-                    "name": "parse_byte_payload",
+                    "name": "parse_tls_header",
                     "id": 8,
+                    "parser_ops": [
+                        {
+                            "op": "extract",
+                            "parameters": [
+                                {
+                                    "type": "regular",
+                                    "value": "tls_records_header"
+                                }
+                            ]
+                        }
+                    ],
+                    "transition_key": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "tls_records_header",
+                                "_type"
+                            ]
+                        }
+                    ],
+                    "transitions": [
+                        {
+                            "type": "hexstr",
+                            "value": "0x16",
+                            "mask": null,
+                            "next_state": "parse_handshake_protocol"
+                        },
+                        {
+                            "type": "default",
+                            "value": null,
+                            "mask": null,
+                            "next_state": null
+                        }
+                    ]
+                },
+                {
+                    "name": "parse_handshake_protocol",
+                    "id": 9,
+                    "parser_ops": [
+                        {
+                            "op": "extract",
+                            "parameters": [
+                                {
+                                    "type": "regular",
+                                    "value": "handshake_protocol"
+                                }
+                            ]
+                        }
+                    ],
+                    "transition_key": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "handshake_protocol",
+                                "_type"
+                            ]
+                        }
+                    ],
+                    "transitions": [
+                        {
+                            "type": "hexstr",
+                            "value": "0x01",
+                            "mask": null,
+                            "next_state": "parse_client_hello"
+                        },
+                        {
+                            "type": "default",
+                            "value": null,
+                            "mask": null,
+                            "next_state": null
+                        }
+                    ]
+                },
+                {
+                    "name": "parse_client_hello",
+                    "id": 10,
+                    "parser_ops": [
+                        {
+                            "op": "extract",
+                            "parameters": [
+                                {
+                                    "type": "regular",
+                                    "value": "client_hello"
+                                }
+                            ]
+                        }
+                    ],
+                    "transition_key": [],
+                    "transitions": [
+                        {
+                            "type": "default",
+                            "value": null,
+                            "mask": null,
+                            "next_state": "parse_cipher"
+                        }
+                    ]
+                },
+                {
+                    "name": "parse_cipher",
+                    "id": 11,
+                    "parser_ops": [
+                        {
+                            "op": "extract",
+                            "parameters": [
+                                {
+                                    "type": "regular",
+                                    "value": "cipher_suites"
+                                }
+                            ]
+                        }
+                    ],
+                    "transition_key": [],
+                    "transitions": [
+                        {
+                            "type": "default",
+                            "value": null,
+                            "mask": null,
+                            "next_state": "parse_compression"
+                        }
+                    ]
+                },
+                {
+                    "name": "parse_compression",
+                    "id": 12,
+                    "parser_ops": [
+                        {
+                            "op": "extract",
+                            "parameters": [
+                                {
+                                    "type": "regular",
+                                    "value": "compression_methods"
+                                }
+                            ]
+                        }
+                    ],
+                    "transition_key": [],
+                    "transitions": [
+                        {
+                            "type": "default",
+                            "value": null,
+                            "mask": null,
+                            "next_state": "parse_extension"
+                        }
+                    ]
+                },
+                {
+                    "name": "parse_extension",
+                    "id": 13,
+                    "parser_ops": [],
+                    "transition_key": [
+                        {
+                            "type": "lookahead",
+                            "value": [
+                                0,
+                                16
+                            ]
+                        }
+                    ],
+                    "transitions": [
+                        {
+                            "type": "hexstr",
+                            "value": "0x0000",
+                            "mask": null,
+                            "next_state": "parse_server_name_indication"
+                        },
+                        {
+                            "type": "default",
+                            "value": null,
+                            "mask": null,
+                            "next_state": "parse_other_extension"
+                        }
+                    ]
+                },
+                {
+                    "name": "parse_server_name_indication",
+                    "id": 14,
+                    "parser_ops": [
+                        {
+                            "op": "extract",
+                            "parameters": [
+                                {
+                                    "type": "regular",
+                                    "value": "server_extension"
+                                }
+                            ]
+                        },
+                        {
+                            "op": "extract",
+                            "parameters": [
+                                {
+                                    "type": "regular",
+                                    "value": "server_name_indication"
+                                }
+                            ]
+                        },
+                        {
+                            "op": "set",
+                            "parameters": [
+                                {
+                                    "type": "field",
+                                    "value": [
+                                        "intrinsic_metadata",
+                                        "ssl_host_name"
+                                    ]
+                                },
+                                {
+                                    "type": "field",
+                                    "value": [
+                                        "server_name_indication",
+                                        "name_length"
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "transition_key": [],
+                    "transitions": [
+                        {
+                            "type": "default",
+                            "value": null,
+                            "mask": null,
+                            "next_state": "parse_host_name"
+                        }
+                    ]
+                },
+                {
+                    "name": "parse_host_name",
+                    "id": 15,
+                    "parser_ops": [
+                        {
+                            "op": "extract",
+                            "parameters": [
+                                {
+                                    "type": "stack",
+                                    "value": "one_byte_payload"
+                                }
+                            ]
+                        },
+                        {
+                            "op": "set",
+                            "parameters": [
+                                {
+                                    "type": "field",
+                                    "value": [
+                                        "intrinsic_metadata",
+                                        "ssl_host_name"
+                                    ]
+                                },
+                                {
+                                    "type": "expression",
+                                    "value": {
+                                        "type": "expression",
+                                        "value": {
+                                            "op": "-",
+                                            "left": {
+                                                "type": "field",
+                                                "value": [
+                                                    "intrinsic_metadata",
+                                                    "ssl_host_name"
+                                                ]
+                                            },
+                                            "right": {
+                                                "type": "hexstr",
+                                                "value": "0x1"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "transition_key": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "intrinsic_metadata",
+                                "ssl_host_name"
+                            ]
+                        }
+                    ],
+                    "transitions": [
+                        {
+                            "type": "hexstr",
+                            "value": "0x0000",
+                            "mask": null,
+                            "next_state": null
+                        },
+                        {
+                            "type": "default",
+                            "value": null,
+                            "mask": null,
+                            "next_state": "parse_host_name"
+                        }
+                    ]
+                },
+                {
+                    "name": "parse_other_extension",
+                    "id": 16,
+                    "parser_ops": [
+                        {
+                            "op": "extract",
+                            "parameters": [
+                                {
+                                    "type": "stack",
+                                    "value": "other_extension"
+                                }
+                            ]
+                        }
+                    ],
+                    "transition_key": [],
+                    "transitions": [
+                        {
+                            "type": "default",
+                            "value": null,
+                            "mask": null,
+                            "next_state": "parse_extension"
+                        }
+                    ]
+                },
+                {
+                    "name": "parse_byte_payload",
+                    "id": 17,
                     "parser_ops": [],
                     "transition_key": [
                         {
@@ -1638,7 +2758,7 @@
                 },
                 {
                     "name": "parse_whatsapp_three_byte_payload",
-                    "id": 9,
+                    "id": 18,
                     "parser_ops": [
                         {
                             "op": "extract",
@@ -1680,7 +2800,7 @@
                 },
                 {
                     "name": "parse_four_byte_payload",
-                    "id": 10,
+                    "id": 19,
                     "parser_ops": [
                         {
                             "op": "extract",
@@ -1704,7 +2824,7 @@
                 },
                 {
                     "name": "parse_udp",
-                    "id": 11,
+                    "id": 20,
                     "parser_ops": [
                         {
                             "op": "extract",
@@ -1830,7 +2950,7 @@
                 },
                 {
                     "name": "check_udp_port",
-                    "id": 12,
+                    "id": 21,
                     "parser_ops": [],
                     "transition_key": [
                         {
@@ -1895,7 +3015,7 @@
                 },
                 {
                     "name": "parse_quic_flags",
-                    "id": 13,
+                    "id": 22,
                     "parser_ops": [
                         {
                             "op": "extract",
@@ -2073,7 +3193,7 @@
                 },
                 {
                     "name": "parse_ipv6",
-                    "id": 14,
+                    "id": 23,
                     "parser_ops": [
                         {
                             "op": "extract",
@@ -2183,12 +3303,84 @@
             "order": [
                 "label_header",
                 "ethernet_header",
-                "ipv6_header",
                 "ipv4_header",
+                "ipv6_header",
                 "udp_header",
+                "quic_flags",
                 "tcp_header",
                 "four_byte_payload",
                 "dns_header",
+                "tls_records_header",
+                "handshake_protocol",
+                "client_hello",
+                "cipher_suites",
+                "compression_methods",
+                "other_extension[0]",
+                "other_extension[1]",
+                "other_extension[2]",
+                "other_extension[3]",
+                "other_extension[4]",
+                "other_extension[5]",
+                "other_extension[6]",
+                "other_extension[7]",
+                "other_extension[8]",
+                "other_extension[9]",
+                "other_extension[10]",
+                "other_extension[11]",
+                "other_extension[12]",
+                "other_extension[13]",
+                "other_extension[14]",
+                "other_extension[15]",
+                "other_extension[16]",
+                "other_extension[17]",
+                "other_extension[18]",
+                "other_extension[19]",
+                "other_extension[20]",
+                "other_extension[21]",
+                "other_extension[22]",
+                "other_extension[23]",
+                "other_extension[24]",
+                "other_extension[25]",
+                "other_extension[26]",
+                "other_extension[27]",
+                "other_extension[28]",
+                "other_extension[29]",
+                "other_extension[30]",
+                "other_extension[31]",
+                "other_extension[32]",
+                "other_extension[33]",
+                "other_extension[34]",
+                "other_extension[35]",
+                "other_extension[36]",
+                "other_extension[37]",
+                "other_extension[38]",
+                "other_extension[39]",
+                "other_extension[40]",
+                "other_extension[41]",
+                "other_extension[42]",
+                "other_extension[43]",
+                "other_extension[44]",
+                "other_extension[45]",
+                "other_extension[46]",
+                "other_extension[47]",
+                "other_extension[48]",
+                "other_extension[49]",
+                "other_extension[50]",
+                "other_extension[51]",
+                "other_extension[52]",
+                "other_extension[53]",
+                "other_extension[54]",
+                "other_extension[55]",
+                "other_extension[56]",
+                "other_extension[57]",
+                "other_extension[58]",
+                "other_extension[59]",
+                "other_extension[60]",
+                "other_extension[61]",
+                "other_extension[62]",
+                "other_extension[63]",
+                "server_extension",
+                "server_name_indication",
                 "one_byte_payload[0]",
                 "one_byte_payload[1]",
                 "whatsapp_three_byte_payload",
@@ -2253,16 +3445,215 @@
                 "one_byte_payload[60]",
                 "one_byte_payload[61]",
                 "one_byte_payload[62]",
-                "one_byte_payload[63]",
-                "quic_flags"
+                "one_byte_payload[63]"
             ]
         }
     ],
     "meter_arrays": [],
     "actions": [
         {
-            "name": "do_copy_A_fields",
+            "name": "do_read_all",
             "id": 0,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_A"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_payload"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_B"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_payload"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_A"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_length"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_B"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_length"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_read_counter",
+            "id": 1,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_A"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirA_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_read",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_B"
+                            ]
+                        },
+                        {
+                            "type": "register_array",
+                            "value": "dirB_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_update_counter_A",
+            "id": 2,
+            "runtime_data": [
+                {
+                    "name": "number",
+                    "bitwidth": 16
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_A"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirA_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_copy_A_fields",
+            "id": 3,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2306,8 +3697,249 @@
             ]
         },
         {
+            "name": "set_egress_port",
+            "id": 4,
+            "runtime_data": [
+                {
+                    "name": "port",
+                    "bitwidth": 9
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "egress_spec"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_calculate_index",
+            "id": 5,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "modify_field_with_hash_based_offset",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x0"
+                        },
+                        {
+                            "type": "calculation",
+                            "value": "index_hash_cal"
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x400"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_updateB",
+            "id": 6,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_payload"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "four_byte_payload",
+                                "data"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_length"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "intrinsic_metadata",
+                                "payload_len"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_B"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_copy_B_fields",
+            "id": 7,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "_payload"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "payload_B"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "_length"
+                            ]
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "length_B"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_update_counter_B",
+            "id": 8,
+            "runtime_data": [
+                {
+                    "name": "number",
+                    "bitwidth": 16
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "counter_B"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "register_write",
+                    "parameters": [
+                        {
+                            "type": "register_array",
+                            "value": "dirB_counter"
+                        },
+                        {
+                            "type": "field",
+                            "value": [
+                                "direction_metadata",
+                                "hash_index"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name": "do_updateA",
-            "id": 1,
+            "id": 9,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2395,124 +4027,19 @@
             ]
         },
         {
-            "name": "do_copy_B_fields",
-            "id": 2,
+            "name": "_drop",
+            "id": 10,
             "runtime_data": [],
             "primitives": [
                 {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "_payload"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_B"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "_length"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_B"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_assemble",
-            "id": 3,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
+                    "op": "drop",
+                    "parameters": []
                 }
             ]
         },
         {
             "name": "do_label_encap",
-            "id": 4,
+            "id": 11,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2603,53 +4130,28 @@
             ]
         },
         {
-            "name": "do_updateB",
-            "id": 5,
-            "runtime_data": [],
+            "name": "do_set_sub_label_by_guess",
+            "id": 12,
+            "runtime_data": [
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
             "primitives": [
                 {
-                    "op": "register_write",
+                    "op": "modify_field",
                     "parameters": [
                         {
-                            "type": "register_array",
-                            "value": "dirB_payload"
-                        },
-                        {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "hash_index"
+                                "label_metadata",
+                                "sub_label"
                             ]
                         },
                         {
-                            "type": "field",
-                            "value": [
-                                "four_byte_payload",
-                                "data"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "intrinsic_metadata",
-                                "payload_len"
-                            ]
+                            "type": "runtime_data",
+                            "value": 0
                         }
                     ]
                 },
@@ -2659,28 +4161,24 @@
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "counter_B"
+                                "label_metadata",
+                                "sub_label_result"
                             ]
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x1"
+                            "value": "0x2"
                         }
                     ]
                 },
                 {
-                    "op": "register_write",
+                    "op": "modify_field",
                     "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_counter"
-                        },
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "hash_index"
+                                "learning_metadata",
+                                "_type"
                             ]
                         },
                         {
@@ -2692,8 +4190,143 @@
             ]
         },
         {
+            "name": "do_set_label_by_detect",
+            "id": 13,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                },
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "egress_spec"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "send_to_cpu",
+            "id": 14,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "standard_metadata",
+                                "egress_spec"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0xff"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name": "count_packet",
-            "id": 6,
+            "id": 15,
             "runtime_data": [],
             "primitives": [
                 {
@@ -2731,501 +4364,12 @@
             ]
         },
         {
-            "name": "do_update_counter_B",
-            "id": 7,
-            "runtime_data": [
-                {
-                    "name": "number",
-                    "bitwidth": 16
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_B"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "set_egress_port",
-            "id": 8,
-            "runtime_data": [
-                {
-                    "name": "port",
-                    "bitwidth": 9
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "_nop",
-            "id": 9,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "no_op",
-                    "parameters": []
-                }
-            ]
-        },
-        {
-            "name": "send_to_cpu",
-            "id": 10,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0xff"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_read_all",
-            "id": 11,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_A"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_payload"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_B"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirB_payload"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_A"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_length"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_B"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_set_label_by_match_rule",
-            "id": 12,
-            "runtime_data": [
-                {
-                    "name": "label",
-                    "bitwidth": 8
-                },
-                {
-                    "name": "sublabel",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 1
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "do_set_label_by_guess",
-            "id": 13,
-            "runtime_data": [
-                {
-                    "name": "label",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_set_label_by_detect",
-            "id": 14,
-            "runtime_data": [
-                {
-                    "name": "label",
-                    "bitwidth": 8
-                },
-                {
-                    "name": "sublabel",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 1
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_set_sub_label_by_guess",
-            "id": 15,
-            "runtime_data": [
-                {
-                    "name": "sublabel",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_update_counter_A",
             "id": 16,
             "runtime_data": [
                 {
-                    "name": "number",
-                    "bitwidth": 16
+                    "name": "label",
+                    "bitwidth": 8
                 }
             ],
             "primitives": [
@@ -3235,8 +4379,8 @@
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "counter_A"
+                                "label_metadata",
+                                "label"
                             ]
                         },
                         {
@@ -3246,106 +4390,34 @@
                     ]
                 },
                 {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_calculate_index",
-            "id": 17,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field_with_hash_based_offset",
+                    "op": "modify_field",
                     "parameters": [
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "hash_index"
+                                "label_metadata",
+                                "label_result"
                             ]
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x0"
-                        },
-                        {
-                            "type": "calculation",
-                            "value": "index_hash_cal"
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x400"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_read_counter",
-            "id": 18,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_A"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
+                            "value": "0x2"
                         }
                     ]
                 },
                 {
-                    "op": "register_read",
+                    "op": "modify_field",
                     "parameters": [
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "counter_B"
+                                "learning_metadata",
+                                "_type"
                             ]
                         },
                         {
-                            "type": "register_array",
-                            "value": "dirB_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
+                            "type": "hexstr",
+                            "value": "0x1"
                         }
                     ]
                 }
@@ -3353,7 +4425,7 @@
         },
         {
             "name": "do_reset_direction",
-            "id": 19,
+            "id": 17,
             "runtime_data": [],
             "primitives": [
                 {
@@ -3479,12 +4551,131 @@
             ]
         },
         {
-            "name": "_drop",
+            "name": "do_assemble",
+            "id": 18,
+            "runtime_data": [],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_set_label_by_match_rule",
+            "id": 19,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                },
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "_nop",
             "id": 20,
             "runtime_data": [],
             "primitives": [
                 {
-                    "op": "drop",
+                    "op": "no_op",
                     "parameters": []
                 }
             ]
@@ -5026,6 +6217,10 @@
         [
             "intrinsic_metadata",
             "tcp_hdr_len"
+        ],
+        [
+            "intrinsic_metadata",
+            "ssl_host_name"
         ]
     ]
 }

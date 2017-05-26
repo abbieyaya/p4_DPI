@@ -158,7 +158,7 @@ parser parse_tls_header {
 
 parser parse_handshake_protocol {
     extract(handshake_protocol);
-    return select(tls_records_header._type){
+    return select(handshake_protocol._type){
         0x01 : parse_client_hello;
         default : ingress;
     }
@@ -166,7 +166,16 @@ parser parse_handshake_protocol {
 
 parser parse_client_hello {
     extract(client_hello);
+    //return ingress;
+    return parse_cipher;
+}
+
+parser parse_cipher {
     extract(cipher_suites);
+    return parse_compression;
+}
+
+parser parse_compression {
     extract(compression_methods);
     return parse_extension;
 }
@@ -174,20 +183,29 @@ parser parse_client_hello {
 parser parse_extension{
     return select(current(0,16)){
         0x0000 : parse_server_name_indication ;
-        default : parse_extension;
+        default : parse_other_extension;
     }
 }
 
+parser parse_other_extension {
+    extract(other_extension[next]);
+    return parse_extension;
+}
+
 parser parse_server_name_indication {
+    extract(server_extension);
     extract(server_name_indication);
+    set_metadata( intrinsic_metadata.ssl_host_name, server_name_indication.name_length ); 
     return parse_host_name;
 }
 
 parser parse_host_name {
     extract(one_byte_payload[next]);
-    set_metadata( intrinsic_metadata.version_len, quic_flags.version << 2 ); 
+    set_metadata( intrinsic_metadata.ssl_host_name, intrinsic_metadata.ssl_host_name - 1 ); 
     return select(intrinsic_metadata.ssl_host_name){
         0x0000 : ingress;
         default : parse_host_name ;
     }
 }
+
+
