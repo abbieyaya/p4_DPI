@@ -10,45 +10,30 @@ import json
 import sys
 import csv
 
-def file2dict(appfile):
+def file2dict(appfile, fo_writer):
     table = {}
     for line in appfile:
         data = line.split(' ')[:6]
         label = data[0]
-        src_ip = data[1]
-        dst_ip = data[2]
-        src_port = data[3]
-        dst_port = data[4]
-        protocol = data[5]
-        key = frozenset({src_ip+":"+str(src_port), dst_ip+":"+str(dst_port), protocol})
+        src = "%s:%s" % (data[1], data[3])
+        dst = "%s:%s" % (data[2], data[4])
+        if data[5] == '6' : protocol = "TCP"
+        else : protocol = "UDP"
+        key = frozenset({src, dst, protocol})
         table.update({key:label})
         print key, label
+        dict2csv( fo_writer, src, dst, protocol, label )
 
     return table ;
 
 
-def dict2csv( fo_writer, dictionary ):
-    csv_header = ['src_ip']
-    csv_header.append('src_port')
-    csv_header.append('dst_ip')
-    csv_header.append('dst_port')
-    csv_header.append('protocol')
-    csv_header.append('label')
-    print csv_header
-    fo_writer.writerow(csv_header)
-
-    for key, value in dictionary.iteritems() :
-        src = key[0].split(':')
-        dst = key[1].split(':')
-        result = []
-        result.append(src[0] )
-        result.append(src[1])
-        result.append(dst[0])
-        result.append(dst[1])
-        result.append(key[2])
-        result.append(value)
-        print result 
-        fo_writer.writerow(result)
+def dict2csv( fo_writer, src, dst, protocol, label ):
+    result = []
+    result.append(src)
+    result.append(dst)
+    result.append(protocol)
+    result.append(label)
+    fo_writer.writerow(result)
 
 
 def main():
@@ -72,9 +57,7 @@ def main():
         print "I/O error({0}): {1}".format(errno, strerror)
         return
 
-    appdict = file2dict(fi)
-    #print appdict
-    #dict2csv( fo_writer, appdict )
+    appdict = file2dict(fi, fo_writer)
 
     fi.close()
     fo.close()

@@ -25,26 +25,33 @@ def dict2csv(src, dst, protocol, label):
 def match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label, m_label_result, s_label_result):
     #print "in_match"
     global table
-    key = frozenset({src_ip+":"+str(src_port), dst_ip+":"+str(dst_port), protocol})
+    src = "%s:%s" % ( src_ip, src_port )
+    dst = "%s:%s" % ( dst_ip, dst_port )
+    if m_label == "" : 
+        label = "%s" % s_label
+        way = "%s" % s_label_result
+
+    elif s_label == "" : 
+        label = "%s" % m_label
+        way = "%s" % m_label_result
+
+    else : 
+        label = "%s.%s" % ( m_label, s_label)
+        way = "%s.%s" % ( m_label_result, s_label_result)
+
+    key = frozenset({src, dst, protocol})
     value = set({m_label,s_label})
     if key not in table :
         table.update({key:value})
-        src = "%s:%s" % ( src_ip, src_port )
-        dst = "%s:%s" % ( dst_ip, dst_port )
-        if m_label == "" : 
-            label = "%s" % s_label
-            way = "%s" % s_label_result
-
-        elif s_label == "" : 
-            label = "%s" % m_label
-            way = "%s" % m_label_result
-
-        else : 
-            label = "%s.%s" % ( m_label, s_label)
-            way = "%s.%s" % ( m_label_result, s_label_result)
-
         print "%s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
-        dict2csv( src, dst, protocol, label)
+        dict2csv(src, dst, protocol, label)
+    else :
+        if m_label_result == "detect" or s_label_result == "detect" :
+            if table[key] != label :
+                table[key] = label 
+                print "Update !!! %s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
+                dict2csv(src, dst, protocol, label)
+
 
 def master_label(label):
     #print label
@@ -131,6 +138,8 @@ def master_label(label):
     if label == 80: return "Viber"
     if label == 81: return "COAP"
     if label == 82: return "BJNP"
+    if label == 83: return "SSDP"
+    if label == 90: return "SSL"
     return ""
 
 def sub_label(label):
@@ -156,7 +165,7 @@ def sub_label(label):
     if label == 18: return "PPStream"
     if label == 19: return "Instagram"
     if label == 20: return "CNN"
-    if label == 21: return "Youtube"
+    if label == 21: return "YouTube"
     return ""
 
 def detect_or_guess(label):

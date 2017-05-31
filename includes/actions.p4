@@ -54,7 +54,7 @@ action do_set_label_by_detect(label, sublabel) {
 
     modify_field(learning_metadata._type, 1);
     
-    modify_field(standard_metadata.egress_spec, 2);
+    //modify_field(standard_metadata.egress_spec, 2);
     //clone_ingress_pkt_to_egress(200, copy_to_cpu_fields);
     //drop();
 }
@@ -86,11 +86,11 @@ action _nop() {
 
 action do_assemble(){
     modify_field(label_metadata.label, 2);
-    //pattern_match(label_metadata.sub_label, one_byte_payload);
+    pattern_match(label_metadata.sub_label, one_byte_payload);
     modify_field(label_metadata.label_result, 1); // by detect
     modify_field(label_metadata.sub_label_result, 1); // by detect
     
-    //modify_field(standard_metadata.egress_spec, 2);
+    modify_field(standard_metadata.egress_spec, 2);
 
     modify_field(learning_metadata._type, 1);
     
@@ -98,6 +98,19 @@ action do_assemble(){
     //drop();
 }
 
+action do_detect_ssl(){
+    modify_field(label_metadata.label, 90);
+    pattern_match(label_metadata.sub_label, one_byte_payload);
+    modify_field(label_metadata.label_result, 1); // by detect
+    modify_field(label_metadata.sub_label_result, 1); // by detect
+    
+    modify_field(standard_metadata.egress_spec, 2);
+
+    modify_field(learning_metadata._type, 1);
+    
+    //clone_ingress_pkt_to_egress(200, copy_to_cpu_fields);
+    //drop();
+}
 
 action do_set_priority(priority) {
     modify_field(intrinsic_metadata.priority, priority);
@@ -131,36 +144,36 @@ field_list_calculation index_hash_cal {
 
 register dirA_payload{
     width : 32;
-    instance_count : 1024;
+    instance_count : 1048576;
 }
 
 register dirB_payload{
     width : 32;
-    instance_count : 1024;
+    instance_count : 1048576;
 }
 
 register dirA_length{
     width : 16;
-    instance_count : 1024;
+    instance_count : 1048576;
 }
 
 register dirB_length{
     width : 16;
-    instance_count : 1024;
+    instance_count : 1048576;
 }
 
 register dirA_counter{
     width : 16;
-    instance_count : 1024;
+    instance_count : 1048576;
 }
 
 register dirB_counter{
     width : 16;
-    instance_count : 1024;
+    instance_count : 1048576;
 }
 
 action do_calculate_index(){
-    modify_field_with_hash_based_offset(direction_metadata.hash_index, 0, index_hash_cal, 1024);
+    modify_field_with_hash_based_offset(direction_metadata.hash_index, 0, index_hash_cal, 1048576);
 }
 
 action do_read_all(){

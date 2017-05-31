@@ -46,13 +46,11 @@ def dict2csv( fo_writer, src, dst, protocol, label ):
 
 def main():
     # Check for arguments
-    if len(sys.argv) == 3:
-        file_in_tcp = sys.argv[1]
-        file_in_udp = sys.argv[2]
+    if len(sys.argv) == 2:
+        file_in = sys.argv[1]
         file_out = 'essence.csv'
-    elif len(sys.argv) == 4:
-        file_in_tcp = sys.argv[1]
-        file_in_udp = sys.argv[2]
+    elif len(sys.argv) == 3:
+        file_in = sys.argv[1]
         file_out = sys.argv[3]
     else:
         print "Usage: ", sys.argv[0], "[input_tcp.json]", "[input_udp.json]", "[output.csv]"
@@ -61,16 +59,14 @@ def main():
     # Open files for input and output
     try:
         FNULL = open(devnull, 'w')   # File of nowhere
-        fi_tcp = open(file_in_tcp, 'r')
-        fi_udp = open(file_in_udp, 'r')
+        fi = open(file_in, 'r')
         fo = open(file_out, 'w')
         fo_writer = csv.writer(fo)
     except IOError as (errno, strerror):
         print "I/O error({0}): {1}".format(errno, strerror)
         return
 
-    json2dict(json.load(fi_tcp, encoding='latin-1'), fo_writer)
-    json2dict(json.load(fi_udp, encoding='latin-1'), fo_writer)
+    json2dict(json.load(fi, encoding='latin-1'), fo_writer)
 
 
     fi_tcp.close()

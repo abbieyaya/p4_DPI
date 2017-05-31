@@ -52,8 +52,8 @@ table physical_to_host {
 
 table label_encup {
     reads { 
-        //standard_metadata.instance_type : exact ;
-        learning_metadata._type : exact ;
+        standard_metadata.instance_type : exact ;
+        //learning_metadata._type : exact ;
     }
     actions { 
         _drop; 
@@ -101,6 +101,12 @@ table detect_four_byte_payload {
 table detect_dns {
     actions {
         do_assemble ;
+    }
+}
+
+table detect_ssl {
+    actions {
+        do_detect_ssl;
     }
 }
 
