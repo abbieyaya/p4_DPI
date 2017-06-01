@@ -20,8 +20,8 @@ control process_libprotoident {
             apply(detect_two_direction); 
             apply(reset_direction); 
     }
-    else if( direction_metadata.counter_A == 3 or direction_metadata.counter_B == 3 ) {
-        if( direction_metadata.counter_A == 3 ){ apply(copy_A_fields); }
+    else if( direction_metadata.counter_A == 2 or direction_metadata.counter_B == 2 ) {
+        if( direction_metadata.counter_A == 2 ){ apply(copy_A_fields); }
         else { apply(copy_B_fields); }
         apply(detect_one_direction); 
         apply(reset_direction); 

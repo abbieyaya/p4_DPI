@@ -52,6 +52,7 @@ class pattern_match : public ActionPrimitive<Field &, HeaderStack &> {
         free(pattern);
         return false ;
     }else {
+        BMLOG_DEBUG("~~~~~~~~~~~~~~~~~~~~~~~~~~~compare {} {}\n", text, temp );
         for (c = 0; c <= text_length - pattern_length; c++) {
             e = c;
              
@@ -79,18 +80,23 @@ class pattern_match : public ActionPrimitive<Field &, HeaderStack &> {
   void operator ()(Field & result, HeaderStack &data) {
     char text[100] ;
     memset(text, '\0', 100);
-    for (size_t i = 0; i < data.get_count(); i++) {
+    int now = 0 ;
+    for (size_t i = 0; i < data.get_count(); i++, now++ ) {
         auto &hdr_instance = data.at(i);
         assert(hdr_instance.is_valid());
         //auto &bc = hdr_instance.get_bytes();
         //assert(bc.size() == 1);
         // hdr_instance.get_field(0).set_arith(1);
         //text[i] = hdr_instance.get_field(0).get_uint() ;
-        text[i] = (hdr_instance.get_field(0).get_bytes())[0] ;
-        if ( text[i] == 0 ) {
+        text[now] = (hdr_instance.get_field(0).get_bytes())[0] ;
+        if ( text[now] == 0 ) {
             break ;
         }
-        text[i] = text[i] < 32 ? '.' : text[i] ;
+        if ( now == 0 && text[now] < 32 ) {
+            now-- ;
+        } else {
+            text[now] = text[now] < 32 ? '.' : text[now] ;
+        }
     }
  
     //BMLOG_DEBUG("~~~~~~~~~~~~~~~~~~~~~~~~~~~find {} \n", text );
@@ -100,7 +106,7 @@ class pattern_match : public ActionPrimitive<Field &, HeaderStack &> {
         //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find SKYPE\n");
         result.set(1);
     }else if ( match( text, ".yahoo." ) || match( text, ".yimg.com" ) || match( text, "yahooapis." ) ) {
-        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find yahoo\n");
+        BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find yahoo\n");
         result.set(2);
     }else if ( match( text, "wikipedia." ) || match( text, "wikimedia." ) 
              || match( text, "mediawiki." ) || match( text, "wikimediafoundation." ) ) {
@@ -138,6 +144,10 @@ class pattern_match : public ActionPrimitive<Field &, HeaderStack &> {
              || match( text, ".icloud.com" ) || match( text, "itunes.apple.com" ) ) {
         //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
         result.set(12);
+    }else if ( match( text, "youtube." ) || match( text, "yt3.ggpht.com" ) || match( text, ".googlevideo.com" ) 
+             || match( text, ".ytimg.com" ) || match( text, "youtube-nocookie.") ){ 
+        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
+        result.set(21);
     }else if ( match( text, ".google." ) || match( text, ".gstatic.com" ) || match( text, ".googlesyndication.com" )
              || match( text, ".googletagservices.com" ) || match( text, ".2mdn.net" ) || match( text, ".doubleclick.net" ) 
              || match( text, "googleads." ) || match( text, "google-analytics." ) || match( text, "googleusercontent." ) 
@@ -168,11 +178,6 @@ class pattern_match : public ActionPrimitive<Field &, HeaderStack &> {
     }else if ( match( text, ".cnn.c" ) || match( text, ".cnn.net" ) ) {
         //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
         result.set(20);
-    }else if ( match( text, "youtube." ) || match( text, "youtu.be." ) || match( text, "yt3.ggpht.com" )
-             || match( text, ".googlevideo.com" ) || match( text, ".ytimg.com" ) || match( text, "youtube-nocookie." ) 
-             || match( text, "ggpht.com" ) || match( text, "googleusercontent.com" ) ) {
-        //BMLOG_DEBUG("YES!!!!!!!!!!!!!!!!!!! I find google\n");
-        result.set(21);
     }else {
         //BMLOG_DEBUG("NO QQQQQQQQQQQQQQQQQQQQQ \n");
         result.set(0);
@@ -407,6 +412,7 @@ class modify_field_with_hash_based_offset
     uint64_t v =
       (hash.output(get_packet()) % size.get<uint64_t>()) + base.get<uint64_t>();
     dst.set(v);
+    BMLOG_DEBUG("~~~~~~~ hash result: {}\n", v );
   }
 };
 

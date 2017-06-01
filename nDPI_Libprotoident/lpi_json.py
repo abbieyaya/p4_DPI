@@ -15,14 +15,17 @@ def file2dict(appfile, fo_writer):
     for line in appfile:
         data = line.split(' ')[:6]
         label = data[0]
-        src = "%s:%s" % (data[1], data[3])
-        dst = "%s:%s" % (data[2], data[4])
-        if data[5] == '6' : protocol = "TCP"
-        else : protocol = "UDP"
-        key = frozenset({src, dst, protocol})
-        table.update({key:label})
-        print key, label
-        dict2csv( fo_writer, src, dst, protocol, label )
+        if label.find("Unknown") == -1 :
+            if label == "HTTPS" : label = "SSL"
+            if label == "mDNS" : label = "MDNS"
+            src = "%s:%s" % (data[1], data[3])
+            dst = "%s:%s" % (data[2], data[4])
+            if data[5] == '6' : protocol = "TCP"
+            else : protocol = "UDP"
+            key = frozenset({src, dst, protocol})
+            table.update({key:label})
+            print key, label
+            dict2csv( fo_writer, src, dst, protocol, label )
 
     return table ;
 

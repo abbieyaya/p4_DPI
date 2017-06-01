@@ -243,6 +243,8 @@ table detect_two_direction {
         direction_metadata.length_A : ternary;
         direction_metadata.payload_B : ternary;
         direction_metadata.length_B : ternary;
+        five_tuple_metadata.srcPort : ternary;
+        five_tuple_metadata.dstPort : ternary;
     }
 
     actions { do_set_label_by_detect; }
@@ -252,6 +254,8 @@ table detect_one_direction {
     reads {
         direction_metadata._payload : ternary;
         direction_metadata._length : ternary;
+        five_tuple_metadata.srcPort : ternary;
+        five_tuple_metadata.dstPort : ternary;
     }
 
     actions { do_set_label_by_detect; }

@@ -150,8 +150,8 @@ parser parse_quic_flags {
 
 parser parse_tls_header {
     extract(tls_records_header);
-    return select(tls_records_header._type){
-        0x16 : parse_handshake_protocol;
+    return select(tls_records_header._type, tls_records_header.version){
+        0x160303 : parse_handshake_protocol;
         default : ingress;
     }
 }

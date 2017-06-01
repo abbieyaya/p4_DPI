@@ -12,8 +12,19 @@ def json2dict(appjson, fo_writer):
     table = {}
     for flow in appjson['known.flows']:
         label = str(flow['detected.protocol.name'])
-        src = "%s:%s" % (str(flow['host_a.name']), str(flow['host_a.port']))
-        dst = "%s:%s" % (str(flow['host_b.name']), str(flow['host_b.port']))
+        src_ip = str(flow['host_a.name'])
+        dst_ip = str(flow['host_b.name'])
+        print("%s" % src_ip )
+        if src_ip.find(':') > 0 :
+            print("exchange")
+            src_port = str(flow['host_b.port'])
+            dst_port = str(flow['host_a.port'])
+        else :
+            src_port = str(flow['host_a.port'])
+            dst_port = str(flow['host_b.port']) 
+
+        src = "%s:%s" % ( src_ip, src_port )
+        dst = "%s:%s" % ( dst_ip, dst_port )
         protocol = str(flow['protocol'])
         key = frozenset({src, dst, protocol})
         table.update({key:label})

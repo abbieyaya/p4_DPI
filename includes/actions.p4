@@ -31,7 +31,8 @@ action do_set_label_by_guess(label) {
     modify_field(label_metadata.label, label);
     modify_field(label_metadata.label_result, 2); // by guess
 
-    modify_field(learning_metadata._type, 1);
+    clone_ingress_pkt_to_egress( 2, copy_to_cpu_fields );
+    //modify_field(learning_metadata._type, 1);
 
     //modify_field(standard_metadata.egress_spec, 2);
 }
@@ -40,7 +41,8 @@ action do_set_sub_label_by_guess(sublabel) {
     modify_field(label_metadata.sub_label, sublabel);
     modify_field(label_metadata.sub_label_result, 2); // by guess
 
-    modify_field(learning_metadata._type, 1);
+    clone_ingress_pkt_to_egress( 2, copy_to_cpu_fields );
+    //modify_field(learning_metadata._type, 1);
 
     //modify_field(standard_metadata.egress_spec, 2);
 }
@@ -52,6 +54,7 @@ action do_set_label_by_detect(label, sublabel) {
     modify_field(label_metadata.label_result, 1); // by detect
     modify_field(label_metadata.sub_label_result, 1); // by detect
 
+    clone_ingress_pkt_to_egress( 2, copy_to_cpu_fields );
     modify_field(learning_metadata._type, 1);
     
     //modify_field(standard_metadata.egress_spec, 2);
@@ -92,6 +95,7 @@ action do_assemble(){
     
     modify_field(standard_metadata.egress_spec, 2);
 
+    clone_ingress_pkt_to_egress( 2, copy_to_cpu_fields );
     modify_field(learning_metadata._type, 1);
     
     //clone_ingress_pkt_to_egress(200, copy_to_cpu_fields);
@@ -106,6 +110,7 @@ action do_detect_ssl(){
     
     modify_field(standard_metadata.egress_spec, 2);
 
+    clone_ingress_pkt_to_egress( 2, copy_to_cpu_fields );
     modify_field(learning_metadata._type, 1);
     
     //clone_ingress_pkt_to_egress(200, copy_to_cpu_fields);
@@ -123,7 +128,6 @@ field_list copy_to_cpu_fields {
 
 action do_learning() {
     generate_digest( 1, rule_info );
-    clone_ingress_pkt_to_egress( 2, copy_to_cpu_fields );
 }
 
 field_list hash_fields {
@@ -144,36 +148,36 @@ field_list_calculation index_hash_cal {
 
 register dirA_payload{
     width : 32;
-    instance_count : 1048576;
+    instance_count : 16127;
 }
 
 register dirB_payload{
     width : 32;
-    instance_count : 1048576;
+    instance_count : 16127;
 }
 
 register dirA_length{
     width : 16;
-    instance_count : 1048576;
+    instance_count : 16127;
 }
 
 register dirB_length{
     width : 16;
-    instance_count : 1048576;
+    instance_count : 16127;
 }
 
 register dirA_counter{
     width : 16;
-    instance_count : 1048576;
+    instance_count : 16127;
 }
 
 register dirB_counter{
     width : 16;
-    instance_count : 1048576;
+    instance_count : 16127;
 }
 
 action do_calculate_index(){
-    modify_field_with_hash_based_offset(direction_metadata.hash_index, 0, index_hash_cal, 1048576);
+    modify_field_with_hash_based_offset(direction_metadata.hash_index, 0, index_hash_cal, 16127);
 }
 
 action do_read_all(){

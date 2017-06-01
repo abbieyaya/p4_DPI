@@ -40,9 +40,8 @@ def match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label, m_label_resu
         way = "%s.%s" % ( m_label_result, s_label_result)
 
     key = frozenset({src, dst, protocol})
-    value = set({m_label,s_label})
     if key not in table :
-        table.update({key:value})
+        table.update({key:label})
         print "%s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
         dict2csv(src, dst, protocol, label)
     else :
@@ -102,7 +101,7 @@ def master_label(label):
     if label == 44: return "Citrix"
     if label == 45: return "Radius"
     if label == 46: return "SAP"
-    if label == 47: return "UPnP"
+    if label == 47: return "SSDP"
     if label == 48: return "LLMNR"
     if label == 49: return "RemoteScan"
     if label == 50: return "OpenVPN"
@@ -138,7 +137,7 @@ def master_label(label):
     if label == 80: return "Viber"
     if label == 81: return "COAP"
     if label == 82: return "BJNP"
-    if label == 83: return "SSDP"
+    if label == 83: return "HTTP"
     if label == 90: return "SSL"
     return ""
 
@@ -212,6 +211,7 @@ def handle_pkt(pkt):
     counter = 0
     src_port = 0 
     dst_port = 0
+    ipv6_flag = 0
     while True:
         layer = ip_packet.getlayer(counter)
 
@@ -222,6 +222,7 @@ def handle_pkt(pkt):
             src_ip = packet['IP'].fields['src']
             dst_ip = packet['IP'].fields['dst']
         elif layer.name == 'IPv6':
+            ipv6_flag = 1
             src_ip = packet['IPv6'].fields['src']
             dst_ip = packet['IPv6'].fields['dst']
         elif layer.name == 'TCP' :
@@ -238,10 +239,11 @@ def handle_pkt(pkt):
         counter += 1
     #except:
     #    print "Get five tuple Wrong"
-    
+   
+    ipv6_flag = 0
     if src_port == 0 : 
         print "%s:0 <-> %s:0 , %s.%s (%s.%s)" % ( src_ip, dst_ip, m_label, s_label, m_label_result, s_label_result)
-    else :
+    elif not ipv6_flag :
         try :
             match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label,m_label_result,s_label_result)
         except:

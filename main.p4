@@ -9,7 +9,7 @@
 #include "includes/port_counters.p4"
 #include "includes/libprotoident.p4"
 control ingress {
-    if( valid(ipv4_header) or valid(ipv6_header) ) {
+    if( ( valid(ipv4_header) or valid(ipv6_header) ) and intrinsic_metadata.payload_len > 0 ) {
         apply(table0);
         process_port_counters();
         //if( label_metadata.label == 0 ) apply(detect_four_byte_payload);
@@ -30,16 +30,18 @@ control ingress {
         if( label_metadata.label == 0 and valid(whatsapp_three_byte_payload) ) apply(detect_whatsapp);
         if( label_metadata.label == 0 ) apply(detect_four_byte_payload);
 
-        process_libprotoident();
-        if( label_metadata.label == 0 and valid(tcp_header) ) apply(guess_by_tcp_port);
-        if( label_metadata.label == 0 and valid(udp_header) ) apply(guess_by_udp_port);
-        if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_src_address);
-        if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_dst_address);
+        if( learning_metadata._type == 0 ) process_libprotoident();
 
-        if( learning_metadata._type > 0 ) apply(learning);
         //apply(forward);
         //apply(set_queue);
     }
+    
+    if( label_metadata.label == 0 and valid(tcp_header) ) apply(guess_by_tcp_port);
+    if( label_metadata.label == 0 and valid(udp_header) ) apply(guess_by_udp_port);
+    if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_src_address);
+    if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_dst_address);
+    
+    if( learning_metadata._type > 0 ) apply(learning);
 }
 
 control egress {

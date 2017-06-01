@@ -4,6 +4,10 @@ import csv
 import os
 import sys
 
+def printTable(table):
+    for key, value in table.iteritems() :
+        print key, value
+
 def csv2table(file_in):
     csvReader = csv.reader(file_in)
     table = {}
@@ -20,39 +24,41 @@ def csv2table(file_in):
 def hitRate(table_p4, table_nDPI):
     hit = 0.0
     miss = 0.0
+    unknown = 0.0
     for key, value in table_p4.iteritems() :
         if key in table_nDPI :
             if value == table_nDPI[key] : 
                 hit = hit + 1
-                del table_nDPI[key]
             else : 
                 print key, value, table_nDPI[key] 
                 miss = miss + 1
-        else : 
+            del table_nDPI[key]
+        else :
+            print( '(Miss)'),
             print key, value
-            #miss = miss + 1 
+            unknown = unknown + 1 
 
-    print "Hit Rate : %.2f" % ((hit/(hit+miss))*100)
-    print "Miss Rate : %.2f" % ((miss/(hit+miss))*100)
-
+    print "------------------------Remain of nDPI-------------------------"
+    printTable(table_nDPI)
+    print "flow num : hit(%d) miss(%d) unknown(%d) remain(%d)" % ( hit, miss, unknown, len(table_nDPI) )
+    print "Hit Rate : %.2f" % ((hit/len(table_p4))*100)
+    print "Miss Rate : %.2f" % ((miss/len(table_p4))*100)
+    print "Unknown Rate : %.2f" % ((unknown/len(table_p4))*100)
 
 def main():
-    if len(sys.argv) == 3 :
+    if len(sys.argv) == 2 :
         file_p4 = sys.argv[1]
         file_nDPI = sys.argv[2]
-        file_out = "compare_result.txt"
-    elif len(sys.argv) == 4 : 
+    elif len(sys.argv) == 3 : 
         file_p4 = sys.argv[1]
         file_nDPI = sys.argv[2]
-        file_out = sys.argv[4]
     else :
-        print "Usage: ", argv[0], "[P4_input]", "[nDPI_input]", "[output.txt]" 
+        print "Usage: ", argv[0], "[P4_input]", "[nDPI_input]" 
 
     try :
         FNULL = open(devnull, 'w') # File of nowhere
         fi_p4 = open(file_p4, 'r')
         fi_nDPI = open(file_nDPI, 'r')
-        fout = open(file_out, 'w')
     except IOError as (errno, strerror):
         print "I/O error({0}): {1}".format(errno, strerror)
         return
@@ -69,7 +75,7 @@ def main():
     hitRate(table_P4, table_nDPI)
 
     # 2. remain of nDPI and Lib
-    #print table_nDPI
+    #print printTable(table_nDPI)
 
 
 if __name__ == "__main__" :
