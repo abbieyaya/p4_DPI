@@ -21,7 +21,7 @@ table table0 {
 
 table forward {
     reads {
-        ipv4_header.dstAddr: exact;
+        ethernet_header.dstAddr: exact;
     }
 
     actions { 

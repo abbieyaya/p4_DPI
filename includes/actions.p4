@@ -89,7 +89,7 @@ action _nop() {
 
 action do_assemble(){
     modify_field(label_metadata.label, 2);
-    //pattern_match(label_metadata.sub_label, one_byte_payload);
+    pattern_match(label_metadata.sub_label, one_byte_payload);
     modify_field(label_metadata.label_result, 1); // by detect
     modify_field(label_metadata.sub_label_result, 1); // by detect
     
@@ -104,7 +104,7 @@ action do_assemble(){
 
 action do_detect_ssl(){
     modify_field(label_metadata.label, 90);
-    //pattern_match(label_metadata.sub_label, one_byte_payload);
+    pattern_match(label_metadata.sub_label, one_byte_payload);
     modify_field(label_metadata.label_result, 1); // by detect
     modify_field(label_metadata.sub_label_result, 1); // by detect
     

@@ -12,9 +12,6 @@ control ingress {
     if( ( valid(ipv4_header) or valid(ipv6_header) ) and intrinsic_metadata.payload_len > 0 ) {
         apply(table0);
         process_port_counters();
-        //if( label_metadata.label == 0 ) apply(detect_four_byte_payload);
-        //apply(host_to_physical);
-        //apply(physical_to_host);
 
         apply(rule_match);
         if( label_metadata.label == 0 and valid(quic_flags) ) {
@@ -32,7 +29,7 @@ control ingress {
 
         if( learning_metadata._type == 0 ) process_libprotoident();
 
-        //apply(forward);
+        apply(forward);
         //apply(set_queue);
     }
     
@@ -42,6 +39,7 @@ control ingress {
     if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_dst_address);
     
     if( learning_metadata._type > 0 ) apply(learning);
+    //apply(forward);
 }
 
 control egress {
