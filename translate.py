@@ -12,6 +12,7 @@ to_hex = lambda x:" ".join([hex(ord(c)) for c in x])
 fo = None
 fo_writer = None
 table=dict()
+guess_table=dict()
 
 def dict2csv(src, dst, protocol, label):
     global fo_writer, fo
@@ -24,7 +25,7 @@ def dict2csv(src, dst, protocol, label):
 
 def match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label, m_label_result, s_label_result):
     #print "in_match"
-    global table
+    global table, guess_table
     src = "%s:%s" % ( src_ip, src_port )
     dst = "%s:%s" % ( dst_ip, dst_port )
     if m_label == "" : 
@@ -50,6 +51,9 @@ def match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label, m_label_resu
                 table[key] = label 
                 print "Update !!! %s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
                 dict2csv(src, dst, protocol, label)
+        elif key not in guess_table :
+            guess_table.update({key:label})
+            print "Guess %s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
 
 
 def master_label(label):
@@ -139,7 +143,7 @@ def master_label(label):
     if label == 82: return "BJNP"
     if label == 83: return "HTTP"
     if label == 90: return "SSL"
-    return ""
+    return "ERROR"
 
 def sub_label(label):
     #print label
@@ -165,13 +169,16 @@ def sub_label(label):
     if label == 19: return "Instagram"
     if label == 20: return "CNN"
     if label == 21: return "YouTube"
-    return ""
+    return "ERROR"
 
 def detect_or_guess(label):
+    if label == 0:
+        return ""
     if label == 1:
         return "detect"
     if label == 2:
         return "guess"
+    return "ERROR"
 
 def handle_pkt(pkt):
     #pkt.show()
@@ -182,7 +189,8 @@ def handle_pkt(pkt):
         m_label_result = detect_or_guess(int(to_hex((str(pkt))[2:3]), 16))
         s_label_result = detect_or_guess(int(to_hex((str(pkt))[3:4]), 16))
 
-        if m_label == "" and s_label == "" : return ;
+        if m_label == "ERROR" or s_label == "ERROR" or m_label_result == "ERROR" or s_label_result == "ERROR" : return ;
+
         packet = Ether((str(pkt))[4:])
         # parse five tuple
         ether_packet = Ether((str(pkt))[4:18])

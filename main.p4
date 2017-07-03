@@ -9,6 +9,7 @@
 #include "includes/port_counters.p4"
 #include "includes/libprotoident.p4"
 control ingress {
+    
     if( ( valid(ipv4_header) or valid(ipv6_header) ) and intrinsic_metadata.payload_len > 0 ) {
         apply(table0);
         process_port_counters();
@@ -29,7 +30,7 @@ control ingress {
 
         if( learning_metadata._type == 0 ) process_libprotoident();
 
-        apply(forward);
+        //apply(forward);
         //apply(set_queue);
     }
     
@@ -39,7 +40,8 @@ control ingress {
     if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_dst_address);
     
     if( learning_metadata._type > 0 ) apply(learning);
-    //apply(forward);
+    
+    apply(forward);
 }
 
 control egress {
