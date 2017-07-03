@@ -6,6 +6,7 @@ from struct import pack
 from struct import unpack
 from sys import argv
 import csv
+import pickle
 
 to_hex = lambda x:" ".join([hex(ord(c)) for c in x])
 
@@ -32,8 +33,9 @@ def dict2csv(src, dst, protocol, label):
     result.append(dst)
     result.append(protocol)
     result.append(label)
-    sock.sendall(label)
     fo_writer.writerow(result)
+    data = pickle.dumps(result)
+    sock.sendall(data)
 
 def match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label, m_label_result, s_label_result):
     #print "in_match"
