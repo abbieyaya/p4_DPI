@@ -11,16 +11,28 @@ to_hex = lambda x:" ".join([hex(ord(c)) for c in x])
 
 fo = None
 fo_writer = None
+sock = None
 table=dict()
 guess_table=dict()
 
+def connect2server():
+    global sock
+    #create a TCP/IP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # Connect the socket to the port where the server is listening
+    server_address = ('192.168.164.131', 10000)
+    print >>sys.stderr, 'connecting to %s port %s' % server_address
+    sock.connect(server_address)
+
 def dict2csv(src, dst, protocol, label):
-    global fo_writer, fo
+    global fo_writer, fo, sock
     result = []
     result.append(src)
     result.append(dst)
     result.append(protocol)
     result.append(label)
+    sock.sendall(label)
     fo_writer.writerow(result)
 
 def match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label, m_label_result, s_label_result):
@@ -190,7 +202,7 @@ def handle_pkt(pkt):
         s_label_result = detect_or_guess(int(to_hex((str(pkt))[3:4]), 16))
 
         if m_label == "ERROR" or s_label == "ERROR" or m_label_result == "ERROR" or s_label_result == "ERROR" : return ;
-
+        if m_label == "" and s_label == "" : return ;
         packet = Ether((str(pkt))[4:])
         # parse five tuple
         ether_packet = Ether((str(pkt))[4:18])
@@ -275,14 +287,18 @@ def main():
         print "I/O error({0}): {1}".format(errno, strerror)
         return
 
+    connect2server()
+
     #if argv[1].find(".pcap") == -1 : target =  "h%s-eth1" % (argv[1])
     if argv[1].find(".pcap") == -1 : target = argv[1]
     else : target = "h%s-eth1" % (argv[1])
+
 
     print "Listen on %s to transfer label of the packet" % target
     if target.find(".pcap") == -1 : sniff(iface=target, prn=handle_pkt )
     else : sniff(offline=target, prn=handle_pkt )
     fo.close()
+    sock.close()
 
 if __name__ == '__main__':
     main()
