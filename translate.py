@@ -230,7 +230,9 @@ def handle_pkt(pkt):
     try :
         # get label name
         m_label = master_label(int(to_hex((str(pkt))[0:1]), 16))
-        s_label = sub_label(int(to_hex((str(pkt))[1:2]), 16))
+        if m_label == 'Skype' or m_label == 'Whatsapp' or m_label == 'Bittorrent' or m_label == 'Teamviewer' or m_label == 'Youku' :
+            s_label = ""
+        else : s_label = sub_label(int(to_hex((str(pkt))[1:2]), 16))
         m_label_result = detect_or_guess(int(to_hex((str(pkt))[2:3]), 16))
         s_label_result = detect_or_guess(int(to_hex((str(pkt))[3:4]), 16))
 
