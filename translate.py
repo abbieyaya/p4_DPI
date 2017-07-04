@@ -7,6 +7,7 @@ from struct import unpack
 from sys import argv
 import csv
 import pickle
+import argparse
 
 to_hex = lambda x:" ".join([hex(ord(c)) for c in x])
 
@@ -15,6 +16,19 @@ fo_writer = None
 sock = None
 table=dict()
 guess_table=dict()
+
+parser = argparse.ArgumentParser(description='Translate the result of P4-Switch')
+parser.add_argument('-s', '--socket', action='store_true',
+                    default=False, required=False, dest='socket', 
+                    help='connect to the remote server')
+parser.add_argument('-i', '--interface', action='store',
+                    required=True, dest='target',
+                    help='listen to interface')
+parser.add_argument('-w', '--write',
+                    default='essence.csv', required=False, dest='file_out',
+                    help='write to csv file')
+
+args = parser.parse_args()
 
 def connect2server():
     global sock
@@ -34,25 +48,39 @@ def dict2csv(src, dst, protocol, label):
     result.append(protocol)
     result.append(label)
     fo_writer.writerow(result)
-    data = pickle.dumps(result)
-    sock.sendall(data)
+    fo.flush()
+    if args.socket == True :
+        data = pickle.dumps(result)
+        sock.sendall(data)
 
-def match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label, m_label_result, s_label_result):
-    #print "in_match"
-    global table, guess_table
-    src = "%s:%s" % ( src_ip, src_port )
-    dst = "%s:%s" % ( dst_ip, dst_port )
+def format(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label,m_label_result,s_label_result):
+    five_tuple = {}
+    five_tuple.update({'src':"%s:%s" % ( src_ip, src_port )})
+    five_tuple.update({'dst':"%s:%s" % ( dst_ip, dst_port )})
+    five_tuple.update({'protocol':protocol})
+
     if m_label == "" : 
-        label = "%s" % s_label
-        way = "%s" % s_label_result
+        five_tuple.update({'label':"%s" % s_label})
+        five_tuple.update({'way':"%s" % s_label_result})
 
     elif s_label == "" : 
-        label = "%s" % m_label
-        way = "%s" % m_label_result
+        five_tuple.update({'label':"%s" % m_label})
+        five_tuple.update({'way':"%s" % m_label_result})
 
     else : 
-        label = "%s.%s" % ( m_label, s_label)
-        way = "%s.%s" % ( m_label_result, s_label_result)
+        five_tuple.update({'label':"%s.%s" % ( m_label, s_label)})
+        five_tuple.update({'way':"%s.%s" % ( m_label_result, s_label_result)})
+
+    return five_tuple
+
+def match(five_tuple):
+    global table, guess_table
+
+    src = five_tuple['src']
+    dst = five_tuple['dst']
+    protocol = five_tuple['protocol']
+    label = five_tuple['label']
+    way = five_tuple['way']
 
     key = frozenset({src, dst, protocol})
     if key not in table :
@@ -60,14 +88,17 @@ def match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label, m_label_resu
         print "%s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
         dict2csv(src, dst, protocol, label)
     else :
-        if m_label_result == "detect" or s_label_result == "detect" :
+        if label.find('detect') > -1 :
             if table[key] != label :
                 table[key] = label 
                 print "Update !!! %s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
                 dict2csv(src, dst, protocol, label)
-        elif key not in guess_table :
+        elif label != table[key] and key not in guess_table :
             guess_table.update({key:label})
             print "Guess %s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
+
+
+
 
 
 def master_label(label):
@@ -234,6 +265,8 @@ def handle_pkt(pkt):
     src_port = 0 
     dst_port = 0
     ipv6_flag = 0
+    protocol = None
+
     while True:
         layer = ip_packet.getlayer(counter)
 
@@ -259,46 +292,37 @@ def handle_pkt(pkt):
             break 
 
         counter += 1
-    #except:
-    #    print "Get five tuple Wrong"
    
-    ipv6_flag = 0
-    if src_port == 0 : 
-        print "%s:0 <-> %s:0 , %s.%s (%s.%s)" % ( src_ip, dst_ip, m_label, s_label, m_label_result, s_label_result)
-    elif not ipv6_flag :
-        try :
-            match(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label,m_label_result,s_label_result)
-        except:
-            print "Print Wrong"
-    #print "-----------------------------------------------------------"
+    try :
+        five_tuple = format(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label,m_label_result,s_label_result)
+        match(five_tuple)
+    except:
+        print "Print Wrong"
 
 def main():
     global fo_writer, fo
-    if len(argv) == 2:
-        file_out = 'essence.csv'
-    elif len(argv) == 3:
-        file_out = argv[2]
-    else:
-        print "Usage transfer.py [host number/file] [output.csv]"
-        return
 
     try:
-        fo = open(file_out, 'w')
+        fo = open(args.file_out, 'w')
         fo_writer = csv.writer(fo)
     except IOError as (errno, strerror):
         print "I/O error({0}): {1}".format(errno, strerror)
         return
 
-    connect2server()
+    if args.socket == True : connect2server()
+    
 
+    '''
     #if argv[1].find(".pcap") == -1 : target =  "h%s-eth1" % (argv[1])
     if argv[1].find(".pcap") == -1 : target = argv[1]
     else : target = "h%s-eth1" % (argv[1])
+    '''
 
-
-    print "Listen on %s to transfer label of the packet" % target
-    if target.find(".pcap") == -1 : sniff(iface=target, prn=handle_pkt )
-    else : sniff(offline=target, prn=handle_pkt )
+    print "Listen on %s to transfer label of the packet" % args.target
+    #if args.target.find(".pcap") == -1 : sniff(iface=args.target, prn=handle_pkt )
+    #else : sniff(offline=args.target, prn=handle_pkt )
+    
+    sniff(iface=args.target, prn=handle_pkt )
     fo.close()
     sock.close()
 
