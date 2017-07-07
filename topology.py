@@ -30,7 +30,7 @@ def main():
     net.addLink(s1, h1, port1=1, port2=1, bw=50, cls=TCLink)
     net.addLink(s1, h2, port1=2, port2=1, bw=50, cls=TCLink)
     net.addLink(s1, h3, port1=3, port2=1, bw=50, cls=TCLink)
-    Intf( 'eth0' , node=s1 )
+    #Intf( 'eth0' , node=s1 )
     #net.addLink(s1, h1, port1=1, port2=1)
     #net.addLink(s1, h2, port1=2, port2=1)
     #net.addLink(s1, h3, port1=3, port2=1)

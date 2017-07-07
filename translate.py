@@ -51,6 +51,7 @@ def dict2csv(src, dst, protocol, label):
     fo.flush()
     if args.socket == True :
         data = pickle.dumps(result)
+        print "send!!!!!!!!!!!!"
         sock.sendall(data)
 
 def format(src_ip,src_port,dst_ip,dst_port,protocol,m_label,s_label,m_label_result,s_label_result):
@@ -88,7 +89,7 @@ def match(five_tuple):
         print "%s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
         dict2csv(src, dst, protocol, label)
     else :
-        if label.find('detect') > -1 :
+        if way.find('detect') > -1 :
             if table[key] != label :
                 table[key] = label 
                 print "Update !!! %s <-> %s %s, %s (%s)" % ( src, dst, protocol, label, way )
@@ -199,11 +200,11 @@ def sub_label(label):
     if label == 4: return "Whatsapp"
     if label == 5: return "BitTorrent"
     if label == 6: return "GoogleMaps"
-    if label == 7: return "Gmail"
+    if label == 7: return "GMail"
     if label == 8: return "Facebook"
     if label == 9: return "Twitter"
     if label == 10: return "Wechat"
-    if label == 11: return "Netflex"
+    if label == 11: return "NetFlix"
     if label == 12: return "Apple"
     if label == 13: return "Google"
     if label == 14: return "Dropbox"
