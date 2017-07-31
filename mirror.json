@@ -168,52 +168,8 @@
             "max_length": null
         },
         {
-            "name": "direction_metadata_t",
-            "id": 5,
-            "fields": [
-                [
-                    "hash_index",
-                    16
-                ],
-                [
-                    "_payload",
-                    32
-                ],
-                [
-                    "_length",
-                    16
-                ],
-                [
-                    "payload_A",
-                    32
-                ],
-                [
-                    "payload_B",
-                    32
-                ],
-                [
-                    "length_A",
-                    16
-                ],
-                [
-                    "length_B",
-                    16
-                ],
-                [
-                    "counter_A",
-                    16
-                ],
-                [
-                    "counter_B",
-                    16
-                ]
-            ],
-            "length_exp": null,
-            "max_length": null
-        },
-        {
             "name": "ethernet_header_t",
-            "id": 6,
+            "id": 5,
             "fields": [
                 [
                     "dstAddr",
@@ -233,7 +189,7 @@
         },
         {
             "name": "ipv4_header_t",
-            "id": 7,
+            "id": 6,
             "fields": [
                 [
                     "version",
@@ -289,7 +245,7 @@
         },
         {
             "name": "ipv6_header_t",
-            "id": 8,
+            "id": 7,
             "fields": [
                 [
                     "version",
@@ -329,7 +285,7 @@
         },
         {
             "name": "tcp_header_t",
-            "id": 9,
+            "id": 8,
             "fields": [
                 [
                     "srcPort",
@@ -418,7 +374,7 @@
         },
         {
             "name": "udp_header_t",
-            "id": 10,
+            "id": 9,
             "fields": [
                 [
                     "srcPort",
@@ -442,7 +398,7 @@
         },
         {
             "name": "dns_header_t",
-            "id": 11,
+            "id": 10,
             "fields": [
                 [
                     "tr_id",
@@ -474,7 +430,7 @@
         },
         {
             "name": "label_header_t",
-            "id": 12,
+            "id": 11,
             "fields": [
                 [
                     "label",
@@ -498,7 +454,7 @@
         },
         {
             "name": "four_byte_payload_t",
-            "id": 13,
+            "id": 12,
             "fields": [
                 [
                     "data",
@@ -510,7 +466,7 @@
         },
         {
             "name": "one_byte_payload_t",
-            "id": 14,
+            "id": 13,
             "fields": [
                 [
                     "data",
@@ -522,7 +478,7 @@
         },
         {
             "name": "whatsapp_three_byte_payload_t",
-            "id": 15,
+            "id": 14,
             "fields": [
                 [
                     "payload_1",
@@ -542,7 +498,7 @@
         },
         {
             "name": "quic_flags_t",
-            "id": 16,
+            "id": 15,
             "fields": [
                 [
                     "version",
@@ -570,7 +526,7 @@
         },
         {
             "name": "tls_records_header_t",
-            "id": 17,
+            "id": 16,
             "fields": [
                 [
                     "_type",
@@ -590,7 +546,7 @@
         },
         {
             "name": "handshake_protocol_t",
-            "id": 18,
+            "id": 17,
             "fields": [
                 [
                     "_type",
@@ -606,7 +562,7 @@
         },
         {
             "name": "client_hello_t",
-            "id": 19,
+            "id": 18,
             "fields": [
                 [
                     "version",
@@ -663,7 +619,7 @@
         },
         {
             "name": "cipher_suites_t",
-            "id": 20,
+            "id": 19,
             "fields": [
                 [
                     "_length",
@@ -712,7 +668,7 @@
         },
         {
             "name": "compression_methods_t",
-            "id": 21,
+            "id": 20,
             "fields": [
                 [
                     "_length",
@@ -765,7 +721,7 @@
         },
         {
             "name": "server_extension_t",
-            "id": 22,
+            "id": 21,
             "fields": [
                 [
                     "_type",
@@ -781,7 +737,7 @@
         },
         {
             "name": "server_name_indication_t",
-            "id": 23,
+            "id": 22,
             "fields": [
                 [
                     "list_length",
@@ -801,7 +757,7 @@
         },
         {
             "name": "other_extension_t",
-            "id": 24,
+            "id": 23,
             "fields": [
                 [
                     "_type",
@@ -885,878 +841,872 @@
             "metadata": true
         },
         {
-            "name": "direction_metadata",
-            "id": 5,
-            "header_type": "direction_metadata_t",
-            "metadata": true
-        },
-        {
             "name": "ethernet_header",
-            "id": 6,
+            "id": 5,
             "header_type": "ethernet_header_t",
             "metadata": false
         },
         {
             "name": "ipv4_header",
-            "id": 7,
+            "id": 6,
             "header_type": "ipv4_header_t",
             "metadata": false
         },
         {
             "name": "ipv6_header",
-            "id": 8,
+            "id": 7,
             "header_type": "ipv6_header_t",
             "metadata": false
         },
         {
             "name": "tcp_header",
-            "id": 9,
+            "id": 8,
             "header_type": "tcp_header_t",
             "metadata": false
         },
         {
             "name": "udp_header",
-            "id": 10,
+            "id": 9,
             "header_type": "udp_header_t",
             "metadata": false
         },
         {
             "name": "dns_header",
-            "id": 11,
+            "id": 10,
             "header_type": "dns_header_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[0]",
-            "id": 12,
+            "id": 11,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[1]",
-            "id": 13,
+            "id": 12,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[2]",
-            "id": 14,
+            "id": 13,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[3]",
-            "id": 15,
+            "id": 14,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[4]",
-            "id": 16,
+            "id": 15,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[5]",
-            "id": 17,
+            "id": 16,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[6]",
-            "id": 18,
+            "id": 17,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[7]",
-            "id": 19,
+            "id": 18,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[8]",
-            "id": 20,
+            "id": 19,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[9]",
-            "id": 21,
+            "id": 20,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[10]",
-            "id": 22,
+            "id": 21,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[11]",
-            "id": 23,
+            "id": 22,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[12]",
-            "id": 24,
+            "id": 23,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[13]",
-            "id": 25,
+            "id": 24,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[14]",
-            "id": 26,
+            "id": 25,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[15]",
-            "id": 27,
+            "id": 26,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[16]",
-            "id": 28,
+            "id": 27,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[17]",
-            "id": 29,
+            "id": 28,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[18]",
-            "id": 30,
+            "id": 29,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[19]",
-            "id": 31,
+            "id": 30,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[20]",
-            "id": 32,
+            "id": 31,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[21]",
-            "id": 33,
+            "id": 32,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[22]",
-            "id": 34,
+            "id": 33,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[23]",
-            "id": 35,
+            "id": 34,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[24]",
-            "id": 36,
+            "id": 35,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[25]",
-            "id": 37,
+            "id": 36,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[26]",
-            "id": 38,
+            "id": 37,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[27]",
-            "id": 39,
+            "id": 38,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[28]",
-            "id": 40,
+            "id": 39,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[29]",
-            "id": 41,
+            "id": 40,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[30]",
-            "id": 42,
+            "id": 41,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[31]",
-            "id": 43,
+            "id": 42,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[32]",
-            "id": 44,
+            "id": 43,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[33]",
-            "id": 45,
+            "id": 44,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[34]",
-            "id": 46,
+            "id": 45,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[35]",
-            "id": 47,
+            "id": 46,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[36]",
-            "id": 48,
+            "id": 47,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[37]",
-            "id": 49,
+            "id": 48,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[38]",
-            "id": 50,
+            "id": 49,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[39]",
-            "id": 51,
+            "id": 50,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[40]",
-            "id": 52,
+            "id": 51,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[41]",
-            "id": 53,
+            "id": 52,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[42]",
-            "id": 54,
+            "id": 53,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[43]",
-            "id": 55,
+            "id": 54,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[44]",
-            "id": 56,
+            "id": 55,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[45]",
-            "id": 57,
+            "id": 56,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[46]",
-            "id": 58,
+            "id": 57,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[47]",
-            "id": 59,
+            "id": 58,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[48]",
-            "id": 60,
+            "id": 59,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[49]",
-            "id": 61,
+            "id": 60,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[50]",
-            "id": 62,
+            "id": 61,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[51]",
-            "id": 63,
+            "id": 62,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[52]",
-            "id": 64,
+            "id": 63,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[53]",
-            "id": 65,
+            "id": 64,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[54]",
-            "id": 66,
+            "id": 65,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[55]",
-            "id": 67,
+            "id": 66,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[56]",
-            "id": 68,
+            "id": 67,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[57]",
-            "id": 69,
+            "id": 68,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[58]",
-            "id": 70,
+            "id": 69,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[59]",
-            "id": 71,
+            "id": 70,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[60]",
-            "id": 72,
+            "id": 71,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[61]",
-            "id": 73,
+            "id": 72,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[62]",
-            "id": 74,
+            "id": 73,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "one_byte_payload[63]",
-            "id": 75,
+            "id": 74,
             "header_type": "one_byte_payload_t",
             "metadata": false
         },
         {
             "name": "four_byte_payload",
-            "id": 76,
+            "id": 75,
             "header_type": "four_byte_payload_t",
             "metadata": false
         },
         {
             "name": "label_header",
-            "id": 77,
+            "id": 76,
             "header_type": "label_header_t",
             "metadata": false
         },
         {
             "name": "quic_flags",
-            "id": 78,
+            "id": 77,
             "header_type": "quic_flags_t",
             "metadata": false
         },
         {
             "name": "whatsapp_three_byte_payload",
-            "id": 79,
+            "id": 78,
             "header_type": "whatsapp_three_byte_payload_t",
             "metadata": false
         },
         {
             "name": "tls_records_header",
-            "id": 80,
+            "id": 79,
             "header_type": "tls_records_header_t",
             "metadata": false
         },
         {
             "name": "handshake_protocol",
-            "id": 81,
+            "id": 80,
             "header_type": "handshake_protocol_t",
             "metadata": false
         },
         {
             "name": "client_hello",
-            "id": 82,
+            "id": 81,
             "header_type": "client_hello_t",
             "metadata": false
         },
         {
             "name": "cipher_suites",
-            "id": 83,
+            "id": 82,
             "header_type": "cipher_suites_t",
             "metadata": false
         },
         {
             "name": "compression_methods",
-            "id": 84,
+            "id": 83,
             "header_type": "compression_methods_t",
             "metadata": false
         },
         {
             "name": "server_extension",
-            "id": 85,
+            "id": 84,
             "header_type": "server_extension_t",
             "metadata": false
         },
         {
             "name": "server_name_indication",
-            "id": 86,
+            "id": 85,
             "header_type": "server_name_indication_t",
             "metadata": false
         },
         {
             "name": "other_extension[0]",
-            "id": 87,
+            "id": 86,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[1]",
-            "id": 88,
+            "id": 87,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[2]",
-            "id": 89,
+            "id": 88,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[3]",
-            "id": 90,
+            "id": 89,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[4]",
-            "id": 91,
+            "id": 90,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[5]",
-            "id": 92,
+            "id": 91,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[6]",
-            "id": 93,
+            "id": 92,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[7]",
-            "id": 94,
+            "id": 93,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[8]",
-            "id": 95,
+            "id": 94,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[9]",
-            "id": 96,
+            "id": 95,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[10]",
-            "id": 97,
+            "id": 96,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[11]",
-            "id": 98,
+            "id": 97,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[12]",
-            "id": 99,
+            "id": 98,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[13]",
-            "id": 100,
+            "id": 99,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[14]",
-            "id": 101,
+            "id": 100,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[15]",
-            "id": 102,
+            "id": 101,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[16]",
-            "id": 103,
+            "id": 102,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[17]",
-            "id": 104,
+            "id": 103,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[18]",
-            "id": 105,
+            "id": 104,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[19]",
-            "id": 106,
+            "id": 105,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[20]",
-            "id": 107,
+            "id": 106,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[21]",
-            "id": 108,
+            "id": 107,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[22]",
-            "id": 109,
+            "id": 108,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[23]",
-            "id": 110,
+            "id": 109,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[24]",
-            "id": 111,
+            "id": 110,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[25]",
-            "id": 112,
+            "id": 111,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[26]",
-            "id": 113,
+            "id": 112,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[27]",
-            "id": 114,
+            "id": 113,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[28]",
-            "id": 115,
+            "id": 114,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[29]",
-            "id": 116,
+            "id": 115,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[30]",
-            "id": 117,
+            "id": 116,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[31]",
-            "id": 118,
+            "id": 117,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[32]",
-            "id": 119,
+            "id": 118,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[33]",
-            "id": 120,
+            "id": 119,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[34]",
-            "id": 121,
+            "id": 120,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[35]",
-            "id": 122,
+            "id": 121,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[36]",
-            "id": 123,
+            "id": 122,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[37]",
-            "id": 124,
+            "id": 123,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[38]",
-            "id": 125,
+            "id": 124,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[39]",
-            "id": 126,
+            "id": 125,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[40]",
-            "id": 127,
+            "id": 126,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[41]",
-            "id": 128,
+            "id": 127,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[42]",
-            "id": 129,
+            "id": 128,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[43]",
-            "id": 130,
+            "id": 129,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[44]",
-            "id": 131,
+            "id": 130,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[45]",
-            "id": 132,
+            "id": 131,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[46]",
-            "id": 133,
+            "id": 132,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[47]",
-            "id": 134,
+            "id": 133,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[48]",
-            "id": 135,
+            "id": 134,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[49]",
-            "id": 136,
+            "id": 135,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[50]",
-            "id": 137,
+            "id": 136,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[51]",
-            "id": 138,
+            "id": 137,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[52]",
-            "id": 139,
+            "id": 138,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[53]",
-            "id": 140,
+            "id": 139,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[54]",
-            "id": 141,
+            "id": 140,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[55]",
-            "id": 142,
+            "id": 141,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[56]",
-            "id": 143,
+            "id": 142,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[57]",
-            "id": 144,
+            "id": 143,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[58]",
-            "id": 145,
+            "id": 144,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[59]",
-            "id": 146,
+            "id": 145,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[60]",
-            "id": 147,
+            "id": 146,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[61]",
-            "id": 148,
+            "id": 147,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[62]",
-            "id": 149,
+            "id": 148,
             "header_type": "other_extension_t",
             "metadata": false
         },
         {
             "name": "other_extension[63]",
-            "id": 150,
+            "id": 149,
             "header_type": "other_extension_t",
             "metadata": false
         }
@@ -1768,6 +1718,7 @@
             "size": 64,
             "header_type": "one_byte_payload_t",
             "header_ids": [
+                11,
                 12,
                 13,
                 14,
@@ -1830,8 +1781,7 @@
                 71,
                 72,
                 73,
-                74,
-                75
+                74
             ]
         },
         {
@@ -1840,6 +1790,7 @@
             "size": 64,
             "header_type": "other_extension_t",
             "header_ids": [
+                86,
                 87,
                 88,
                 89,
@@ -1902,8 +1853,7 @@
                 146,
                 147,
                 148,
-                149,
-                150
+                149
             ]
         }
     ],
@@ -3299,10 +3249,6 @@
                 "other_extension[8]",
                 "other_extension[9]",
                 "other_extension[10]",
-                "udp_header",
-                "quic_flags",
-                "four_byte_payload",
-                "dns_header",
                 "other_extension[11]",
                 "other_extension[12]",
                 "other_extension[13]",
@@ -3331,6 +3277,10 @@
                 "other_extension[36]",
                 "other_extension[37]",
                 "other_extension[38]",
+                "udp_header",
+                "four_byte_payload",
+                "quic_flags",
+                "dns_header",
                 "other_extension[39]",
                 "other_extension[40]",
                 "other_extension[41]",
@@ -3429,356 +3379,8 @@
     "meter_arrays": [],
     "actions": [
         {
-            "name": "do_calculate_index",
-            "id": 0,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field_with_hash_based_offset",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x0"
-                        },
-                        {
-                            "type": "calculation",
-                            "value": "index_hash_cal"
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x3eff"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_read_all",
-            "id": 1,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_A"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_payload"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_B"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirB_payload"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_A"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_length"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_B"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_read_counter",
-            "id": 2,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_A"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_read",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_B"
-                            ]
-                        },
-                        {
-                            "type": "register_array",
-                            "value": "dirB_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_updateA",
-            "id": 3,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_payload"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "four_byte_payload",
-                                "data"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_length"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "intrinsic_metadata",
-                                "payload_len"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_A"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_update_counter_A",
-            "id": 4,
-            "runtime_data": [
-                {
-                    "name": "number",
-                    "bitwidth": 16
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_A"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "set_egress_port",
-            "id": 5,
-            "runtime_data": [
-                {
-                    "name": "port",
-                    "bitwidth": 9
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "_drop",
-            "id": 6,
+            "id": 0,
             "runtime_data": [],
             "primitives": [
                 {
@@ -3788,35 +3390,12 @@
             ]
         },
         {
-            "name": "send_to_cpu",
-            "id": 7,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "egress_spec"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0xff"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_forward",
-            "id": 8,
+            "name": "do_set_sub_label_by_guess",
+            "id": 1,
             "runtime_data": [
                 {
-                    "name": "out_port",
-                    "bitwidth": 9
+                    "name": "sublabel",
+                    "bitwidth": 8
                 }
             ],
             "primitives": [
@@ -3826,8 +3405,8 @@
                         {
                             "type": "field",
                             "value": [
-                                "standard_metadata",
-                                "egress_spec"
+                                "label_metadata",
+                                "sub_label"
                             ]
                         },
                         {
@@ -3835,32 +3414,6 @@
                             "value": 0
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "name": "do_copy_A_fields",
-            "id": 9,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "_payload"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_A"
-                            ]
-                        }
-                    ]
                 },
                 {
                     "op": "modify_field",
@@ -3868,53 +3421,26 @@
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "_length"
+                                "label_metadata",
+                                "sub_label_result"
                             ]
                         },
                         {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_A"
-                            ]
+                            "type": "hexstr",
+                            "value": "0x2"
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "name": "_nop",
-            "id": 10,
-            "runtime_data": [],
-            "primitives": [
+                },
                 {
-                    "op": "no_op",
-                    "parameters": []
-                }
-            ]
-        },
-        {
-            "name": "do_copy_B_fields",
-            "id": 11,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "modify_field",
+                    "op": "clone_ingress_pkt_to_egress",
                     "parameters": [
                         {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "_payload"
-                            ]
+                            "type": "hexstr",
+                            "value": "0x2"
                         },
                         {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "payload_B"
-                            ]
+                            "type": "hexstr",
+                            "value": "0x1"
                         }
                     ]
                 },
@@ -3924,143 +3450,263 @@
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "_length"
+                                "learning_metadata",
+                                "_type"
                             ]
                         },
                         {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "length_B"
-                            ]
+                            "type": "hexstr",
+                            "value": "0x1"
                         }
                     ]
                 }
             ]
         },
         {
-            "name": "do_reset_direction",
-            "id": 12,
+            "name": "do_set_label_by_match_rule",
+            "id": 2,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                },
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "sub_label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_learning",
+            "id": 3,
             "runtime_data": [],
             "primitives": [
                 {
-                    "op": "register_write",
+                    "op": "generate_digest",
                     "parameters": [
                         {
-                            "type": "register_array",
-                            "value": "dirA_payload"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
+                            "type": "hexstr",
+                            "value": "0x1"
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x0"
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_set_label_by_detect",
+            "id": 4,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                },
+                {
+                    "name": "sublabel",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
                         }
                     ]
                 },
                 {
-                    "op": "register_write",
+                    "op": "modify_field",
                     "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirA_length"
-                        },
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "hash_index"
+                                "label_metadata",
+                                "sub_label"
                             ]
                         },
                         {
-                            "type": "hexstr",
-                            "value": "0x0"
+                            "type": "runtime_data",
+                            "value": 1
                         }
                     ]
                 },
                 {
-                    "op": "register_write",
+                    "op": "modify_field",
                     "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_payload"
-                        },
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "hash_index"
+                                "label_metadata",
+                                "label_result"
                             ]
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x0"
+                            "value": "0x1"
                         }
                     ]
                 },
                 {
-                    "op": "register_write",
+                    "op": "modify_field",
                     "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length"
-                        },
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "hash_index"
+                                "label_metadata",
+                                "sub_label_result"
                             ]
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x0"
+                            "value": "0x1"
                         }
                     ]
                 },
                 {
-                    "op": "register_write",
+                    "op": "clone_ingress_pkt_to_egress",
                     "parameters": [
                         {
-                            "type": "register_array",
-                            "value": "dirA_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
+                            "type": "hexstr",
+                            "value": "0x2"
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x0"
+                            "value": "0x1"
                         }
                     ]
                 },
                 {
-                    "op": "register_write",
+                    "op": "modify_field",
                     "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_counter"
-                        },
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "hash_index"
+                                "learning_metadata",
+                                "_type"
                             ]
                         },
                         {
                             "type": "hexstr",
-                            "value": "0x0"
+                            "value": "0x1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "do_set_label_by_guess",
+            "id": 5,
+            "runtime_data": [
+                {
+                    "name": "label",
+                    "bitwidth": 8
+                }
+            ],
+            "primitives": [
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label"
+                            ]
+                        },
+                        {
+                            "type": "runtime_data",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "label_metadata",
+                                "label_result"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        }
+                    ]
+                },
+                {
+                    "op": "clone_ingress_pkt_to_egress",
+                    "parameters": [
+                        {
+                            "type": "hexstr",
+                            "value": "0x2"
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
+                        }
+                    ]
+                },
+                {
+                    "op": "modify_field",
+                    "parameters": [
+                        {
+                            "type": "field",
+                            "value": [
+                                "learning_metadata",
+                                "_type"
+                            ]
+                        },
+                        {
+                            "type": "hexstr",
+                            "value": "0x1"
                         }
                     ]
                 }
@@ -4068,7 +3714,7 @@
         },
         {
             "name": "do_assemble",
-            "id": 13,
+            "id": 6,
             "runtime_data": [],
             "primitives": [
                 {
@@ -4183,326 +3829,24 @@
             ]
         },
         {
-            "name": "do_set_label_by_guess",
-            "id": 14,
+            "name": "set_egress_port",
+            "id": 7,
             "runtime_data": [
                 {
-                    "name": "label",
-                    "bitwidth": 8
+                    "name": "port",
+                    "bitwidth": 9
                 }
             ],
             "primitives": [
                 {
                     "op": "modify_field",
                     "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "clone_ingress_pkt_to_egress",
-                    "parameters": [
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_learning",
-            "id": 15,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "generate_digest",
-                    "parameters": [
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_set_sub_label_by_guess",
-            "id": 16,
-            "runtime_data": [
-                {
-                    "name": "sublabel",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        }
-                    ]
-                },
-                {
-                    "op": "clone_ingress_pkt_to_egress",
-                    "parameters": [
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_set_label_by_detect",
-            "id": 17,
-            "runtime_data": [
-                {
-                    "name": "label",
-                    "bitwidth": 8
-                },
-                {
-                    "name": "sublabel",
-                    "bitwidth": 8
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 1
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label_result"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "clone_ingress_pkt_to_egress",
-                    "parameters": [
-                        {
-                            "type": "hexstr",
-                            "value": "0x2"
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "learning_metadata",
-                                "_type"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "count_packet",
-            "id": 18,
-            "runtime_data": [],
-            "primitives": [
-                {
-                    "op": "count",
-                    "parameters": [
-                        {
-                            "type": "counter_array",
-                            "value": "ingress_port_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "standard_metadata",
-                                "ingress_port"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "count",
-                    "parameters": [
-                        {
-                            "type": "counter_array",
-                            "value": "egress_port_counter"
-                        },
                         {
                             "type": "field",
                             "value": [
                                 "standard_metadata",
                                 "egress_spec"
                             ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "do_update_counter_B",
-            "id": 19,
-            "runtime_data": [
-                {
-                    "name": "number",
-                    "bitwidth": 16
-                }
-            ],
-            "primitives": [
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "counter_B"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
                         },
                         {
                             "type": "runtime_data",
@@ -4513,18 +3857,20 @@
             ]
         },
         {
-            "name": "do_set_label_by_match_rule",
-            "id": 20,
-            "runtime_data": [
+            "name": "_nop",
+            "id": 8,
+            "runtime_data": [],
+            "primitives": [
                 {
-                    "name": "label",
-                    "bitwidth": 8
-                },
-                {
-                    "name": "sublabel",
-                    "bitwidth": 8
+                    "op": "no_op",
+                    "parameters": []
                 }
-            ],
+            ]
+        },
+        {
+            "name": "send_to_cpu",
+            "id": 9,
+            "runtime_data": [],
             "primitives": [
                 {
                     "op": "modify_field",
@@ -4532,29 +3878,13 @@
                         {
                             "type": "field",
                             "value": [
-                                "label_metadata",
-                                "label"
+                                "standard_metadata",
+                                "egress_spec"
                             ]
                         },
                         {
-                            "type": "runtime_data",
-                            "value": 0
-                        }
-                    ]
-                },
-                {
-                    "op": "modify_field",
-                    "parameters": [
-                        {
-                            "type": "field",
-                            "value": [
-                                "label_metadata",
-                                "sub_label"
-                            ]
-                        },
-                        {
-                            "type": "runtime_data",
-                            "value": 1
+                            "type": "hexstr",
+                            "value": "0xff"
                         }
                     ]
                 }
@@ -4562,7 +3892,7 @@
         },
         {
             "name": "do_detect_ssl",
-            "id": 21,
+            "id": 10,
             "runtime_data": [],
             "primitives": [
                 {
@@ -4677,89 +4007,28 @@
             ]
         },
         {
-            "name": "do_updateB",
-            "id": 22,
-            "runtime_data": [],
+            "name": "do_forward",
+            "id": 11,
+            "runtime_data": [
+                {
+                    "name": "out_port",
+                    "bitwidth": 9
+                }
+            ],
             "primitives": [
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_payload"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "four_byte_payload",
-                                "data"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_length"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "intrinsic_metadata",
-                                "payload_len"
-                            ]
-                        }
-                    ]
-                },
                 {
                     "op": "modify_field",
                     "parameters": [
                         {
                             "type": "field",
                             "value": [
-                                "direction_metadata",
-                                "counter_B"
+                                "standard_metadata",
+                                "egress_spec"
                             ]
                         },
                         {
-                            "type": "hexstr",
-                            "value": "0x1"
-                        }
-                    ]
-                },
-                {
-                    "op": "register_write",
-                    "parameters": [
-                        {
-                            "type": "register_array",
-                            "value": "dirB_counter"
-                        },
-                        {
-                            "type": "field",
-                            "value": [
-                                "direction_metadata",
-                                "hash_index"
-                            ]
-                        },
-                        {
-                            "type": "hexstr",
-                            "value": "0x1"
+                            "type": "runtime_data",
+                            "value": 0
                         }
                     ]
                 }
@@ -4767,7 +4036,7 @@
         },
         {
             "name": "do_label_encap",
-            "id": 23,
+            "id": 12,
             "runtime_data": [],
             "primitives": [
                 {
@@ -4913,11 +4182,11 @@
                         "_drop"
                     ],
                     "next_tables": {
-                        "set_egress_port": "_condition_1",
-                        "send_to_cpu": "_condition_1",
-                        "_drop": "_condition_1"
+                        "set_egress_port": "rule_match",
+                        "send_to_cpu": "rule_match",
+                        "_drop": "rule_match"
                     },
-                    "base_default_next": "_condition_1"
+                    "base_default_next": "rule_match"
                 },
                 {
                     "name": "forward",
@@ -4995,9 +4264,9 @@
                         "do_set_label_by_match_rule"
                     ],
                     "next_tables": {
-                        "do_set_label_by_match_rule": "_condition_2"
+                        "do_set_label_by_match_rule": "_condition_1"
                     },
-                    "base_default_next": "_condition_2"
+                    "base_default_next": "_condition_1"
                 },
                 {
                     "name": "detect_four_byte_payload",
@@ -5030,9 +4299,9 @@
                         "do_set_label_by_detect"
                     ],
                     "next_tables": {
-                        "do_set_label_by_detect": "_condition_8"
+                        "do_set_label_by_detect": "_condition_7"
                     },
-                    "base_default_next": "_condition_8"
+                    "base_default_next": "_condition_7"
                 },
                 {
                     "name": "detect_dns",
@@ -5048,9 +4317,9 @@
                         "do_assemble"
                     ],
                     "next_tables": {
-                        "do_assemble": "_condition_7"
+                        "do_assemble": "_condition_6"
                     },
-                    "base_default_next": "_condition_6"
+                    "base_default_next": "_condition_5"
                 },
                 {
                     "name": "detect_ssl",
@@ -5066,9 +4335,9 @@
                         "do_detect_ssl"
                     ],
                     "next_tables": {
-                        "do_detect_ssl": "_condition_7"
+                        "do_detect_ssl": "_condition_6"
                     },
-                    "base_default_next": "_condition_5"
+                    "base_default_next": "_condition_4"
                 },
                 {
                     "name": "detect_quic",
@@ -5101,10 +4370,10 @@
                         "_nop"
                     ],
                     "next_tables": {
-                        "__HIT__": "_condition_3",
-                        "__MISS__": "_condition_7"
+                        "__HIT__": "_condition_2",
+                        "__MISS__": "_condition_6"
                     },
-                    "base_default_next": "_condition_4"
+                    "base_default_next": "_condition_3"
                 },
                 {
                     "name": "set_quic",
@@ -5120,9 +4389,9 @@
                         "do_set_label_by_detect"
                     ],
                     "next_tables": {
-                        "do_set_label_by_detect": "_condition_7"
+                        "do_set_label_by_detect": "_condition_6"
                     },
-                    "base_default_next": "_condition_4"
+                    "base_default_next": "_condition_3"
                 },
                 {
                     "name": "detect_whatsapp",
@@ -5163,9 +4432,9 @@
                         "do_set_label_by_detect"
                     ],
                     "next_tables": {
-                        "do_set_label_by_detect": "_condition_7"
+                        "do_set_label_by_detect": "_condition_6"
                     },
-                    "base_default_next": "_condition_7"
+                    "base_default_next": "_condition_6"
                 },
                 {
                     "name": "guess_by_tcp_port",
@@ -5198,9 +4467,9 @@
                         "do_set_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_label_by_guess": "_condition_18"
+                        "do_set_label_by_guess": "_condition_10"
                     },
-                    "base_default_next": "_condition_17"
+                    "base_default_next": "_condition_9"
                 },
                 {
                     "name": "guess_by_udp_port",
@@ -5233,9 +4502,9 @@
                         "do_set_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_label_by_guess": "_condition_18"
+                        "do_set_label_by_guess": "_condition_10"
                     },
-                    "base_default_next": "_condition_18"
+                    "base_default_next": "_condition_10"
                 },
                 {
                     "name": "guess_by_src_address",
@@ -5260,9 +4529,9 @@
                         "do_set_sub_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_sub_label_by_guess": "_condition_19"
+                        "do_set_sub_label_by_guess": "_condition_11"
                     },
-                    "base_default_next": "_condition_19"
+                    "base_default_next": "_condition_11"
                 },
                 {
                     "name": "guess_by_dst_address",
@@ -5287,9 +4556,9 @@
                         "do_set_sub_label_by_guess"
                     ],
                     "next_tables": {
-                        "do_set_sub_label_by_guess": "_condition_20"
+                        "do_set_sub_label_by_guess": "_condition_12"
                     },
-                    "base_default_next": "_condition_20"
+                    "base_default_next": "_condition_12"
                 },
                 {
                     "name": "learning",
@@ -5317,340 +4586,6 @@
                         "do_learning": "forward"
                     },
                     "base_default_next": "forward"
-                },
-                {
-                    "name": "calculate_index",
-                    "id": 14,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 1,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [],
-                    "actions": [
-                        "do_calculate_index"
-                    ],
-                    "next_tables": {
-                        "do_calculate_index": "read_counter"
-                    },
-                    "base_default_next": "read_counter"
-                },
-                {
-                    "name": "read_counter",
-                    "id": 15,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 1,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [],
-                    "actions": [
-                        "do_read_counter"
-                    ],
-                    "next_tables": {
-                        "do_read_counter": "_condition_9"
-                    },
-                    "base_default_next": "_condition_9"
-                },
-                {
-                    "name": "update_A",
-                    "id": 16,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 1,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [],
-                    "actions": [
-                        "do_updateA"
-                    ],
-                    "next_tables": {
-                        "do_updateA": "read_all"
-                    },
-                    "base_default_next": "read_all"
-                },
-                {
-                    "name": "update_counter_A",
-                    "id": 17,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 2,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [
-                        {
-                            "match_type": "exact",
-                            "target": [
-                                "direction_metadata",
-                                "counter_A"
-                            ],
-                            "mask": null
-                        }
-                    ],
-                    "actions": [
-                        "do_update_counter_A"
-                    ],
-                    "next_tables": {
-                        "do_update_counter_A": "read_all"
-                    },
-                    "base_default_next": "read_all"
-                },
-                {
-                    "name": "update_B",
-                    "id": 18,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 1,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [],
-                    "actions": [
-                        "do_updateB"
-                    ],
-                    "next_tables": {
-                        "do_updateB": "read_all"
-                    },
-                    "base_default_next": "read_all"
-                },
-                {
-                    "name": "update_counter_B",
-                    "id": 19,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 2,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [
-                        {
-                            "match_type": "exact",
-                            "target": [
-                                "direction_metadata",
-                                "counter_B"
-                            ],
-                            "mask": null
-                        }
-                    ],
-                    "actions": [
-                        "do_update_counter_B"
-                    ],
-                    "next_tables": {
-                        "do_update_counter_B": "read_all"
-                    },
-                    "base_default_next": "read_all"
-                },
-                {
-                    "name": "read_all",
-                    "id": 20,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 1,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [],
-                    "actions": [
-                        "do_read_all"
-                    ],
-                    "next_tables": {
-                        "do_read_all": "_condition_12"
-                    },
-                    "base_default_next": "_condition_12"
-                },
-                {
-                    "name": "detect_two_direction",
-                    "id": 21,
-                    "match_type": "ternary",
-                    "type": "simple",
-                    "max_size": 16384,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "direction_metadata",
-                                "payload_A"
-                            ],
-                            "mask": null
-                        },
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "direction_metadata",
-                                "length_A"
-                            ],
-                            "mask": null
-                        },
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "direction_metadata",
-                                "payload_B"
-                            ],
-                            "mask": null
-                        },
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "direction_metadata",
-                                "length_B"
-                            ],
-                            "mask": null
-                        },
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "five_tuple_metadata",
-                                "srcPort"
-                            ],
-                            "mask": null
-                        },
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "five_tuple_metadata",
-                                "dstPort"
-                            ],
-                            "mask": null
-                        }
-                    ],
-                    "actions": [
-                        "do_set_label_by_detect"
-                    ],
-                    "next_tables": {
-                        "do_set_label_by_detect": "reset_direction"
-                    },
-                    "base_default_next": "reset_direction"
-                },
-                {
-                    "name": "detect_one_direction",
-                    "id": 22,
-                    "match_type": "ternary",
-                    "type": "simple",
-                    "max_size": 16384,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "direction_metadata",
-                                "_payload"
-                            ],
-                            "mask": null
-                        },
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "direction_metadata",
-                                "_length"
-                            ],
-                            "mask": null
-                        },
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "five_tuple_metadata",
-                                "srcPort"
-                            ],
-                            "mask": null
-                        },
-                        {
-                            "match_type": "ternary",
-                            "target": [
-                                "five_tuple_metadata",
-                                "dstPort"
-                            ],
-                            "mask": null
-                        }
-                    ],
-                    "actions": [
-                        "do_set_label_by_detect"
-                    ],
-                    "next_tables": {
-                        "do_set_label_by_detect": "reset_direction"
-                    },
-                    "base_default_next": "reset_direction"
-                },
-                {
-                    "name": "copy_A_fields",
-                    "id": 23,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 1,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [],
-                    "actions": [
-                        "do_copy_A_fields"
-                    ],
-                    "next_tables": {
-                        "do_copy_A_fields": "detect_one_direction"
-                    },
-                    "base_default_next": "detect_one_direction"
-                },
-                {
-                    "name": "copy_B_fields",
-                    "id": 24,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 1,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [],
-                    "actions": [
-                        "do_copy_B_fields"
-                    ],
-                    "next_tables": {
-                        "do_copy_B_fields": "detect_one_direction"
-                    },
-                    "base_default_next": "detect_one_direction"
-                },
-                {
-                    "name": "reset_direction",
-                    "id": 25,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 1,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [],
-                    "actions": [
-                        "do_reset_direction"
-                    ],
-                    "next_tables": {
-                        "do_reset_direction": "_condition_15"
-                    },
-                    "base_default_next": "_condition_15"
-                },
-                {
-                    "name": "port_count_table",
-                    "id": 26,
-                    "match_type": "exact",
-                    "type": "simple",
-                    "max_size": 16384,
-                    "with_counters": false,
-                    "direct_meters": null,
-                    "support_timeout": false,
-                    "key": [],
-                    "actions": [
-                        "count_packet"
-                    ],
-                    "next_tables": {
-                        "count_packet": "rule_match"
-                    },
-                    "base_default_next": "rule_match"
                 }
             ],
             "action_profiles": [],
@@ -5710,34 +4645,11 @@
                         }
                     },
                     "true_next": "table0",
-                    "false_next": "_condition_15"
+                    "false_next": "_condition_7"
                 },
                 {
                     "name": "_condition_1",
                     "id": 1,
-                    "expression": {
-                        "type": "expression",
-                        "value": {
-                            "op": "<",
-                            "left": {
-                                "type": "field",
-                                "value": [
-                                    "standard_metadata",
-                                    "egress_spec"
-                                ]
-                            },
-                            "right": {
-                                "type": "hexstr",
-                                "value": "0xfe"
-                            }
-                        }
-                    },
-                    "true_next": "port_count_table",
-                    "false_next": "rule_match"
-                },
-                {
-                    "name": "_condition_2",
-                    "id": 2,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -5773,11 +4685,11 @@
                         }
                     },
                     "true_next": "detect_quic",
-                    "false_next": "_condition_4"
+                    "false_next": "_condition_3"
                 },
                 {
-                    "name": "_condition_3",
-                    "id": 3,
+                    "name": "_condition_2",
+                    "id": 2,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -5809,11 +4721,11 @@
                         }
                     },
                     "true_next": "set_quic",
-                    "false_next": "_condition_7"
+                    "false_next": "_condition_6"
                 },
                 {
-                    "name": "_condition_4",
-                    "id": 4,
+                    "name": "_condition_3",
+                    "id": 3,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -5849,11 +4761,11 @@
                         }
                     },
                     "true_next": "detect_ssl",
-                    "false_next": "_condition_5"
+                    "false_next": "_condition_4"
                 },
                 {
-                    "name": "_condition_5",
-                    "id": 5,
+                    "name": "_condition_4",
+                    "id": 4,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -5889,11 +4801,11 @@
                         }
                     },
                     "true_next": "detect_dns",
-                    "false_next": "_condition_6"
+                    "false_next": "_condition_5"
                 },
                 {
-                    "name": "_condition_6",
-                    "id": 6,
+                    "name": "_condition_5",
+                    "id": 5,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -5929,11 +4841,11 @@
                         }
                     },
                     "true_next": "detect_whatsapp",
-                    "false_next": "_condition_7"
+                    "false_next": "_condition_6"
                 },
                 {
-                    "name": "_condition_7",
-                    "id": 7,
+                    "name": "_condition_6",
+                    "id": 6,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -5952,267 +4864,11 @@
                         }
                     },
                     "true_next": "detect_four_byte_payload",
-                    "false_next": "_condition_8"
+                    "false_next": "_condition_7"
                 },
                 {
-                    "name": "_condition_8",
-                    "id": 8,
-                    "expression": {
-                        "type": "expression",
-                        "value": {
-                            "op": "==",
-                            "left": {
-                                "type": "field",
-                                "value": [
-                                    "learning_metadata",
-                                    "_type"
-                                ]
-                            },
-                            "right": {
-                                "type": "hexstr",
-                                "value": "0x0"
-                            }
-                        }
-                    },
-                    "true_next": "calculate_index",
-                    "false_next": "_condition_15"
-                },
-                {
-                    "name": "_condition_9",
-                    "id": 9,
-                    "expression": {
-                        "type": "expression",
-                        "value": {
-                            "op": "<",
-                            "left": {
-                                "type": "field",
-                                "value": [
-                                    "five_tuple_metadata",
-                                    "srcPort"
-                                ]
-                            },
-                            "right": {
-                                "type": "field",
-                                "value": [
-                                    "five_tuple_metadata",
-                                    "dstPort"
-                                ]
-                            }
-                        }
-                    },
-                    "true_next": "_condition_10",
-                    "false_next": "_condition_11"
-                },
-                {
-                    "name": "_condition_10",
-                    "id": 10,
-                    "expression": {
-                        "type": "expression",
-                        "value": {
-                            "op": "==",
-                            "left": {
-                                "type": "field",
-                                "value": [
-                                    "direction_metadata",
-                                    "counter_A"
-                                ]
-                            },
-                            "right": {
-                                "type": "hexstr",
-                                "value": "0x0"
-                            }
-                        }
-                    },
-                    "true_next": "update_A",
-                    "false_next": "update_counter_A"
-                },
-                {
-                    "name": "_condition_11",
-                    "id": 11,
-                    "expression": {
-                        "type": "expression",
-                        "value": {
-                            "op": "==",
-                            "left": {
-                                "type": "field",
-                                "value": [
-                                    "direction_metadata",
-                                    "counter_B"
-                                ]
-                            },
-                            "right": {
-                                "type": "hexstr",
-                                "value": "0x0"
-                            }
-                        }
-                    },
-                    "true_next": "update_B",
-                    "false_next": "update_counter_B"
-                },
-                {
-                    "name": "_condition_12",
-                    "id": 12,
-                    "expression": {
-                        "type": "expression",
-                        "value": {
-                            "op": "or",
-                            "left": {
-                                "type": "expression",
-                                "value": {
-                                    "op": "and",
-                                    "left": {
-                                        "type": "expression",
-                                        "value": {
-                                            "op": "==",
-                                            "left": {
-                                                "type": "field",
-                                                "value": [
-                                                    "direction_metadata",
-                                                    "counter_A"
-                                                ]
-                                            },
-                                            "right": {
-                                                "type": "hexstr",
-                                                "value": "0x1"
-                                            }
-                                        }
-                                    },
-                                    "right": {
-                                        "type": "expression",
-                                        "value": {
-                                            "op": ">",
-                                            "left": {
-                                                "type": "field",
-                                                "value": [
-                                                    "direction_metadata",
-                                                    "counter_B"
-                                                ]
-                                            },
-                                            "right": {
-                                                "type": "hexstr",
-                                                "value": "0x0"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "right": {
-                                "type": "expression",
-                                "value": {
-                                    "op": "and",
-                                    "left": {
-                                        "type": "expression",
-                                        "value": {
-                                            "op": "==",
-                                            "left": {
-                                                "type": "field",
-                                                "value": [
-                                                    "direction_metadata",
-                                                    "counter_B"
-                                                ]
-                                            },
-                                            "right": {
-                                                "type": "hexstr",
-                                                "value": "0x1"
-                                            }
-                                        }
-                                    },
-                                    "right": {
-                                        "type": "expression",
-                                        "value": {
-                                            "op": ">",
-                                            "left": {
-                                                "type": "field",
-                                                "value": [
-                                                    "direction_metadata",
-                                                    "counter_A"
-                                                ]
-                                            },
-                                            "right": {
-                                                "type": "hexstr",
-                                                "value": "0x0"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "true_next": "detect_two_direction",
-                    "false_next": "_condition_13"
-                },
-                {
-                    "name": "_condition_13",
-                    "id": 13,
-                    "expression": {
-                        "type": "expression",
-                        "value": {
-                            "op": "or",
-                            "left": {
-                                "type": "expression",
-                                "value": {
-                                    "op": "==",
-                                    "left": {
-                                        "type": "field",
-                                        "value": [
-                                            "direction_metadata",
-                                            "counter_A"
-                                        ]
-                                    },
-                                    "right": {
-                                        "type": "hexstr",
-                                        "value": "0x2"
-                                    }
-                                }
-                            },
-                            "right": {
-                                "type": "expression",
-                                "value": {
-                                    "op": "==",
-                                    "left": {
-                                        "type": "field",
-                                        "value": [
-                                            "direction_metadata",
-                                            "counter_B"
-                                        ]
-                                    },
-                                    "right": {
-                                        "type": "hexstr",
-                                        "value": "0x2"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "true_next": "_condition_14",
-                    "false_next": "_condition_15"
-                },
-                {
-                    "name": "_condition_14",
-                    "id": 14,
-                    "expression": {
-                        "type": "expression",
-                        "value": {
-                            "op": "==",
-                            "left": {
-                                "type": "field",
-                                "value": [
-                                    "direction_metadata",
-                                    "counter_A"
-                                ]
-                            },
-                            "right": {
-                                "type": "hexstr",
-                                "value": "0x2"
-                            }
-                        }
-                    },
-                    "true_next": "copy_A_fields",
-                    "false_next": "copy_B_fields"
-                },
-                {
-                    "name": "_condition_15",
-                    "id": 15,
+                    "name": "_condition_7",
+                    "id": 7,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -6253,12 +4909,12 @@
                             }
                         }
                     },
-                    "true_next": "_condition_16",
-                    "false_next": "_condition_20"
+                    "true_next": "_condition_8",
+                    "false_next": "_condition_12"
                 },
                 {
-                    "name": "_condition_16",
-                    "id": 16,
+                    "name": "_condition_8",
+                    "id": 8,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -6294,11 +4950,11 @@
                         }
                     },
                     "true_next": "guess_by_tcp_port",
-                    "false_next": "_condition_17"
+                    "false_next": "_condition_9"
                 },
                 {
-                    "name": "_condition_17",
-                    "id": 17,
+                    "name": "_condition_9",
+                    "id": 9,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -6334,11 +4990,11 @@
                         }
                     },
                     "true_next": "guess_by_udp_port",
-                    "false_next": "_condition_18"
+                    "false_next": "_condition_10"
                 },
                 {
-                    "name": "_condition_18",
-                    "id": 18,
+                    "name": "_condition_10",
+                    "id": 10,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -6374,11 +5030,11 @@
                         }
                     },
                     "true_next": "guess_by_src_address",
-                    "false_next": "_condition_19"
+                    "false_next": "_condition_11"
                 },
                 {
-                    "name": "_condition_19",
-                    "id": 19,
+                    "name": "_condition_11",
+                    "id": 11,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -6414,11 +5070,11 @@
                         }
                     },
                     "true_next": "guess_by_dst_address",
-                    "false_next": "_condition_20"
+                    "false_next": "_condition_12"
                 },
                 {
-                    "name": "_condition_20",
-                    "id": 20,
+                    "name": "_condition_12",
+                    "id": 12,
                     "expression": {
                         "type": "expression",
                         "value": {
@@ -6448,7 +5104,7 @@
             "tables": [
                 {
                     "name": "label_encup",
-                    "id": 27,
+                    "id": 14,
                     "match_type": "exact",
                     "type": "simple",
                     "max_size": 16,
@@ -6480,50 +5136,7 @@
             "conditionals": []
         }
     ],
-    "calculations": [
-        {
-            "name": "index_hash_cal",
-            "id": 0,
-            "input": [
-                {
-                    "type": "field",
-                    "value": [
-                        "five_tuple_metadata",
-                        "srcAddr"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "five_tuple_metadata",
-                        "dstAddr"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "five_tuple_metadata",
-                        "srcPort"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "five_tuple_metadata",
-                        "dstPort"
-                    ]
-                },
-                {
-                    "type": "field",
-                    "value": [
-                        "five_tuple_metadata",
-                        "protocol"
-                    ]
-                }
-            ],
-            "algo": "csum16"
-        }
-    ],
+    "calculations": [],
     "checksums": [],
     "learn_lists": [
         {
@@ -6674,58 +5287,8 @@
             ]
         }
     ],
-    "counter_arrays": [
-        {
-            "name": "ingress_port_counter",
-            "id": 0,
-            "is_direct": false,
-            "size": 254
-        },
-        {
-            "name": "egress_port_counter",
-            "id": 1,
-            "is_direct": false,
-            "size": 254
-        }
-    ],
-    "register_arrays": [
-        {
-            "name": "dirA_payload",
-            "id": 0,
-            "bitwidth": 32,
-            "size": 16127
-        },
-        {
-            "name": "dirB_payload",
-            "id": 1,
-            "bitwidth": 32,
-            "size": 16127
-        },
-        {
-            "name": "dirA_length",
-            "id": 2,
-            "bitwidth": 16,
-            "size": 16127
-        },
-        {
-            "name": "dirB_length",
-            "id": 3,
-            "bitwidth": 16,
-            "size": 16127
-        },
-        {
-            "name": "dirA_counter",
-            "id": 4,
-            "bitwidth": 16,
-            "size": 16127
-        },
-        {
-            "name": "dirB_counter",
-            "id": 5,
-            "bitwidth": 16,
-            "size": 16127
-        }
-    ],
+    "counter_arrays": [],
+    "register_arrays": [],
     "force_arith": [
         [
             "standard_metadata",

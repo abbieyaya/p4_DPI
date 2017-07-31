@@ -30,26 +30,6 @@ table forward {
     }
 }
 
-table host_to_physical {
-    reads {
-        ethernet_header.srcAddr : exact ;
-    }
-
-    actions {
-        do_forward;
-    }
-}
-
-table physical_to_host {
-    reads {
-        ethernet_header.dstAddr : exact ;
-    }
-
-    actions {
-        do_forward;
-    }
-}
-
 table label_encup {
     reads { 
         standard_metadata.instance_type : exact ;
@@ -64,8 +44,8 @@ table label_encup {
 
 table set_queue {
     reads {
-        ipv4_header.srcAddr: exact;
-        ipv4_header.dstAddr: exact;
+        label_metadata.sub_label : exact ;
+        //ethernet_header.srcAddr : exact ;
     }
 
     actions {
@@ -274,4 +254,12 @@ table copy_B_fields {
 table reset_direction{
     actions { do_reset_direction; }
     size : 1;
+}
+
+table threshold{
+    reads {
+        label_metadata.label : exact;
+        label_metadata.sub_label : exact ;
+    }
+    actions { do_set_unknown; do_set_label_when_threshold; }
 }

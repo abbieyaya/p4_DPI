@@ -12,7 +12,7 @@ control ingress {
     
     if( ( valid(ipv4_header) or valid(ipv6_header) ) and intrinsic_metadata.payload_len > 0 ) {
         apply(table0);
-        process_port_counters();
+        //process_port_counters();
 
         apply(rule_match);
         if( label_metadata.label == 0 and valid(quic_flags) ) {
@@ -28,10 +28,7 @@ control ingress {
         if( label_metadata.label == 0 and valid(whatsapp_three_byte_payload) ) apply(detect_whatsapp);
         if( label_metadata.label == 0 ) apply(detect_four_byte_payload);
 
-        if( learning_metadata._type == 0 ) process_libprotoident();
-
-        //apply(forward);
-        //apply(set_queue);
+        //if( learning_metadata._type == 0 ) process_libprotoident();
     }
     
     if ( learning_metadata._type == 0 or label_metadata.label == 0x3 ) {
@@ -40,9 +37,12 @@ control ingress {
         if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_src_address);
         if( label_metadata.sub_label == 0 and valid(ipv4_header)) apply(guess_by_dst_address);
     }
+
+    //process_libprotoident();
     if( learning_metadata._type > 0 ) apply(learning);
     
     apply(forward);
+    //apply(set_queue);
 }
 
 control egress {

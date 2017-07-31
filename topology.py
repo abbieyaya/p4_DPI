@@ -2,7 +2,7 @@
 from mininet.net import Mininet, VERSION 
 from mininet.log import setLogLevel, info, debug
 from mininet.cli import CLI
-from mininet.link import TCLink, Intf
+from mininet.link import TCLink
 from distutils.version import StrictVersion
 from p4_mininet import P4Switch, P4Host
 from time import sleep
@@ -12,7 +12,7 @@ import sys
 #SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch'
 #SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch --log-console'
 #SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch --nanolog ipc:///tmp/bm-log.ipc'
-SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch'
+SW_PATH='/home/abbie/bmv2/targets/simple_switch/simple_switch --log-console'
 JSON_PATH='mirror.json'
 
 
@@ -27,9 +27,9 @@ def main():
 
     print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     print type(s1)
-    net.addLink(s1, h1, port1=1, port2=1, bw=50, cls=TCLink)
-    net.addLink(s1, h2, port1=2, port2=1, bw=50, cls=TCLink)
-    net.addLink(s1, h3, port1=3, port2=1, bw=50, cls=TCLink)
+    net.addLink(s1, h1, port1=1, port2=1, bw=240, cls=TCLink)
+    net.addLink(s1, h2, port1=2, port2=1, bw=240, cls=TCLink)
+    net.addLink(s1, h3, port1=3, port2=1, bw=240, cls=TCLink)
     #Intf( 'eth0' , node=s1 )
     #net.addLink(s1, h1, port1=1, port2=1)
     #net.addLink(s1, h2, port1=2, port2=1)
@@ -40,6 +40,6 @@ def main():
     net.stop()
 
 if __name__ == '__main__':
-    #setLogLevel('debug')
+    setLogLevel('debug')
     main()
 

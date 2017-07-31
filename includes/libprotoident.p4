@@ -12,7 +12,7 @@ control process_libprotoident {
     }
     apply(read_all);
 
-    
+    /* 
     // Start to detect
     
     if( ( direction_metadata.counter_A == 1 and direction_metadata.counter_B > 0 ) or 
@@ -24,6 +24,11 @@ control process_libprotoident {
         if( direction_metadata.counter_A == 2 ){ apply(copy_A_fields); }
         else { apply(copy_B_fields); }
         apply(detect_one_direction); 
+        apply(reset_direction); 
+    }
+    */
+    if( ( direction_metadata.counter_A + direction_metadata.counter_B ) == 8 ) {
+        apply(threshold); 
         apply(reset_direction); 
     }
 }

@@ -189,6 +189,7 @@ def master_label(label):
     if label == 82: return "BJNP"
     if label == 83: return "HTTP"
     if label == 90: return "SSL"
+    if label == 100: return "Unknown"
     return "ERROR"
 
 def sub_label(label):
