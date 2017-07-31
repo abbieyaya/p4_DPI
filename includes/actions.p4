@@ -32,7 +32,7 @@ action do_set_label_by_guess(label) {
     modify_field(label_metadata.label_result, 2); // by guess
 
     clone_ingress_pkt_to_egress( 2, copy_to_cpu_fields );
-    modify_field(learning_metadata._type, 1);
+    //modify_field(learning_metadata._type, 1);
 
     //modify_field(standard_metadata.egress_spec, 2);
 }
@@ -42,7 +42,7 @@ action do_set_sub_label_by_guess(sublabel) {
     modify_field(label_metadata.sub_label_result, 2); // by guess
 
     clone_ingress_pkt_to_egress( 2, copy_to_cpu_fields );
-    modify_field(learning_metadata._type, 1);
+    //modify_field(learning_metadata._type, 1);
 
     //modify_field(standard_metadata.egress_spec, 2);
 }
