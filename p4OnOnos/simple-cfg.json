@@ -1,0 +1,55 @@
+{
+  "apps": {
+    "org.onosproject.core": {
+      "core": {
+        "linkDiscoveryMode": "STRICT"
+      }
+    }
+  },
+  "devices": {
+    "bmv2:127.0.0.1:9090#11": {
+      "basic": {
+        "name": "bmv2:11",
+        "latitude": 40,
+        "longitude": -99
+      }
+    }
+  },
+  "links": {
+  },
+  "hosts": {
+    "00:00:00:00:00:01/-1": {
+      "basic": {
+        "location": "bmv2:127.0.0.1:9090#11/1",
+        "ips": [
+          "10.0.0.1"
+        ],
+        "name": "h1",
+        "latitude": 36,
+        "longitude": -107
+      }
+    },
+    "00:00:00:00:00:02/-1": {
+      "basic": {
+        "location": "bmv2:127.0.0.1:9090#11/2",
+        "ips": [
+          "10.0.0.2"
+        ],
+        "name": "h2",
+        "latitude": 36,
+        "longitude": -99
+      }
+    },
+    "00:00:00:00:00:03/-1": {
+      "basic": {
+        "location": "bmv2:127.0.0.1:9090#11/3",
+        "ips": [
+          "10.0.0.3"
+        ],
+        "name": "h3",
+        "latitude": 36,
+        "longitude": -91
+      }
+    }
+  }
+}
