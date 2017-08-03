@@ -1,0 +1,40 @@
+<!-- partial HTML -->
+<div id="ov-sample-custom">
+    <div class="summary-list" onos-table-resize>
+        <div class="table-header" onos-sortable-header>
+            <h2>Traffic Classification ({{tableData.length}} total)</h2>
+            <table>
+                <tr>
+                    <td colId="id" width="5%" sortable>ID</td>
+                    <td colId="srcAddress" width="25%" sortable>Source</td>
+                    <td colId="dstAddress" width="25%"  sortable>Destination</td>
+                    <td colId="protocol" width="13%"  sortable>Protocol</td>
+                    <td colId="label" width="9%"  sortable>Label</td>
+                    <td colId="hostLabel" width="13%"  sortable>Host Label</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="table-body" style="height:450px; overflow-y: auto;">
+            <table onos-flash-changes id-prop="id">
+                <tr ng-if="!tableData.length" class="no-data">
+                    <td colspan="9">
+                        {{annots.no_rows_msg}}
+                    </td>
+                </tr>
+
+                <tr ng-repeat="Dpi in tableData track by $index"
+                    ng-repeat-complete row-id="{{Dpi.id}}">
+                    <td width="5%" >{{Dpi.id}}</td>
+                    <td width="25%" >{{Dpi.src}}</td>
+                    <td width="25%" >{{Dpi.dst}}</td>
+                    <td width="13%" >{{Dpi.protocol}}</td>
+                    <td width="9%" >{{Dpi.label}}</td>
+                    <td width="13%" >{{Dpi.hostLabel}}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>

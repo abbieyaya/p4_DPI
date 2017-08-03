@@ -1,0 +1,44 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1499935861946
+Build-Jdk: 1.8.0_111
+Built-By: mininet
+Bundle-Description: ONOS OSGi bundle archetype
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: bmv2-DPI
+Bundle-SymbolicName: org.onosproject.abbie.bmv2-DPI
+Bundle-Version: 1.7.2.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.onosproject.abbie;uses:="com.google.common.collect,o
+ rg.onosproject.app,org.onosproject.bmv2.api.context,org.onosproject.bmv
+ 2.api.runtime,org.onosproject.bmv2.api.service,org.onosproject.core,org
+ .onosproject.net,org.onosproject.net.device,org.onosproject.net.flow,or
+ g.onosproject.net.flow.criteria,org.onosproject.net.host,org.onosprojec
+ t.net.topology,org.onosproject.ui,org.slf4j";version="1.7.2"
+Import-Package: 
+ com.eclipsesource.json;version="[0.9,1)",
+ com.fasterxml.jackson.databind.node;version="[2.7,3)",
+ com.google.common.base;version="[19.0,20)",
+ com.google.common.collect;version="[19.0,20)",
+ org.onlab.util;version="[1.7,2)",
+ org.onosproject.app;version="[1.7,2)",
+ org.onosproject.bmv2.api.context;version="[1.7,2)",
+ org.onosproject.bmv2.api.runtime;version="[1.7,2)",
+ org.onosproject.bmv2.api.service;version="[1.7,2)",
+ org.onosproject.bmv2.api.utils;version="[1.7,2)",
+ org.onosproject.core;version="[1.7,2)",
+ org.onosproject.event;version="[1.7,2)",
+ org.onosproject.net;version="[1.7,2)",
+ org.onosproject.net.device;version="[1.7,2)",
+ org.onosproject.net.flow;version="[1.7,2)",
+ org.onosproject.net.flow.criteria;version="[1.7,2)",
+ org.onosproject.net.flow.instructions;version="[1.7,2)",
+ org.onosproject.net.host;version="[1.7,2)",
+ org.onosproject.net.topology;version="[1.7,2)",
+ org.onosproject.ui;version="[1.7,2)",
+ org.onosproject.ui.table;version="[1.7,2)",
+ org.slf4j;version="[1.7,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Service-Component: OSGI-INF/org.onosproject.abbie.DpiApp.xml,OSGI-INF/or
+ g.onosproject.abbie.DpiUiComponent.xml
+Tool: Bnd-3.0.0.201509101326

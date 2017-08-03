@@ -1,0 +1,20 @@
+/* css for sample app custom view */
+/*
+div.summary-list tr {
+    transition: background-color 500ms;
+}
+.light div.summary-list tr.data-change {
+    background-color: #FDFFDC;
+}
+.dark div.summary-list tr.data-change {
+    background-color: #5A5600;
+}
+*/
+
+#ov-sample-custom h2 {
+    display: inline-block;
+}
+
+#ov-sample-custom div.table-body{
+    overflow-y: scroll;
+}
